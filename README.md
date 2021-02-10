@@ -1,16 +1,11 @@
 # Major Group Project
 
-Before you submit your project, modify the following table to include everyone's full name and GitHub usernames:
-
 | Group Member Name          | GitHub Username    |
 | :------------------------- |:------------------:|
-| <first_name1> <last_name1> | <github_username1> |
-| <first_name2> <last_name2> | <github_username2> |
-| <first_name3> <last_name3> | <github_username3> |
-| <first_name4> <last_name4> | <github_username4> |
-| <first_name5> <last_name5> | <github_username5> |
+| Cody Malcolm               | cody-malcolm       |
+| Avril Lopez                | AvrilLopez         |
+| Frede Emnetu               | FredeEmnetu        |
 
-_**Note:** You can delete the unused rows from the table._
 
 ## Overview
 This group project is designed for you to demonstrate the skills that you have learned in this course.  The final project that you submit in the last week of classes will be a completed web application.  Non-functional requirements, especially those associated with production-readiness, will be considered extremely important when marking this project.  You are expected to work in a group of 3-5 when completing this project.  Students will be prohibited from working alone on the project, as this eliminates one of the learning objectives of this assessment.  
