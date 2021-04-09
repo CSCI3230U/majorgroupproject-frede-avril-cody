@@ -1,4 +1,4 @@
-import './App.css';
+import './styles/App.css';
 import Menu from './components/Menu.js'
 import Tweet from './components/Tweet.js'
 import Feed from './components/Feed.js'
