@@ -5,6 +5,7 @@ import Feed from './components/Feed.js'
 import Search from './components/Search.js'
 import News from './components/News.js'
 import FollowRecommendations from './components/FollowRecommendations.js'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
     return (
@@ -22,6 +23,15 @@ function App() {
                 <FollowRecommendations />
             </div>
         </div>
+       
+        // <Router>
+        //     <div className="App">
+        //         <Switch>
+        //         <Route exact path="/" render={() => (<Menu />)}/>
+        //         <Route exact path="/feed" render={() => (<Feed />)}/>
+        //         </Switch> 
+        //     </div> 
+        // </Router>
     );
 }
 
