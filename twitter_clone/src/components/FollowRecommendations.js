@@ -4,7 +4,7 @@ class FollowRecommendations extends Component {
     render() {
         return(
             <>
-                <h2>Placeholder</h2>
+                <h2>FollowRecommendations</h2>
             </>
         );
     };

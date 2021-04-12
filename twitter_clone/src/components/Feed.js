@@ -4,7 +4,7 @@ class Feed extends Component {
     render() {
         return(
             <>
-                <h2>Placeholder</h2>
+                <h2>Feed</h2>
             </>
         );
     };
