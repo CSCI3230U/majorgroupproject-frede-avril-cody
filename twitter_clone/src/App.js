@@ -10,6 +10,12 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 function App() {
     return (
         <div className="App">
+            <Router>
+                <Switch>
+                <Route exact path="/" render={() => (<Menu />)}/>
+                <Route exact path="/news" render={() => (<News />)}/>
+                </Switch>   
+            </Router>
             <div className="leftSide">
                 <Menu />
             </div>
@@ -24,14 +30,7 @@ function App() {
             </div>
         </div>
        
-        // <Router>
-        //     <div className="App">
-        //         <Switch>
-        //         <Route exact path="/" render={() => (<Menu />)}/>
-        //         <Route exact path="/feed" render={() => (<Feed />)}/>
-        //         </Switch> 
-        //     </div> 
-        // </Router>
+        
     );
 }
 
