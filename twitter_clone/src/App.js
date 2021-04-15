@@ -5,6 +5,7 @@ import Tweet from './components/Tweet.js'
 import Feed from './components/Feed.js'
 import Search from './components/Search.js'
 import News from './components/News.js'
+import Card from './components/Card.js'
 import NotFound from './components/NotFound.js'
 import FollowRecommendations from './components/FollowRecommendations.js'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -21,6 +22,7 @@ class App extends React.Component {
             <div className="App">
                 <div className="leftSide">
                     <Menu />
+                    <Card />
                 </div>
                 <div className="center">
                     <Router>
