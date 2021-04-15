@@ -1,0 +1,26 @@
+.feed {
+     border-left: 1px solid #ececec;
+     border-right: 1px solid #ececec;
+     height: 100%;
+}
+
+.post{
+     border-bottom: 1px solid #ececec;
+}
+
+.post:hover {
+     background-color: #e2e2e28a;
+}
+
+.profilePic{
+
+}
+
+.postActionIcon {
+     color: #858585;
+}
+
+.centered{
+     text-align:center;
+     padding: 10px;
+}
