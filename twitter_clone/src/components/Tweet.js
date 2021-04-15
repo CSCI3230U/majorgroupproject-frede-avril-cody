@@ -33,7 +33,7 @@ class Tweet extends Component{
                                    
                               </div>
                               <div className={`col`}>
-                                   <div className="tweetContent">
+                                   <div className="tweet_tweetContent">
                                         <input type="text" name="tweet" placeholder="What's happening?"
                                                className={'tweet_tweetInput tweet_form-control'}></input>
                                    </div>
