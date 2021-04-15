@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import '../styles/FollowRecommendations.css';
 
 class FollowRecommendations extends Component {
     render() {
