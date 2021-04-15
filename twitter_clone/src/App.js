@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import Menu from './components/Menu.js'
 import Tweet from './components/Tweet.js'
@@ -17,7 +17,7 @@ class App extends React.Component {
         this.state = {
         }
     }
-    render(){
+    render() {
         return (
             <div className="App">
                 <div className="leftSide">
@@ -29,7 +29,12 @@ class App extends React.Component {
                         <Switch>
                             <Route exact path="/" render={() => {}}/>
                             <Route path="/News" component={News}/>
-                            <Route path="/Feed" render={() => "hello feed"}/>
+                            <Route path="/Feed" render={() =>
+                                <Fragment>
+                                    <Tweet />
+                                    <Feed />
+                                </Fragment>
+                            }/>
                             <Route component={NotFound} />
                         </Switch>
                     </Router>

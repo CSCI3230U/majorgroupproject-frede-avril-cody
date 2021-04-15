@@ -18,7 +18,7 @@ class Menu extends Component{
     // }
     render(){
         return(
-            <>
+            <div className={`menu`}>
                 <ul>
                     <li><Link to="/feed"  >Home</Link></li>
                     <li><Link to="/">Profile</Link></li>
@@ -30,7 +30,7 @@ class Menu extends Component{
                 <div className=".btn">
                     <button type="button">Tweet</button>
                 </div>
-            </>
+            </div>
 
         );
     };

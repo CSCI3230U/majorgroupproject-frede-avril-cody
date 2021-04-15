@@ -6,7 +6,7 @@ import {faSmile} from '@fortawesome/free-regular-svg-icons';
 import {faCaretSquareRight} from '@fortawesome/free-regular-svg-icons';
 import {faCalendarAlt} from '@fortawesome/free-regular-svg-icons';
 import {faChartBar} from '@fortawesome/free-regular-svg-icons';
-import "../styles/tweet.css";
+import "../styles/Tweet.css";
 
 class Tweet extends Component{
      constructor(props) {
@@ -30,7 +30,7 @@ class Tweet extends Component{
                     <div className={`tweet_tweet container tweet_body`}>
                          <div className={`row`}>
                               <div className={`col-2 tweet_profilePic`}>
-                                   
+
                               </div>
                               <div className={`col`}>
                                    <div className="tweet_tweetContent">
@@ -51,7 +51,7 @@ class Tweet extends Component{
                                    </div>
                               </div>
                          </div>
-                         
+
                     </div>
                </>
           );
