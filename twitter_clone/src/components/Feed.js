@@ -14,36 +14,36 @@ class Feed extends Component {
     render() {
         return(
             <>
-                <div className={`feed`}>
+                <div className={`feed_feed`}>
                     <div className={`container`}>
 
                     </div>
-                    <div className={`post`}>
+                    <div className={`feed_post`}>
                         <div className={`row`}>
                             <div className={`col-2`}>
-                                <div className="profilePic">
+                                <div className="feed_profilePic">
                                     
                                 </div>
                             </div>
                             <div className={`col`}>
-                                <div className="postContent">
+                                <div className="feed_postContent">
                                 </div>
                             </div>
                         </div>
                         <br />
                         <div className={``}>
                             <div  className={`row`}>
-                                <div className={`col inline centered`}>
-                                    <FontAwesomeIcon className={`postActionIcon`} icon={faComment} size="1x" />
+                                <div className={`col inline feed_centered`}>
+                                    <FontAwesomeIcon className={`feed_postActionIcon`} icon={faComment} size="1x" />
                                 </div>
-                                <div className={`col inline centered`}>
-                                    <FontAwesomeIcon className={`postActionIcon`} icon={faImage} size="1x" />
+                                <div className={`col inline feed_centered`}>
+                                    <FontAwesomeIcon className={`feed_postActionIcon`} icon={faImage} size="1x" />
                                 </div>
-                                <div className={`col inline centered`}>
-                                    <FontAwesomeIcon className={`postActionIcon`} icon={faHeart} size="1x" />     
+                                <div className={`col inline feed_centered`}>
+                                    <FontAwesomeIcon className={`feed_postActionIcon`} icon={faHeart} size="1x" />     
                                 </div>
-                                <div className={`col inline centered`}>
-                                    <FontAwesomeIcon className={`postActionIcon`} icon={faShareSquare} size="1x" />  
+                                <div className={`col inline feed_centered`}>
+                                    <FontAwesomeIcon className={`feed_postActionIcon`} icon={faShareSquare} size="1x" />  
                                 </div>
                             </div>
                         </div>

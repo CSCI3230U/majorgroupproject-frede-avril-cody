@@ -1,26 +1,26 @@
-.feed {
+.feed_feed {
      border-left: 1px solid #ececec;
      border-right: 1px solid #ececec;
      height: 100%;
 }
 
-.post{
+.feed_post{
      border-bottom: 1px solid #ececec;
 }
 
-.post:hover {
+.feed_post:hover {
      background-color: #e2e2e28a;
 }
 
-.profilePic{
+.feed_profilePic{
 
 }
 
-.postActionIcon {
+.feed_postActionIcon {
      color: #858585;
 }
 
-.centered{
+.feed_centered{
      text-align:center;
      padding: 10px;
 }
