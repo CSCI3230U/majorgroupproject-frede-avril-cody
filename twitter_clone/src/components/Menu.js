@@ -22,7 +22,7 @@ class Menu extends Component{
                 <ul>
                     <li><Link to="/feed">Home</Link></li>
                     <li><Link to="/explore">Explore</Link></li>
-                    <li><Link to="/message">Messages</Link></li>
+                    <li><Link to="/messages">Messages</Link></li>
                     <li><Link to="/connect">Connect</Link></li>
                     <li><Link to="/profile">Profile</Link></li>
                     <li>More</li>

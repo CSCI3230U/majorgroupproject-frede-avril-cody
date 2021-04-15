@@ -29,25 +29,23 @@ class App extends React.Component {
                     <Card />
                 </div>
                 <div className="center">
-                    <Router>
-                        <Switch>
-                            <Route exact path="/" render={() => {
-                                return <Redirect to="/feed"/>}} />
-                            <Route path="/connect" component={Connect}/>
-                            <Route path="/explore" component={Explore}/>
-                            <Route path="/messages" component={Messages}/>
-                            <Route path="/profile" component={Profile}/>
+                    <Switch>
+                        <Route exact path="/" render={() => {
+                            return <Redirect to="/feed"/>}} />
+                        <Route exact path="/connect" component={Connect}/>
+                        <Route exact path="/explore" component={Explore}/>
+                        <Route exact path="/messages" component={Messages}/>
+                        <Route exact path="/profile" component={Profile}/>
 
-                            <Route path="/feed" render={() =>
-                                <Fragment>
-                                    <Tweet />
-                                    <Feed />
-                                </Fragment>
-                            }/>
+                        <Route exact path="/feed" render={() =>
+                            <Fragment>
+                                <Tweet />
+                                <Feed />
+                            </Fragment>
+                        }/>
 
-                            <Route component={NotFound} />
-                        </Switch>
-                    </Router>
+                        <Route component={NotFound} />
+                    </Switch>
                 </div>
 
                 <div className="rightSide">
