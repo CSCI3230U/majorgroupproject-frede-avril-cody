@@ -20,11 +20,11 @@ class Menu extends Component{
         return(
             <div className={`menu`}>
                 <ul>
-                    <li><Link to="/feed"  >Home</Link></li>
-                    <li><Link to="/">Profile</Link></li>
-                    <li><Link to="/News">Messages</Link></li>
-                    <li>Connect</li>
-                    <li><Link to="/FollowRecommendations">Profile</Link></li>
+                    <li><Link to="/feed">Home</Link></li>
+                    <li><Link to="/explore">Explore</Link></li>
+                    <li><Link to="/message">Messages</Link></li>
+                    <li><Link to="/connect">Connect</Link></li>
+                    <li><Link to="/profile">Profile</Link></li>
                     <li>More</li>
                 </ul>
                 <div className=".btn">
