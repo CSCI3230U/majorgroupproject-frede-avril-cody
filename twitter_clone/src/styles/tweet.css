@@ -1,40 +1,40 @@
-.header{
+.tweet_header{
      position: sticky;
      padding: 10px;
      border: 1px solid #ececec;
 }
 
-.tweet {
+.tweet_tweet {
      border: 1px solid #ececec;
      border-top: none;
 }
 
-.tweetContent{
+.tweet_tweetContent{
      padding: 7%;
      padding-left: 0;
 }
 
-.inline{
+.tweet_inline{
      display: inline;
 }
 
-.star {
+.tweet_star {
      color: #1DA1F2;
 }
 
-.homeText{
+.tweet_homeText{
      font-weight: bold;
 }
 
-body {
+.tweet_body {
      font-family: "Helvetica Neue", sans-serif; 
 }
 
-.profilePic{
+.tweet_profilePic{
 
 }
 
-.submit {
+.tweet_submit {
      padding: 5px;
      width: 100%;
      border: none;
@@ -43,18 +43,18 @@ body {
      color: white;
 }
 
-.tweetExtra{
+.tweet_tweetExtra{
      margin: 10px;
      margin-right: 20px;
      margin-left: 0;
      color: #1DA1F2;
 }
 
-.tweetInput {
+.tweet_tweetInput {
      font-size: large;
      border: none;
 }
 
-.form-control {
+.tweet_form-control {
      border: 0;
- }
+}
