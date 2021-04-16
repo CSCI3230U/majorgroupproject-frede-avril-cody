@@ -1,16 +1,18 @@
 const express = require('express');
 const tweets = require('./model/tweets.js');
+const cors = require('cors');
 const app = express();
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+app.use(express.json({
+    type: ['application/json', 'text/plain']
+}));
 
-app.get('/tweets', (request, response) => {
+app.use(cors());
+
+app.post('/tweets', (request, response) => {
+    console.log(request.body);
     tweets.getAll(response);
 });
 
