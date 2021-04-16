@@ -5,12 +5,13 @@ class FollowRecommendations extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recommendations: {}
+            recommendations: []
         }
         // this.handleChange = this.handleChange.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this);
     }
 
-    componentDidMount() {
+    handleRefresh() {
         const params = {
             username: this.props.username,
             profiles: 8
@@ -23,14 +24,22 @@ class FollowRecommendations extends Component {
         fetch("http://localhost:4000/whoToFollow", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                this.setState({recommendations: res});
             });
     }
 
+    componentDidMount() {
+        this.handleRefresh();
+    }
+
     render() {
+        const recommendations = this.state.recommendations.map(i => (
+            <li key={i.rowid}>{i.username + " " + i.handle}</li>
+        ));
         return(
             <div className={`follow-reqs`}>
-                <h2>FollowRecommendations</h2>
+                <button onClick={this.handleRefresh}>Refresh</button>
+                <ul>{recommendations}</ul>
             </div>
         );
     };
