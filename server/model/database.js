@@ -47,7 +47,7 @@ db.serialize(function () {
     const profs = ["Randy", "Lennart", "Mariana", "Mehran", "Paula", "Ilona",
                     "Ken", "Mihai", "Joe", "Rupinder"];
     for (let i = 0; i < profs.length; i++) {
-        users.run(profs[i], "apple", profs[i].toLowerCase(), profs[i].toLowerCase() + "@otu.net");
+        users.run(profs[i], "apple", `@${profs[i].toLowerCase()}`, `${profs[i].toLowerCase()}@otu.net`);
     }
 
     users.finalize();
