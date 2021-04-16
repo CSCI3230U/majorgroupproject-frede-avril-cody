@@ -1,3 +1,5 @@
+./server/data/twitterClone.db
+
 # Logs
 logs
 *.log
