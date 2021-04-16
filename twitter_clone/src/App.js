@@ -66,8 +66,8 @@ class App extends React.Component {
 
                             <Route exact path="/feed" render={() =>
                                 <Fragment>
-                                    <Tweet token={this.state.token} />
-                                    <Feed token={this.state.token} />
+                                    <Tweet username={this.state.username} />
+                                    <Feed username={this.state.username} />
                                 </Fragment>
                             }/>
 

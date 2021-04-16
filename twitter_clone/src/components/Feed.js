@@ -11,6 +11,22 @@ class Feed extends Component {
     //     super(props);
     // }
 
+    componentDidMount() {
+        const params = {
+            username: this.props.username
+        };
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/populateFeed", options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+            });
+    }
+
     render() {
         return(
             <div className={`feed_feed`}>
