@@ -13,6 +13,7 @@ class Card extends Component {
         return(
             <div className={`card`}>
                 <p>The profile card will go here</p>
+                <button onClick={this.props.handleLogoutClick}>Logout</button>
             </div>
         );
     };

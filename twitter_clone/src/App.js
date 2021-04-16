@@ -26,6 +26,7 @@ class App extends React.Component {
             token: ''
         }
         this.handleLogin = this.handleLogin.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
     handleLogin(handle, token) {
@@ -33,6 +34,12 @@ class App extends React.Component {
             loggedIn: true,
             handle: handle,
             token: token
+        });
+    }
+
+    handleLogout() {
+        this.setState({
+            loggedIn: false
         });
     }
 
@@ -44,7 +51,7 @@ class App extends React.Component {
                 <div className="App">
                     <div className="leftSide">
                         <Menu handle={this.state.handle} token={this.state.token}/>
-                        <Card handle={this.state.handle}/>
+                        <Card handle={this.state.handle} handleLogoutClick={this.handleLogout}/>
                     </div>
                     <div className="center">
                         <Switch>

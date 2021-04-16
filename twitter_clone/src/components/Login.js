@@ -53,8 +53,9 @@ class Login extends Component {
 
     render() {
         return(
+            // TODO refactor to handle enter press
             <div className={`login`}>
-                <h2>{this.state.message}</h2>
+                <h2>{this.state.message} </h2>
                 <input placeholder="Username" type="text" onChange={this.handleUsernameChange} />
                 <input placeholder="Password" type="password" onChange={this.handlePasswordChange} />
                 <button onClick={this.handleLoginClick}>Login</button>
