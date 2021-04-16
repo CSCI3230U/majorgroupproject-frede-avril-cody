@@ -1,5 +1,6 @@
-import React, { Component, Fragment } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Fragment } from 'react';
+// import React, { Component, Fragment } from 'react';
+// import ReactDOM from 'react-dom';
 import Menu from './components/Menu.js'
 import Tweet from './components/Tweet.js'
 import Feed from './components/Feed.js'
@@ -10,51 +11,66 @@ import Connect from './components/Connect.js'
 import Explore from './components/Explore.js'
 import Messages from './components/Messages.js'
 import Profile from './components/Profile.js'
+import Login from './components/Login.js'
 import NotFound from './components/NotFound.js'
 import FollowRecommendations from './components/FollowRecommendations.js'
-import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import { Route, Switch, Redirect} from 'react-router-dom';
 import './styles/App.css';
 
 class App extends React.Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
+            loggedIn: false
         }
+        this.handleLogin = this.handleLogin.bind(this);
     }
+
+    handleLogin() {
+        this.setState({
+            loggedIn: true
+        });
+    }
+
     render() {
-        return (
-            <div className="App">
-                <div className="leftSide">
-                    <Menu />
-                    <Card />
-                </div>
-                <div className="center">
-                    <Switch>
-                        <Route exact path="/" render={() => {
-                            return <Redirect to="/feed"/>}} />
-                        <Route exact path="/connect" component={Connect}/>
-                        <Route exact path="/explore" component={Explore}/>
-                        <Route exact path="/messages" component={Messages}/>
-                        <Route exact path="/profile" component={Profile}/>
+        if (!this.state.loggedIn) {
+            return <Login handleLogin={this.handleLogin} />;
+        } else {
+            return (
+                <div className="App">
+                    <div className="leftSide">
+                        <Menu />
+                        <Card />
+                    </div>
+                    <div className="center">
+                        <Switch>
+                            <Route exact path="/" render={() => {
+                                return <Redirect to="/feed"/>}} />
+                            <Route exact path="/connect" component={Connect}/>
+                            <Route exact path="/explore" component={Explore}/>
+                            <Route exact path="/messages" component={Messages}/>
+                            <Route exact path="/profile" component={Profile}/>
 
-                        <Route exact path="/feed" render={() =>
-                            <Fragment>
-                                <Tweet />
-                                <Feed />
-                            </Fragment>
-                        }/>
+                            <Route exact path="/feed" render={() =>
+                                <Fragment>
+                                    <Tweet />
+                                    <Feed />
+                                </Fragment>
+                            }/>
 
-                        <Route component={NotFound} />
-                    </Switch>
-                </div>
+                            <Route component={NotFound} />
+                        </Switch>
+                    </div>
 
-                <div className="rightSide">
-                    <Search />
-                    <News />
-                    <FollowRecommendations />
+                    <div className="rightSide">
+                        <Search />
+                        <News />
+                        <FollowRecommendations />
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
+
     }
 }
 

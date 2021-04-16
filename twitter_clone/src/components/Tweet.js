@@ -9,9 +9,9 @@ import {faChartBar} from '@fortawesome/free-regular-svg-icons';
 import "../styles/Tweet.css";
 
 class Tweet extends Component{
-     constructor(props) {
-          super(props);
-     }
+     // constructor(props) {
+     //      super(props);
+     // }
 
 
      render(){

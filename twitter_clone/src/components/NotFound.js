@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/NotFound.css';
 
-class App extends React.Component {
+class App extends Component {
     render(){
         return (
             <>
