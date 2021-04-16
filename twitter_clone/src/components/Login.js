@@ -21,6 +21,9 @@ class Login extends Component {
             username: this.state.username,
             password: this.state.password
         };
+        if (!params.username || !params.password) {
+            return;
+        }
         const options = {
             method: 'POST',
             body: JSON.stringify(params)

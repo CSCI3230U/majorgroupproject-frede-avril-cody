@@ -51,7 +51,7 @@ class App extends React.Component {
                 <div className="App">
                     <div className="leftSide">
                         <Menu handle={this.state.handle} token={this.state.token}/>
-                        <Card handle={this.state.handle} handleLogoutClick={this.handleLogout}/>
+                        <Card handle={this.state.handle} handleLogout={this.handleLogout}/>
                     </div>
                     <div className="center">
                         <Switch>
