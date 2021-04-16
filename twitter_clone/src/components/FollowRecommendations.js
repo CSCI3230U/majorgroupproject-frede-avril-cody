@@ -59,7 +59,7 @@ class FollowRecommendations extends Component {
             <button key={i.rowid} data-key={i.rowid} onClick={this.handleFollow}>Follow</button></li>
         ));
         return(
-            <div className={`follow-reqs`}>
+            <div className={`follow-recs`}>
                 <button onClick={this.handleRefresh}>Refresh</button>
                 <ul>{recommendations}</ul>
             </div>
