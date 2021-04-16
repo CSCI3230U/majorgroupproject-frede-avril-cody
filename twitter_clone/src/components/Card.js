@@ -4,6 +4,7 @@ import '../styles/Card.css';
 class Card extends Component {
     constructor(props) {
         super(props);
+        // unimplemented props are this.props.username and this.props.handle eg. @joe
         this.state = {
         }
         this.handleLogoutClick = this.handleLogoutClick.bind(this);

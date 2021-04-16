@@ -11,6 +11,7 @@ db.serialize(function () {
 
     db  .run(`CREATE TABLE IF NOT EXISTS tweets (
                                         time DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                        senderId INTEGER NOT NULL,
                                         sender TEXT NOT NULL,
                                         likes INTEGER DEFAULT 0,
                                         replyTo INTEGER,
@@ -38,7 +39,7 @@ db.serialize(function () {
                                         FOREIGN KEY (followedId) REFERENCES users(rowid))`);
 
     const users = db.prepare('INSERT INTO users VALUES (?, ?, ?, ?)');
-    const tweets = db.prepare('INSERT INTO tweets (sender, message) VALUES (?, ?)');
+    const tweets = db.prepare('INSERT INTO tweets (senderId, sender, message) VALUES (?, ?, ?)');
     const hashtags = db.prepare('INSERT INTO hashtags (hashtag) VALUES (?)');
     const tweetHashtags = db.prepare('INSERT INTO tweetHashtags (hashtagId, tweetId) VALUES (?, ?)');
     const followers = db.prepare('INSERT INTO followers (followerId, followedId) VALUES (?, ?)');
@@ -46,7 +47,7 @@ db.serialize(function () {
     const profs = ["Randy", "Lennart", "Mariana", "Mehran", "Paula", "Ilona",
                     "Ken", "Mihai", "Joe", "Rupinder"];
     for (let i = 0; i < profs.length; i++) {
-        users.run(profs[i], "apple", profs[i].toLowerCase(), profs[i].toLowerCase() + "@otu.net");
+        users.run(profs[i], "apple", `@${profs[i].toLowerCase()}`, `${profs[i].toLowerCase()}@otu.net`);
     }
 
     users.finalize();
@@ -54,11 +55,11 @@ db.serialize(function () {
     for (let i = 0; i < 10; i++) {
         let senderIndex = Math.floor(Math.random() * 10);
         let senderUsername = profs[senderIndex];
-        db.get(`SELECT rowid FROM users WHERE username = '${senderUsername}'`, (err, user) => {
+        db.get(`SELECT rowid, handle FROM users WHERE username = '${senderUsername}'`, (err, user) => {
             if (err) {
                 console.error(err.message);
             } else {
-                tweets.run(user.rowid, "This is message " + i);
+                tweets.run(user.rowid, user.handle, "This is message " + i);
             }
         });
     }

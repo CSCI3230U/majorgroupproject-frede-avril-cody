@@ -42,6 +42,11 @@ app.post('/follow', (request, response) => {
     response.json({response: "received"});
 });
 
+app.post('/populateFeed', (request, response) => {
+    console.log(request.body);
+    tweets.getFeed(request.body.username, response);
+});
+
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), function() {
     console.log(`Server listening on port ${app.get('port')}`)

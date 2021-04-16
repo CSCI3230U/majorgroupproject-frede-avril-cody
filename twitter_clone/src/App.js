@@ -23,17 +23,24 @@ class App extends React.Component {
         this.state = {
             loggedIn: false,
             username: '',
-            handle: ''
+            handle: '',
+            isConnectDisplayed: false
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.connectDisplayed = this.connectDisplayed.bind(this);
+    }
+
+    connectDisplayed(flag) {
+        this.setState({isConnectDisplayed: flag});
     }
 
     handleLogin(username, handle) {
         this.setState({
             loggedIn: true,
             username: username,
-            handle: handle
+            handle: handle,
+            isConnectDisplayed: false
         });
     }
 
@@ -59,15 +66,17 @@ class App extends React.Component {
                         <Switch>
                             <Route exact path="/" render={() => {
                                 return <Redirect to="/feed"/>}} />
-                            <Route exact path="/connect" component={Connect}/>
+                            <Route exact path="/connect" render={() => {
+                                return <Connect connectDisplayed={this.connectDisplayed} 
+                                                username={this.state.username}/>}}/>
                             <Route exact path="/explore" component={Explore}/>
                             <Route exact path="/messages" component={Messages}/>
                             <Route exact path="/profile" component={Profile}/>
 
                             <Route exact path="/feed" render={() =>
                                 <Fragment>
-                                    <Tweet token={this.state.token} />
-                                    <Feed token={this.state.token} />
+                                    <Tweet username={this.state.username} />
+                                    <Feed username={this.state.username} />
                                 </Fragment>
                             }/>
 
@@ -78,7 +87,7 @@ class App extends React.Component {
                     <div className="rightSide">
                         <Search />
                         <News />
-                        <FollowRecommendations username={this.state.username} />
+                        {!this.state.isConnectDisplayed && <FollowRecommendations username={this.state.username} />}
                     </div>
                 </div>
             );
