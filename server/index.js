@@ -30,6 +30,11 @@ app.post('/login', (request, response) => {
     users.login(request.session, request.body, response);
 });
 
+app.post('/whoToFollow', (request, response) => {
+    console.log(request.body);
+    users.getFollowRecommendations(request.session, request.body, response);
+});
+
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), function() {
     console.log(`Server listening on port ${app.get('port')}`)
