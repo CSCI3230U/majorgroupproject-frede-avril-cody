@@ -5,7 +5,7 @@ function getAll(res) {
         if (err) {
             console.error("There was an error retrieving data: " + err);
         } else {
-            res.json(tweets)
+            res.json(tweets);
         }
     });
 }

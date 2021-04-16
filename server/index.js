@@ -1,8 +1,17 @@
 const express = require('express');
+const session = require('express-session');
+const { v4: uuidv4 } = require('uuid');
 const tweets = require('./model/tweets.js');
+const users = require('./model/users.js');
 const cors = require('cors');
 const app = express();
 
+app.use(session({
+    id: () => uuidv4(),
+    saveUnitialized: false, // could make true if have time to block too many bad login attempts
+    resave: false,
+    secret: 'dishwasher purple orangutan'
+}));
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({
@@ -14,6 +23,11 @@ app.use(cors());
 app.post('/tweets', (request, response) => {
     console.log(request.body);
     tweets.getAll(response);
+});
+
+app.post('/login', (request, response) => {
+    console.log(request.body);
+    users.login(request.session, request.body, response);
 });
 
 app.set('port', process.env.PORT || 4000);

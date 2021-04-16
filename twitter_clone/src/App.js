@@ -21,14 +21,18 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            loggedIn: false
+            loggedIn: false,
+            handle: '',
+            token: ''
         }
         this.handleLogin = this.handleLogin.bind(this);
     }
 
-    handleLogin() {
+    handleLogin(handle, token) {
         this.setState({
-            loggedIn: true
+            loggedIn: true,
+            handle: handle,
+            token: token
         });
     }
 
@@ -39,8 +43,8 @@ class App extends React.Component {
             return (
                 <div className="App">
                     <div className="leftSide">
-                        <Menu />
-                        <Card />
+                        <Menu handle={this.state.handle} token={this.state.token}/>
+                        <Card handle={this.state.handle}/>
                     </div>
                     <div className="center">
                         <Switch>
@@ -53,8 +57,8 @@ class App extends React.Component {
 
                             <Route exact path="/feed" render={() =>
                                 <Fragment>
-                                    <Tweet />
-                                    <Feed />
+                                    <Tweet token={this.state.token} />
+                                    <Feed token={this.state.token} />
                                 </Fragment>
                             }/>
 
@@ -70,7 +74,6 @@ class App extends React.Component {
                 </div>
             );
         }
-
     }
 }
 
