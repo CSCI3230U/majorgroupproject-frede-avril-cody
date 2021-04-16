@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const { v4: uuidv4 } = require('uuid');
+const followers = require('./model/followers.js');
 const tweets = require('./model/tweets.js');
 const users = require('./model/users.js');
 const cors = require('cors');
@@ -33,6 +34,12 @@ app.post('/login', (request, response) => {
 app.post('/whoToFollow', (request, response) => {
     console.log(request.body);
     users.getFollowRecommendations(request.session, request.body, response);
+});
+
+app.post('/follow', (request, response) => {
+    console.log(request.body);
+    followers.addFollower(request.session, request.body);
+    response.json({response: "received"});
 });
 
 app.set('port', process.env.PORT || 4000);

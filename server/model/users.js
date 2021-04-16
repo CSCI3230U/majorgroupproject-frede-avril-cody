@@ -50,10 +50,12 @@ function findFollowRecommendations(session, req, res) {
 }
 
 function retrieveRandomProfiles(userId, numProfiles, res) {
-    db.data.all(`SELECT rowid, username, handle FROM users ORDER BY RANDOM() LIMIT ${numProfiles}`, function(err, users) {
-        console.log(userId);
+    db.data.all(`SELECT rowid, username, handle FROM users WHERE (${userId}, \
+                rowid) NOT IN followers ORDER BY RANDOM() LIMIT ${numProfiles}`,
+                 function(err, users) {
         if (err) {
             console.error("Error retrieving users to recommend");
+            console.error(err)
         } else {
             const data = [];
             users.forEach(function(user) {
@@ -61,8 +63,6 @@ function retrieveRandomProfiles(userId, numProfiles, res) {
                     data.push(user);
                 }
             });
-            console.log("sending follow recommendations");
-            console.log(data);
             res.json(data);
         }
     });
