@@ -34,7 +34,7 @@ class Login extends Component {
             .then(res => {
                 console.log(res);
                 if (res.authenticated) {
-                    this.props.handleLogin(res.token, res.handle);
+                    this.props.handleLogin(res.username, res.handle);
                 } else {
                     this.loginUnsuccessful();
                 }

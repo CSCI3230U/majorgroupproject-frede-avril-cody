@@ -22,18 +22,18 @@ class App extends React.Component {
         super();
         this.state = {
             loggedIn: false,
-            handle: '',
-            token: ''
+            username: '',
+            handle: ''
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
     }
 
-    handleLogin(handle, token) {
+    handleLogin(username, handle) {
         this.setState({
             loggedIn: true,
-            handle: handle,
-            token: token
+            username: username,
+            handle: handle
         });
     }
 
@@ -51,7 +51,9 @@ class App extends React.Component {
                 <div className="App">
                     <div className="leftSide">
                         <Menu handle={this.state.handle} token={this.state.token}/>
-                        <Card handle={this.state.handle} handleLogout={this.handleLogout}/>
+                        <Card   handle={this.state.handle}
+                                username={this.state.username}
+                                handleLogout={this.handleLogout}/>
                     </div>
                     <div className="center">
                         <Switch>
@@ -76,7 +78,7 @@ class App extends React.Component {
                     <div className="rightSide">
                         <Search />
                         <News />
-                        <FollowRecommendations />
+                        <FollowRecommendations username={this.state.username} />
                     </div>
                 </div>
             );
