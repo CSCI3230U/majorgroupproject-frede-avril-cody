@@ -115,4 +115,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-.server/data/twitterClone.db
+./server/data/twitterClone.db
