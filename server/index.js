@@ -13,6 +13,7 @@ app.use(session({
     resave: false,
     secret: 'dishwasher purple orangutan'
 }));
+
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({

@@ -68,6 +68,5 @@ function retrieveRandomProfiles(userId, numProfiles, res) {
     });
 }
 
-
 module.exports.login = handleLogin;
 module.exports.getFollowRecommendations = findFollowRecommendations;

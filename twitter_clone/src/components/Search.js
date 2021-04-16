@@ -64,7 +64,6 @@ class Search extends Component {
                         <li>Placeholder 2</li>
                         <li>Placeholder 3</li>
                     </ul>}
-
                 </div>}
             </>
         );

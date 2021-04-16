@@ -14,10 +14,6 @@ function addFollower(session, req) {
     });
 }
 
-function follows() {
-
-}
-
 function insert(follower, followed) {
     db.data.run('INSERT OR IGNORE INTO followers (followerId, followedId) VALUES (?, ?)',
                 [follower, followed]);
