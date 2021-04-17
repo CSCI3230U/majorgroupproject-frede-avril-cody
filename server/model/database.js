@@ -1,7 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./data/twitterClone.db');
+const bcrypt = require('bcrypt');
 
-db.serialize(function () {
+db.serialize(async function () {
     db  .run("DROP TABLE IF EXISTS hashtags")
         .run("DROP TABLE IF EXISTS tweets")
         .run("DROP TABLE IF EXISTS tweetHashtags")
@@ -46,8 +47,10 @@ db.serialize(function () {
 
     const profs = ["Randy", "Lennart", "Mariana", "Mehran", "Paula", "Ilona",
                     "Ken", "Mihai", "Joe", "Rupinder"];
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash("apple", salt);
     for (let i = 0; i < profs.length; i++) {
-        users.run(profs[i], "apple", `@${profs[i].toLowerCase()}`, `${profs[i].toLowerCase()}@otu.net`);
+        users.run(profs[i], password, `@${profs[i].toLowerCase()}`, `${profs[i].toLowerCase()}@otu.net`);
     }
 
     users.finalize();
