@@ -6,7 +6,8 @@ class News extends Component {
         super(props);
         this.state = {
             articles: []
-        }
+        };
+        this.newsArticles = [];
     }
     
     componentDidMount() {
@@ -30,15 +31,18 @@ class News extends Component {
                 }
             });
             this.setState({articles: articlesFromJSON});
-        console.log(articlesFromJSON);
+            this.newsArticles = articlesFromJSON;
+        // console.log(this.state.articles); // Is empty
+        // console.log(this.newsArticles) // Is not empty
     }
 
     render() {
-        // const news = this.state.articles.map((article,index) => (
-            // <div key={index} className={`row news-line`}>
-            //     <a href={article.url}>{article.title}</a>
-            //     <p>{"Article by: " + article.author + ", " + article.source.name}</p>
-            // </div>
+        // console.log(this.newsArticles) 
+        // const news = this.newsArticles.map((article,index) => (
+        //     <div key={index} className={`row news-line`}>
+        //         <a href={article.url}>{article.title}</a>
+        //         <p>{"Article by: " + article.author + ", " + article.source.name}</p>
+        //     </div>
         // ));
 
         return(
@@ -49,10 +53,6 @@ class News extends Component {
                     </div>
                     <div>
                         {/* {news} */}
-                        {/* <div className={`row news-line`}>
-                            <a href={this.state.articles[1].url}>{this.state.articles[1].title}</a>
-                            <p>{"Article by: " + this.state.articles[1].author + ", " + this.state.articles[1].source.name}</p>
-                        </div> */}
                     </div>
                     <div className={`row news-footer`}>
                         <a className={`news-a`}>Show more</a>
