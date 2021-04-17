@@ -13,12 +13,16 @@ class Register extends Component {
             confirmedPassword: '',
             handle: '',
             email: '',
-            message: this.defaultMessage
+            message: this.defaultMessage,
+            usernameStyle: 'register-default',
+            handleStyle: 'register-default',
+            passwordStyle: 'register-default',
+            confirmPasswordStyle: 'register-default',
+            emailStyle: 'register-default'
         }
         this.handleRegisterClick = this.handleRegisterClick.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handleHandleChange = this.handleHandleChange.bind(this);
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleConfirmPasswordChange = this.handleConfirmPasswordChange.bind(this);
         this.verifyUniqueness = this.verifyUniqueness.bind(this);
@@ -56,11 +60,7 @@ class Register extends Component {
         this.setState({message: message})
     }
 
-    verifyUniqueness(key, value) {
-        if (!value || value.length < 3) {
-            return;
-        }
-        
+    async verifyUniqueness(key, value) {
         const params = {
             [key]: value
         };
@@ -70,24 +70,34 @@ class Register extends Component {
             body: JSON.stringify(params)
         };
 
-        fetch("http://localhost:4000/verifyUnique", options)
+        return await fetch("http://localhost:4000/verifyUnique", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
-
+                return res.unique;
             });
     }
 
-    handleUsernameChange(event) {
-        const username = event.target.value;
-        this.setState({username: username, message: this.defaultMessage});
-        this.verifyUniqueness('username', username);
-    }
+    async handleChange(event) {
+        const type = event.target.dataset.type;
+        const style = type + "Style"
+        const identifier = event.target.value;
+        this.setState({[type]: identifier, message: this.defaultMessage});
 
-    handleHandleChange(event) {
-        const handle = event.target.value;
-        this.setState({handle: handle, message: this.defaultMessage});
-        this.verifyUniqueness('handle', handle);
+        if (!identifier) {
+            this.setState({[style]: 'register-default'});
+            return;
+        }
+
+        const unique = await this.verifyUniqueness(type, identifier);
+        const validator = new RegExp(/^[a-zA-Z0-9]+$/);
+
+        if (unique && validator.test(identifier)) {
+            console.log(this.state)
+            this.setState({[style]: 'register-valid'});
+            console.log(this.state)
+        } else {
+            this.setState({[style]: 'register-invalid'});
+        }
     }
 
     handlePasswordChange(event) {
@@ -108,11 +118,16 @@ class Register extends Component {
             // TODO refactor to handle enter press
             <div className={`register`}>
                 <h2>{this.state.message} </h2>
-                <input placeholder="Username" type="text" onChange={this.handleUsernameChange} />
-                <input placeholder="Password" type="password" onChange={this.handlePasswordChange} />
-                <input placeholder="Confirm Password" type="password" onChange={this.handleConfirmPasswordChange} />
-                <input placeholder="Handle" type="text" onChange={this.handleHandleChange} />
-                <input placeholder="Email" type="email" onChange={this.handleEmailChange} />
+                <input  placeholder="Username" type="text" data-type="username"
+                        className={this.state.usernameStyle} onChange={this.handleChange} />
+                <input  placeholder="Password" type="password"
+                        className={this.state.passwordStyle} onChange={this.handlePasswordChange} />
+                <input  placeholder="Confirm Password" type="password"
+                        className={this.state.confirmPasswordStyle} onChange={this.handleConfirmPasswordChange} />
+                <input  placeholder="Handle" type="text" data-type="handle"
+                        className={this.state.handleStyle} onChange={this.handleChange} />
+                <input  placeholder="Email" type="email"
+                        className={this.state.emailStyle} onChange={this.handleEmailChange} />
                 <button onClick={this.handleRegisterClick}>Register</button>
             </div>
         );

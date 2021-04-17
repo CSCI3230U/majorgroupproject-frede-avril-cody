@@ -8,3 +8,18 @@
     align-items: center;
     justify-content: center;
 }
+
+.register-default {
+    border: 2px solid hsla(0, 100%, 100%, 0);
+    outline: none;
+}
+
+.register-valid {
+    border: 2px solid hsl(120, 50%, 35%);
+    outline: none;
+}
+
+.register-invalid {
+    border: 2px solid hsl(0, 50%, 50%);
+    outline: none;
+}
