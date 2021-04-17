@@ -7,6 +7,7 @@ class News extends Component {
         this.state = {
             json: [],
             articles: [],
+            loaded: false,
         };
         this.showMore = this.showMore.bind(this);
     }
@@ -41,6 +42,8 @@ class News extends Component {
                     console.error("JSON data could not be accessed")
                 }
             });
+
+        this.setState({loaded: true});
             
     }
 
@@ -77,6 +80,7 @@ class News extends Component {
     }
 
     render() { 
+
         const news = this.state.articles.map((article,index) => (
             <div key={index} className={`row news-line news-side-padding`}>
                 <a className={`news-a`} target="_blank" href={article.url}>{article.title}</a>
