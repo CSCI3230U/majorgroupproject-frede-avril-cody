@@ -1,45 +1,113 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Fragment } from 'react';
+// import React, { Component, Fragment } from 'react';
+// import ReactDOM from 'react-dom';
 import Menu from './components/Menu.js'
 import Tweet from './components/Tweet.js'
 import Feed from './components/Feed.js'
 import Search from './components/Search.js'
 import News from './components/News.js'
+import Card from './components/Card.js'
+import Connect from './components/Connect.js'
+import Explore from './components/Explore.js'
+import Messages from './components/Messages.js'
+import Profile from './components/Profile.js'
+import Login from './components/Login.js'
+import Register from './components/Register.js'
 import NotFound from './components/NotFound.js'
 import FollowRecommendations from './components/FollowRecommendations.js'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect} from 'react-router-dom';
 import './styles/App.css';
 
 class App extends React.Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
+            loggedIn: false,
+            username: '',
+            handle: '',
+            register: false,
+            isConnectDisplayed: false
         }
+        this.handleLogin = this.handleLogin.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
+        this.handleRegisterClick = this.handleRegisterClick.bind(this);
+        this.connectDisplayed = this.connectDisplayed.bind(this);
     }
-    render(){
-        return (
-            <div className="App">
-                <div className="leftSide">
-                    <Menu />
-                </div>
-                <div className="center">
-                    <Router>
+
+    connectDisplayed(flag) {
+        this.setState({isConnectDisplayed: flag});
+    }
+
+    handleLogin(username, handle) {
+        this.setState({
+            loggedIn: true,
+            username: username,
+            handle: handle,
+            isConnectDisplayed: false
+        });
+    }
+
+    handleLogout() {
+        this.setState({
+            loggedIn: false
+        });
+    }
+
+    handleRegister(username, handle) {
+        this.setState({register: false});
+        this.handleLogin(username, handle)
+    }
+
+    handleRegisterClick() {
+        this.setState({register: true});
+    }
+
+    render() {
+        if (this.state.register) {
+            return <Register handleRegister={this.handleRegister} />;
+        } else if (!this.state.loggedIn) {
+            return <Login   handleLogin={this.handleLogin}
+                            handleRegister={this.handleRegisterClick}/>;
+        } else {
+            return (
+                <div className="App">
+                    <div className="leftSide">
+                        <Menu handle={this.state.handle} token={this.state.token}/>
+                        <Card   handle={this.state.handle}
+                                username={this.state.username}
+                                handleLogout={this.handleLogout}/>
+                    </div>
+                    <div className="center">
                         <Switch>
-                            <Route exact path="/" render={() => {}}/>
-                            <Route path="/News" component={News}/>
-                            <Route path="/Feed" render={() => "hello feed"}/>
+                            <Route exact path="/" render={() => {
+                                return <Redirect to="/feed"/>}} />
+                            <Route exact path="/connect" render={() => {
+                                return <Connect connectDisplayed={this.connectDisplayed}
+                                                username={this.state.username}/>}}/>
+                            <Route exact path="/explore" component={Explore}/>
+                            <Route exact path="/messages" component={Messages}/>
+                            <Route exact path="/profile" component={Profile}/>
+
+                            <Route exact path="/feed" render={() =>
+                                <Fragment>
+                                    <Tweet username={this.state.username} />
+                                    <Feed username={this.state.username} />
+                                </Fragment>
+                            }/>
+
                             <Route component={NotFound} />
                         </Switch>
-                    </Router>
-                </div>
+                    </div>
 
-                <div className="rightSide">
-                    <Search />
-                    <News />
-                    <FollowRecommendations />
+                    <div className="rightSide">
+                        <Search />
+                        <News />
+                        {!this.state.isConnectDisplayed && <FollowRecommendations username={this.state.username} />}
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 

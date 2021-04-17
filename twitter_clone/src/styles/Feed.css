@@ -1,7 +1,9 @@
 .feed_feed {
      border-left: 1px solid #ececec;
      border-right: 1px solid #ececec;
-     height: 100%;
+     height: 70%;
+     /* The height and scrolling of this will require some figuring out  */
+     border: 1px solid blue;
 }
 
 .feed_post{

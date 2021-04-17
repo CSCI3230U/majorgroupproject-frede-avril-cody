@@ -1,5 +1,6 @@
-.menu {
+.card {
     width: 100%;
     padding: 0.5rem;
+    border-radius: 100rem;
     background-color: #d0d0d0;
 }
