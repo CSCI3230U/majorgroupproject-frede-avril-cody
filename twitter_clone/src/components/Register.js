@@ -21,6 +21,7 @@ class Register extends Component {
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleConfirmPasswordChange = this.handleConfirmPasswordChange.bind(this);
+        this.verifyUniqueness = this.verifyUniqueness.bind(this);
     }
 
     handleRegisterClick() {
@@ -49,15 +50,44 @@ class Register extends Component {
                     this.registerUnsuccessful(res.message);
                 }
             });
-
     }
 
     registerUnsuccessful(message) {
         this.setState({message: message})
     }
 
+    verifyUniqueness(key, value) {
+        if (!value || value.length < 3) {
+            return;
+        }
+        
+        const params = {
+            [key]: value
+        };
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/verifyUnique", options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+
+            });
+    }
+
     handleUsernameChange(event) {
-        this.setState({username: event.target.value, message: this.defaultMessage});
+        const username = event.target.value;
+        this.setState({username: username, message: this.defaultMessage});
+        this.verifyUniqueness('username', username);
+    }
+
+    handleHandleChange(event) {
+        const handle = event.target.value;
+        this.setState({handle: handle, message: this.defaultMessage});
+        this.verifyUniqueness('handle', handle);
     }
 
     handlePasswordChange(event) {
@@ -72,9 +102,6 @@ class Register extends Component {
         this.setState({email: event.target.value, message: this.defaultMessage});
     }
 
-    handleHandleChange(event) {
-        this.setState({handle: event.target.value, message: this.defaultMessage});
-    }
 
     render() {
         return(

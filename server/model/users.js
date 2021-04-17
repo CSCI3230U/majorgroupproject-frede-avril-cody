@@ -67,6 +67,33 @@ function valid(identifier) {
     return validator.test(identifier);
 }
 
+function verifyUniqueIdentifier(req, res) {
+    let type = '';
+    let identifier = '';
+    if (req.username) {
+        type = 'username';
+        identifier = req.username;
+    } else if (req.handle) {
+        type = 'handle';
+        identifier = `@${req.handle}`;
+    } else {
+        /*  this entire routine is for client convenience, we are not concerned
+            with the case where a modified client sends nonsense requests
+            Our concern is to not query a non-existent column in our table */
+        res.json({unique: true});
+        return;
+    }
+
+    db.data.get(`SELECT rowid FROM users WHERE ${type} =\
+                '${identifier}'`, function(err, user) {
+        if (user) {
+            res.json({unique: false});
+        } else {
+            res.json({unique: true});
+        }
+    });
+}
+
 function registerNewUser(session, req, res) {
     const username = req.username;
     const password = req.password;
@@ -104,6 +131,7 @@ function registerNewUser(session, req, res) {
     });
 }
 
+module.exports.verifyUnique = verifyUniqueIdentifier;
 module.exports.login = handleLogin;
 module.exports.register = registerNewUser;
 module.exports.getFollowRecommendations = findFollowRecommendations;

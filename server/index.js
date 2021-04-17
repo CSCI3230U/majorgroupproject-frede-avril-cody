@@ -53,6 +53,11 @@ app.post('/populateFeed', (request, response) => {
     tweets.getFeed(request.body.username, response);
 });
 
+app.post('/verifyUnique', (request, response) => {
+    console.log(request.body);
+    users.verifyUnique(request.body, response);
+});
+
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), function() {
     console.log(`Server listening on port ${app.get('port')}`)
