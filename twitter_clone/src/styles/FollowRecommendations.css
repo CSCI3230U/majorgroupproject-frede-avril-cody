@@ -31,3 +31,11 @@
     text-decoration-color: blue;
     text-decoration: underline;
 }
+
+.follow-recs-follow{
+    margin-top: 0.5rem;
+    height: 2.5rem;
+    width: 5rem;
+    border: 1px solid rgb(54, 164, 207);
+    color:rgb(54, 164, 207);
+}

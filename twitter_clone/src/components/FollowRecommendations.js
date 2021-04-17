@@ -63,7 +63,7 @@ class FollowRecommendations extends Component {
                     <h6>{i.username}</h6>
                     <p>{i.handle}</p>
                 </div>
-                <button data-key={i.rowid} onClick={this.handleFollow}>Follow</button>
+                <button data-key={i.rowid} onClick={this.handleFollow} className={`follow-recs-follow rounded-pill`}>Follow</button>
             </div>
         ));
         return(
