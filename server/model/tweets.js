@@ -17,7 +17,12 @@ function getFeed(username, res) {
         if (err) {
             console.error("There was an error getting the feed");
         } else {
-            returnFeed(user.rowid, res);
+            if (user) {
+                returnFeed(user.rowid, res);
+            } else {
+                // if user just registered, user is undefined, but they will have no follows = no feed
+                res.json({});
+            }
         }
     });
 }
@@ -33,5 +38,26 @@ function returnFeed(userId, res) {
     });
 }
 
+function insert(content, userId, username) {
+    db.data.run(`INSERT INTO tweets (senderId, sender, message) VALUES (?, ?, ?)`,
+                [userId, username, content]);
+}
+
+function tweet(req) {
+    const username = req.username;
+    const content = req.content;
+    if (!content || content.length > 140) {
+        return;
+    }
+    db.data.get(`SELECT rowid FROM users WHERE username = '${username}'`, function(err, user) {
+        if (err || !user) {
+            console.error("The sender wasn't found in the database");
+        } else {
+            insert(content, user.rowid, username);
+        }
+    });
+}
+
+module.exports.tweet = tweet;
 module.exports.getAll = getAll;
 module.exports.getFeed = getFeed;

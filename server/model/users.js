@@ -1,15 +1,23 @@
 const db = require('./database.js');
+const emailValidator = require('validator');
+const bcrypt = require('bcrypt');
 
 function handleLogin(session, req, res) {
-    db.data.get(`SELECT username, handle FROM users WHERE username = '${req.username}'
-                AND password = '${req.password}'`, function (err, user) {
+    db.data.get(`SELECT username, handle, password FROM users WHERE username\
+                = '${req.username}'`, async function (err, user) {
         if (err) {
             console.error("There was an error retrieving data: " + err);
         } else {
             if (user) {
-                session.username = user.username;
-                user.authenticated = true;
-                res.json(user)
+                const authenticated = await bcrypt.compare(req.password, user.password);
+                if (authenticated) {
+                    session.username = user.username;
+                    delete user.password;
+                    user.authenticated = true;
+                    res.json(user);
+                } else {
+                    res.json({authenticated: false});
+                }
             } else {
                 res.json({authenticated: false});
             }
@@ -25,28 +33,18 @@ function findFollowRecommendations(session, req, res) {
         if (err) {
             console.error("Couldn't get the rowid for follow recs");
         } else {
-            if (user.rowid) {
-                retrieveRandomProfiles(user.rowid, req.profiles, res);
+            if (user) {
+                if (user.rowid) {
+                    retrieveRandomProfiles(user.rowid, req.profiles, res);
+                } else {
+                    console.error("That user wasn't found (follow recs)");
+                    return;
+                }
             } else {
-                console.error("That user wasn't found (follow recs)");
-                return;
+                res.json([]);
             }
         }
     });
-    // .all(`SELECT rowid, username, handle FROM users ORDER BY RANDOM() LIMIT ${numProfiles}`, function(err, users) {
-    //     console.log(rowid);
-    //     if (err) {
-    //         console.error("Error retrieving users to recommend");
-    //     } else {
-    //         const data = [];
-    //         users.forEach(function(user) {
-    //             data.push(user);
-    //         });
-    //         console.log("sending follow recommendations");
-    //         console.log(data);
-    //         res.json(data);
-    //     }
-    // });
 }
 
 function retrieveRandomProfiles(userId, numProfiles, res) {
@@ -68,5 +66,87 @@ function retrieveRandomProfiles(userId, numProfiles, res) {
     });
 }
 
+function denyRegistration(message) {
+    return {registered: false, message: message};
+}
+
+function valid(identifier) {
+    const validator = new RegExp(/^[a-zA-Z0-9]+$/);
+    return validator.test(identifier);
+}
+
+function verifyUniqueIdentifier(req, res) {
+    let type = '';
+    let identifier = '';
+    if (req.username) {
+        type = 'username';
+        identifier = req.username;
+    } else if (req.handle) {
+        type = 'handle';
+        identifier = `@${req.handle}`;
+    } else {
+        /*  this entire routine is for client convenience, we are not concerned
+            with the case where a modified client sends nonsense requests
+            Our concern is to not query a non-existent column in our table */
+        res.json({unique: true});
+        return;
+    }
+
+    db.data.get(`SELECT rowid FROM users WHERE ${type} =\
+                '${identifier}'`, function(err, user) {
+        if (user) {
+            res.json({unique: false});
+        } else {
+            res.json({unique: true});
+        }
+    });
+}
+
+function registerNewUser(session, req, res) {
+    const username = req.username;
+    const password = req.password;
+    let handle = req.handle;
+    const email = req.email;
+
+    if (!valid(username)) {
+        res.json(denyRegistration("Invalid username"));
+        return;
+    } else if (!valid(handle)) {
+        res.json(denyRegistration("Invalid handle"));
+        return;
+    } else if (!emailValidator.isEmail(email)) {
+        res.json(denyRegistration("Invalid email"));
+        return;
+    }
+
+    handle = `@${handle}`;
+    // TODO have people follow themselves - simplifies application logic considerably
+    // eg for FollowRecommendations and Feed
+
+    db.data.all(`SELECT username FROM users WHERE username = '${username}' OR\
+                    handle = '${handle}'`, async function(err, users) {
+        if (err) {
+            console.error("Error retrieving users for registration validation");
+        } else {
+            if (users.length > 0) {
+                if (users[0].username == username) {
+                    res.json(denyRegistration("That username is already taken!"));
+                } else {
+                    res.json(denyRegistration("That handle is already in use."));
+                }
+            } else {
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(password, salt);
+                db.data.run(`INSERT INTO users VALUES (?, ?, ?, ?)`,
+                            [username, hashedPassword, handle, email]);
+                res.json({registered: true, username: username, message: "Registration success!"});
+            }
+        }
+        // db.data.all()
+    });
+}
+
+module.exports.verifyUnique = verifyUniqueIdentifier;
 module.exports.login = handleLogin;
+module.exports.register = registerNewUser;
 module.exports.getFollowRecommendations = findFollowRecommendations;

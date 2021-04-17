@@ -12,6 +12,7 @@ import Explore from './components/Explore.js'
 import Messages from './components/Messages.js'
 import Profile from './components/Profile.js'
 import Login from './components/Login.js'
+import Register from './components/Register.js'
 import NotFound from './components/NotFound.js'
 import FollowRecommendations from './components/FollowRecommendations.js'
 import { Route, Switch, Redirect} from 'react-router-dom';
@@ -24,10 +25,13 @@ class App extends React.Component {
             loggedIn: false,
             username: '',
             handle: '',
+            register: false,
             isConnectDisplayed: false
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
+        this.handleRegisterClick = this.handleRegisterClick.bind(this);
         this.connectDisplayed = this.connectDisplayed.bind(this);
     }
 
@@ -50,9 +54,21 @@ class App extends React.Component {
         });
     }
 
+    handleRegister(username, handle) {
+        this.setState({register: false});
+        this.handleLogin(username, handle)
+    }
+
+    handleRegisterClick() {
+        this.setState({register: true});
+    }
+
     render() {
-        if (!this.state.loggedIn) {
-            return <Login handleLogin={this.handleLogin} />;
+        if (this.state.register) {
+            return <Register handleRegister={this.handleRegister} />;
+        } else if (!this.state.loggedIn) {
+            return <Login   handleLogin={this.handleLogin}
+                            handleRegister={this.handleRegisterClick}/>;
         } else {
             return (
                 <div className="App">
@@ -67,7 +83,7 @@ class App extends React.Component {
                             <Route exact path="/" render={() => {
                                 return <Redirect to="/feed"/>}} />
                             <Route exact path="/connect" render={() => {
-                                return <Connect connectDisplayed={this.connectDisplayed} 
+                                return <Connect connectDisplayed={this.connectDisplayed}
                                                 username={this.state.username}/>}}/>
                             <Route exact path="/explore" component={Explore}/>
                             <Route exact path="/messages" component={Messages}/>

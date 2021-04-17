@@ -9,10 +9,42 @@ import {faChartBar} from '@fortawesome/free-regular-svg-icons';
 import "../styles/Tweet.css";
 
 class Tweet extends Component{
-    // constructor(props) {
-    //      super(props);
-    // }
-    render(){
+    constructor(props) {
+        super(props);
+        this.state = {
+            content: ''
+        }
+        this.handleText = this.handleText.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleText(event) {
+        this.setState({content: event.target.value});
+    }
+
+    handleClick(event) {
+        const params = {
+            username: this.props.username,
+            content: this.state.content
+        };
+        if (!params.content || params.content.length > 140) {
+            console.log("empty or too long");
+            return;
+        }
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/tweet", options)
+            .then(res => res.json())
+            .then(res => {
+                // refresh feed
+            });
+    }
+
+    render() {
         return(
             <>
                 <div className={`tweet_header container tweet_body`}>
@@ -33,7 +65,8 @@ class Tweet extends Component{
                         <div className={`col`}>
                             <div className="tweet_tweetContent">
                                 <input type="text" name="tweet" placeholder="What's happening?"
-                                        className={'tweet_tweetInput tweet_form-control'}></input>
+                                        className={'tweet_tweetInput tweet_form-control'}
+                                        onChange={this.handleText} />
                             </div>
                             <div  className={`row`}>
                                 <div className="col extras">
@@ -44,7 +77,8 @@ class Tweet extends Component{
                                     <FontAwesomeIcon className={`tweet_tweetExtra fa-lg`} icon={faCalendarAlt}/>
                                 </div>
                                 <div className="col-3">
-                                    <button className={'rounded-pill  tweet_submit'}>Tweet</button>
+                                    <button className={'rounded-pill  tweet_submit'}
+                                            onClick={this.handleClick}>Tweet</button>
                                 </div>
                             </div>
                         </div>
