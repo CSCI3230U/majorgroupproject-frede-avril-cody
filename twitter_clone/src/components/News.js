@@ -41,7 +41,7 @@ class News extends Component {
     render() { 
         const news = this.state.articles.map((article,index) => (
             <div key={index} className={`row news-line`}>
-                <a target="_blank" href={article.url}>{article.title}</a>
+                <a className={`news-a`} target="_blank" href={article.url}>{article.title}</a>
                 <p>{"Article by: " + article.author + ", " + article.source.name}</p>
             </div>
         ));
@@ -56,7 +56,7 @@ class News extends Component {
                         {news}
                     </div>
                     <div className={`row news-footer`}>
-                        <a className={`news-a`}>Show more</a>
+                        <a className={`news-showMore`}>Show more</a>
                     </div>
                 </div>
             </div>

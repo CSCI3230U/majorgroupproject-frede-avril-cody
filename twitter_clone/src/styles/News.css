@@ -15,8 +15,13 @@
     border-bottom: 1px solid hsl(0, 0%, 86%);
 }
 
-.news-a {
+.news-showMore {
     text-decoration-color: blue;
     text-decoration: underline;
+}
+
+.news-a{
+    color: black;
+    font-weight: bold;
 }
 
