@@ -60,8 +60,13 @@ class FollowRecommendations extends Component {
         ));
         return(
             <div className={`follow-recs`}>
-                <button onClick={this.handleRefresh}>Refresh</button>
-                <ul>{recommendations}</ul>
+                <div className={`col`}>
+                    <div className={`row follow-recs-line`}>
+                        <h3>Follow Recommendations</h3>
+                    </div>
+                    <ul>{recommendations}</ul>
+                    <button onClick={this.handleRefresh}>Refresh</button>
+                </div>
             </div>
         );
     };
