@@ -13,6 +13,7 @@ class Feed extends Component {
             posts: [],
             loaded: false,
         };
+        this.getDateDisplay = this.getDateDisplay.bind(this);
     }
 
     componentDidMount() {
@@ -30,6 +31,28 @@ class Feed extends Component {
                 console.log(res);
                 this.setState({posts: res});
             });
+    }
+    
+
+    getDateDisplay(dateString){
+        let display = "";
+        let dateList = dateString.split(" ");
+        let calendar = dateList[0].split("-");
+        let time = dateList[1].split(":");
+
+        let today = new Date();
+
+        // if the tweet was done today
+        if (calendar[2] == String(today.getDate())) {
+            // if the tweet was posted in the same hour
+            if (time[0] == String(today.getHours())){
+                return display;
+            } else { // if the tweet was poster earlier than an hour ago
+                return display;
+            }
+        } else { // if the tweet wasn't posted today
+            return display;
+        }   
     }
 
     render() {
