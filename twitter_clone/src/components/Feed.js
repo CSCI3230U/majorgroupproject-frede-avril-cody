@@ -13,7 +13,8 @@ class Feed extends Component {
             posts: [],
             loaded: false,
         };
-        this.getDateDisplay = this.getDateDisplay.bind(this);
+        this.getTimeDisplay = this.getTimeDisplay.bind(this);
+        this.formatResponseTime = this.formatResponseTime.bind(this);
     }
 
     componentDidMount() {
@@ -31,11 +32,25 @@ class Feed extends Component {
                 console.log(res);
                 this.setState({posts: res});
             });
+
     }
     
+    formatResponseTime(){
+        // let retrieved = ;
+        let formatted = this.state.posts;
 
-    getDateDisplay(dateString){
-        let display = "";
+        formatted.forEach(post => {
+            let formattedTime = this.getTimeDisplay(post.time);
+            console.log("hey");
+            post["time"] = formattedTime;
+        });
+
+        this.setState({posts: formatted});
+        console.log(formatted);
+    }
+
+    getTimeDisplay(dateString){
+        let display = "3h";
         let dateList = dateString.split(" ");
         let calendar = dateList[0].split("-");
         let time = dateList[1].split(":");
@@ -43,9 +58,9 @@ class Feed extends Component {
         let today = new Date();
 
         // if the tweet was done today
-        if (calendar[2] == String(today.getDate())) {
+        if (calendar[2] === String(today.getDate())) {
             // if the tweet was posted in the same hour
-            if (time[0] == String(today.getHours())){
+            if (time[0] === String(today.getHours())){
                 return display;
             } else { // if the tweet was poster earlier than an hour ago
                 return display;
@@ -56,6 +71,13 @@ class Feed extends Component {
     }
 
     render() {
+        const allPosts = this.state.posts;
+
+        const noPosts = (   
+            <div className={`feed_centered`}>
+                <h4>Follow some people!</h4>
+            </div>);
+
         const posts = this.state.posts.map((post,index) => (
             <div key={index} className={`post`}>
                 <div className={`container`}>
@@ -64,8 +86,8 @@ class Feed extends Component {
                 <div className={`feed_post`}>
                     <div className={`row`}>
                         <div className={`col-2`}>
-                            <div className="feed_profilePic">
-
+                            <div className="feed-profilePic-container">
+                                <img src={`images/profile/${post.senderId}.png`} alt="profile" className={`feed-profilePic`}></img>
                             </div>
                         </div>
                         <div className={`col`}>
@@ -78,16 +100,16 @@ class Feed extends Component {
                     <br />
                     <div className={``}>
                         <div  className={`row`}>
-                            <div className={`col inline feed_centered`}>
+                            <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faComment} size="1x" />
                             </div>
-                            <div className={`col inline feed_centered`}>
+                            <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faImage} size="1x" />
                             </div>
-                            <div className={`col inline feed_centered`}>
+                            <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faHeart} size="1x" />
                             </div>
-                            <div className={`col inline feed_centered`}>
+                            <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faShareSquare} size="1x" />
                             </div>
                         </div>
@@ -97,8 +119,9 @@ class Feed extends Component {
         ));
 
         return(
+            
             <div className={`feed_feed`}>
-                {posts}
+                {allPosts.length > 0 ? posts : noPosts}
             </div>
         );
     };

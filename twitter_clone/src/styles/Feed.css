@@ -20,12 +20,24 @@
      background-color: #e2e2e28a;
 }
 
-.feed_profilePic{
+.feed-profilePic-container{
+     padding-left: 1rem;
+}
 
+.feed-profilePic{
+     width: 50px;
+     height: auto;
+     border-radius: 50%;
 }
 
 .feed_postActionIcon {
      color: #858585;
+}
+
+.feed_icon:hover {
+     background-color: #a2cee991;
+     border-radius: 100%;
+     width: 2rem;
 }
 
 .feed_centered{
