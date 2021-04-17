@@ -78,7 +78,7 @@ class Feed extends Component {
                 <h4>Follow some people!</h4>
             </div>);
 
-        const posts = this.state.posts.map((post,index) => (
+        const posts = this.state.posts.reverse().map((post,index) => (
             <div key={index} className={`post`}>
                 <div className={`container`}>
 
