@@ -45,23 +45,23 @@ class Tweet extends Component{
             });
     }
 
-    componentDidMount(){
-        const params = {
-            username: this.props.username
-        };
+    // componentDidMount(){
+    //     const params = {
+    //         username: this.props.username
+    //     };
 
-        const options = {
-            method: 'POST',
-            body: JSON.stringify(params)
-        };
+    //     const options = {
+    //         method: 'POST',
+    //         body: JSON.stringify(params)
+    //     };
 
-        fetch("http://localhost:4000/whoToFollow", options)
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                // this.setState({: res});
-            });
-    }
+    //     fetch("http://localhost:4000/", options)
+    //         .then(res => res.json())
+    //         .then(res => {
+    //             console.log(res);
+    //             // this.setState({: res});
+    //         });
+    // }
 
     render() {
         return(
