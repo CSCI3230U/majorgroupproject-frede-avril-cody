@@ -22,6 +22,9 @@
 }
 
 .news-showMore {
+    background-color: hsl(0, 0%, 95%);
+    border: none;
+    color: blue;
     text-decoration-color: blue;
     text-decoration: underline;
 }

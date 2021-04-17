@@ -66,7 +66,7 @@ class FollowRecommendations extends Component {
                     </div>
                     <ul>{recommendations}</ul>
                     <div className={`row follow-recs-footer follow-recs-side-padding`}>
-                        <a className={`follow-recs-refresh`} onClick={this.handleRefresh}>Refresh</a>
+                        <button className={`follow-recs-refresh`} onClick={this.handleRefresh}>Refresh</button>
                     </div>
                 </div>
             </div>

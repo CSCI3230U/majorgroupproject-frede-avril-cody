@@ -83,7 +83,7 @@ class News extends Component {
 
         const news = this.state.articles.map((article,index) => (
             <div key={index} className={`row news-line news-side-padding news-articles-hover-effect`}>
-                <a className={`news-a`} target="_blank" href={article.url}>{article.title}</a>
+                <a className={`news-a`} target="_blank" rel="noreferrer" href={article.url}>{article.title}</a>
                 <p>{article.author}</p>
             </div>
         ));
@@ -98,7 +98,7 @@ class News extends Component {
                         {news}
                     </div>
                     <div className={`row news-footer news-side-padding`}>
-                        <a className={`news-showMore`} onClick={this.showMore}>Show more</a>
+                        <button className={`news-showMore`} onClick={this.showMore}>Show more</button>
                     </div>
                 </div>
             </div>
