@@ -5,6 +5,7 @@ class News extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            json: [],
             articles: []
         };
         this.newsArticles = [];
@@ -15,35 +16,46 @@ class News extends Component {
         // This link searches for Twitter related articles from 2021 sorted by popularity
         fetch("https://newsapi.org/v2/everything?q=Twitter&from=2021&sortBy=popularity&apiKey=345c48473bcf47f98784d6cd773dd8fa")
             .then(response => response.json())
+            // .then(response => this.setState({json: response.articles}))
             .then(json => {
+                let selectedArticles = [];
+
                 if (json.status === "ok"){
-                    for (let i = 0; i < 6; i++) {
-                        let index = Math.floor(Math.random() * 10000);
-                        // Make sure the same article doesn't appear twice
-                        while (articlesFromJSON.includes(json.articles[index])) {
-                            index = Math.floor(Math.random() * 10000);
+                    this.setState({json: json.articles})
+                    // let index = Math.floor(Math.random() * 10000);
+                    let i = 0;
+                    this.state.json.forEach(article => {
+                        if (i < 6){
+                            selectedArticles.push(article);
                         }
-                        articlesFromJSON.push(json.articles[index]);
+                        i++;
+                        // index = Math.floor(Math.random() * 10000);
+                    });
+                    // for (let i = 0; i < 6; i++) {
+                    //     let index = Math.floor(Math.random() * 10000);
+                    //     // Make sure the same article doesn't appear twice
+                    //     while (articlesFromJSON.includes(json.articles[index])) {
+                    //         index = Math.floor(Math.random() * 10000);
+                    //     }
+                    //     articlesFromJSON.push(json.articles[index]);
                         
-                    }
+                    // }
+                    this.setState({articles: selectedArticles});
                 } else {
                     console.error("JSON data could not be accessed")
                 }
             });
-            this.setState({articles: articlesFromJSON});
-            this.newsArticles = articlesFromJSON;
-        // console.log(this.state.articles); // Is empty
-        // console.log(this.newsArticles) // Is not empty
+            
     }
 
     render() {
         // console.log(this.newsArticles) 
-        // const news = this.newsArticles.map((article,index) => (
-        //     <div key={index} className={`row news-line`}>
-        //         <a href={article.url}>{article.title}</a>
-        //         <p>{"Article by: " + article.author + ", " + article.source.name}</p>
-        //     </div>
-        // ));
+        const news = this.state.articles.map((article,index) => (
+            <div key={index} className={`row news-line`}>
+                <a href={article.url}>{article.title}</a>
+                <p>{"Article by: " + article.author + ", " + article.source.name}</p>
+            </div>
+        ));
 
         return(
             <div className={`news container`}>
@@ -52,7 +64,7 @@ class News extends Component {
                         <h3>News</h3>
                     </div>
                     <div>
-                        {/* {news} */}
+                        {news}
                     </div>
                     <div className={`row news-footer`}>
                         <a className={`news-a`}>Show more</a>
