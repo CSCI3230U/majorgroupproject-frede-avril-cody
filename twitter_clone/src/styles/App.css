@@ -7,7 +7,7 @@
 }
 
 .leftSide {
-    width: 20rem;
+    width: 15rem;
 }
 
 .center {
@@ -20,6 +20,7 @@
 }
 
 .leftSide {
+    margin-right: 0.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

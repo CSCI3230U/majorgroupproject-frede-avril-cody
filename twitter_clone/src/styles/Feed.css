@@ -33,12 +33,12 @@
 .feed_postActionIcon {
      color: #858585;
 }
-
+/* 
 .feed_icon:hover {
      background-color: #a2cee991;
      border-radius: 100%;
      width: 2rem;
-}
+} */
 
 .feed_centered{
      text-align:center;
