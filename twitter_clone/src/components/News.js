@@ -6,40 +6,30 @@ class News extends Component {
         super(props);
         this.state = {
             json: [],
-            articles: []
+            articles: [],
+            topics :["Twitter", "Facebook", "News", "Canada", "Entertainment"],
         };
         this.newsArticles = [];
     }
     
     componentDidMount() {
-        let articlesFromJSON = [];
+        let topicIndex = Math.floor(Math.random() * this.state.topics.length);
         // This link searches for Twitter related articles from 2021 sorted by popularity
-        fetch("https://newsapi.org/v2/everything?q=Twitter&from=2021&sortBy=popularity&apiKey=345c48473bcf47f98784d6cd773dd8fa")
+        fetch(`https://newsapi.org/v2/everything?q=${this.state.topics[topicIndex]}&from=2021&sortBy=popularity&apiKey=345c48473bcf47f98784d6cd773dd8fa`)
             .then(response => response.json())
-            // .then(response => this.setState({json: response.articles}))
             .then(json => {
                 let selectedArticles = [];
 
                 if (json.status === "ok"){
                     this.setState({json: json.articles})
-                    // let index = Math.floor(Math.random() * 10000);
                     let i = 0;
                     this.state.json.forEach(article => {
-                        if (i < 6){
+                        if (i < 5){
                             selectedArticles.push(article);
                         }
                         i++;
-                        // index = Math.floor(Math.random() * 10000);
                     });
-                    // for (let i = 0; i < 6; i++) {
-                    //     let index = Math.floor(Math.random() * 10000);
-                    //     // Make sure the same article doesn't appear twice
-                    //     while (articlesFromJSON.includes(json.articles[index])) {
-                    //         index = Math.floor(Math.random() * 10000);
-                    //     }
-                    //     articlesFromJSON.push(json.articles[index]);
-                        
-                    // }
+
                     this.setState({articles: selectedArticles});
                 } else {
                     console.error("JSON data could not be accessed")
@@ -48,11 +38,10 @@ class News extends Component {
             
     }
 
-    render() {
-        // console.log(this.newsArticles) 
+    render() { 
         const news = this.state.articles.map((article,index) => (
             <div key={index} className={`row news-line`}>
-                <a href={article.url}>{article.title}</a>
+                <a target="_blank" href={article.url}>{article.title}</a>
                 <p>{"Article by: " + article.author + ", " + article.source.name}</p>
             </div>
         ));
@@ -63,7 +52,7 @@ class News extends Component {
                     <div className={`row news-line`}>
                         <h3>News</h3>
                     </div>
-                    <div>
+                    <div className={`news-articles`}>
                         {news}
                     </div>
                     <div className={`row news-footer`}>
