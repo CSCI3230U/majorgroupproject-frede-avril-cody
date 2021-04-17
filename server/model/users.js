@@ -33,20 +33,6 @@ function findFollowRecommendations(session, req, res) {
             }
         }
     });
-    // .all(`SELECT rowid, username, handle FROM users ORDER BY RANDOM() LIMIT ${numProfiles}`, function(err, users) {
-    //     console.log(rowid);
-    //     if (err) {
-    //         console.error("Error retrieving users to recommend");
-    //     } else {
-    //         const data = [];
-    //         users.forEach(function(user) {
-    //             data.push(user);
-    //         });
-    //         console.log("sending follow recommendations");
-    //         console.log(data);
-    //         res.json(data);
-    //     }
-    // });
 }
 
 function retrieveRandomProfiles(userId, numProfiles, res) {
@@ -68,5 +54,29 @@ function retrieveRandomProfiles(userId, numProfiles, res) {
     });
 }
 
+function registerNewUser(session, req, res) {
+    const username = req.username;
+    const password = req.password;
+    const handle = `@${req.handle}`;
+    const email = req.email;
+
+    db.data.all(`SELECT * FROM users WHERE username = '${username}' OR\
+                    handle = '${handle}'`, function(err, users) {
+        if (err) {
+            console.error("Error retrieving users for registration validation");
+        } else {
+            if (users.length > 0) {
+                console.log("found a match");
+                console.log(users)
+            } else {
+                console.log("inserted");
+            }
+        }
+        res.json({registered: false, message: "in dev"});
+        // db.data.all(`INSERT INTO users VALUES (?, ?, ?, ?)`, [])
+    });
+}
+
 module.exports.login = handleLogin;
+module.exports.register = registerNewUser;
 module.exports.getFollowRecommendations = findFollowRecommendations;

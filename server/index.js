@@ -32,6 +32,11 @@ app.post('/login', (request, response) => {
     users.login(request.session, request.body, response);
 });
 
+app.post('/register', (request, response) => {
+    console.log(request.body);
+    users.register(request.session, request.body, response);
+});
+
 app.post('/whoToFollow', (request, response) => {
     console.log(request.body);
     users.getFollowRecommendations(request.session, request.body, response);

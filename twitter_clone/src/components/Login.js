@@ -22,6 +22,7 @@ class Login extends Component {
             password: this.state.password
         };
         if (!params.username || !params.password) {
+            // todo could implement a handler to update the message appropriately
             return;
         }
         const options = {
@@ -62,6 +63,7 @@ class Login extends Component {
                 <input placeholder="Username" type="text" onChange={this.handleUsernameChange} />
                 <input placeholder="Password" type="password" onChange={this.handlePasswordChange} />
                 <button onClick={this.handleLoginClick}>Login</button>
+                <button onClick={this.props.handleRegister}>Register</button>
             </div>
         );
     };
