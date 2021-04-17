@@ -47,6 +47,8 @@ class Feed extends Component {
                         </div>
                         <div className={`col`}>
                             <div className="feed_postContent">
+                                <p>{post.sender + " · " + post.time}</p>
+                                <p>{post.message}</p>
                             </div>
                         </div>
                     </div>
