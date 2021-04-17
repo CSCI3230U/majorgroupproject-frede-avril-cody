@@ -5,11 +5,26 @@
     align-items: center;
     margin: 1rem 0;
     padding: 1rem;
+    padding-top: 0.5rem;
     background: hsl(0, 0%, 95%);
     border: 1px solid transparent;
 }
 
+.follow-recs-side-padding{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .follow-recs-line {
-    width: 100%;
+    padding-top: 0.5rem;
     border-bottom: 1px solid hsl(0, 0%, 86%);
+}
+
+.follow-recs-footer {
+    padding-top: 0.5rem;
+}
+
+.follow-recs-refresh {
+    text-decoration-color: blue;
+    text-decoration: underline;
 }
