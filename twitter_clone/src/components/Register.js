@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import '../styles/Register.css';
-
+const validator = require('validator');
 
 class Register extends Component {
     defaultMessage = 'Please complete this form to register a new account';
@@ -26,6 +26,9 @@ class Register extends Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleConfirmPasswordChange = this.handleConfirmPasswordChange.bind(this);
         this.verifyUniqueness = this.verifyUniqueness.bind(this);
+        this.validName = this.validName.bind(this);
+        this.validPassword = this.validPassword.bind(this);
+        this.displayMessage = this.displayMessage.bind(this);
     }
 
     handleRegisterClick() {
@@ -35,10 +38,47 @@ class Register extends Component {
             handle: this.state.handle,
             email: this.state.email
         };
-        if (!params.username || !params.password || !params.email || !params.handle) {
-            // implement handler
+
+        if (!params.username) {
+            this.displayMessage('Please enter a username');
             return;
         }
+
+        if (!params.password) {
+            this.displayMessage('Please enter a password');
+            return;
+        }
+
+        if (params.password !== this.state.confirmedPassword) {
+            this.displayMessage(`Passwords don't match!`);
+            return;
+        }
+
+        if (!params.handle) {
+            this.displayMessage('Please enter a handle');
+            return;
+        }
+
+        if (!params.email) {
+            this.displayMessage('Please enter an email address');
+            return;
+        }
+
+        if (!this.validName(params.username)) {
+            this.displayMessage('Usernames must only contain letters and numbers');
+            return;
+        }
+
+        if (!this.validName(params.handle)) {
+            this.displayMessage('Handles must only contain letters and numbers');
+            return;
+        }
+
+        if (!validator.isEmail(params.email)) {
+            this.displayMessage(`Please enter a valid email address`);
+            return;
+        }
+
         const options = {
             method: 'POST',
             body: JSON.stringify(params)
@@ -51,12 +91,12 @@ class Register extends Component {
                 if (res.registered) {
                     this.props.handleRegister(res.username, res.handle);
                 } else {
-                    this.registerUnsuccessful(res.message);
+                    this.displayMessage(res.message);
                 }
             });
     }
 
-    registerUnsuccessful(message) {
+    displayMessage(message) {
         this.setState({message: message})
     }
 
@@ -77,6 +117,15 @@ class Register extends Component {
             });
     }
 
+    validName(name) {
+        const validator = new RegExp(/^[a-zA-Z0-9]+$/);
+        return validator.test(name);
+    }
+
+    validPassword(password) {
+        return password.length > 3 && password.search(/\d/) !== -1 && password.search(/[a-zA-z]/) !== -1;
+    }
+
     async handleChange(event) {
         const type = event.target.dataset.type;
         const style = type + "Style"
@@ -89,9 +138,8 @@ class Register extends Component {
         }
 
         const unique = await this.verifyUniqueness(type, identifier);
-        const validator = new RegExp(/^[a-zA-Z0-9]+$/);
 
-        if (unique && validator.test(identifier)) {
+        if (unique && this.validName(identifier)) {
             console.log(this.state)
             this.setState({[style]: 'register-valid'});
             console.log(this.state)
@@ -101,15 +149,38 @@ class Register extends Component {
     }
 
     handlePasswordChange(event) {
-        this.setState({password: event.target.value, message: this.defaultMessage});
+        const password = event.target.value;
+        this.setState({password: password, message: this.defaultMessage});
+        if (this.validPassword(password)) {
+            this.setState({passwordStyle: 'register-valid'});
+        } else {
+            this.setState({passwordStyle: 'register-invalid'});
+        }
+        if (password === this.state.confirmedPassword) {
+            this.setState({confirmPasswordStyle: 'register-valid'});
+        } else {
+            this.setState({confirmPasswordStyle: 'register-default'});
+        }
     }
 
     handleConfirmPasswordChange(event) {
-        this.setState({confirmedPassword: event.target.value, message: this.defaultMessage});
+        const confirmedPassword = event.target.value;
+        this.setState({confirmedPassword: confirmedPassword, message: this.defaultMessage});
+        if (confirmedPassword === this.state.password) {
+            this.setState({confirmPasswordStyle: 'register-valid'});
+        } else {
+            this.setState({confirmPasswordStyle: 'register-invalid'});
+        }
     }
 
     handleEmailChange(event) {
-        this.setState({email: event.target.value, message: this.defaultMessage});
+        const email = event.target.value;
+        this.setState({email: email, message: this.defaultMessage});
+        if (validator.isEmail(email)) {
+            this.setState({emailStyle: 'register-valid'});
+        } else {
+            this.setState({emailStyle: 'register-invalid'});
+        }
     }
 
 
