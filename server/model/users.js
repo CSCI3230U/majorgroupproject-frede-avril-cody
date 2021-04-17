@@ -120,6 +120,8 @@ function registerNewUser(session, req, res) {
     }
 
     handle = `@${handle}`;
+    // TODO have people follow themselves - simplifies application logic considerably
+    // eg for FollowRecommendations and Feed
 
     db.data.all(`SELECT username FROM users WHERE username = '${username}' OR\
                     handle = '${handle}'`, async function(err, users) {

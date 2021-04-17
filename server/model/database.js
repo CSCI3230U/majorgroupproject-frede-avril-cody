@@ -20,7 +20,8 @@ function shuffleArray(array) {
 shuffleArray(fakeTweets);
 
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./data/twitterClone.db');
+const db = new sqlite3.Database(':memory:');
+// const db = new sqlite3.Database('./data/twitterClone.db');
 const bcrypt = require('bcrypt');
 
 db.serialize(async function() {
