@@ -7,35 +7,7 @@ class News extends Component {
         this.state = {
             articles: []
         }
-        this.handleRefresh = this.handleRefresh.bind(this);
     }
-
-    handleRefresh() {
-        let articlesFromJSON = [];
-        // This link searches for Twitter related articles from 2021 sorted by popularity
-        fetch("https://newsapi.org/v2/everything?q=Twitter&from=2021&sortBy=popularity&apiKey=345c48473bcf47f98784d6cd773dd8fa")
-            .then(response => response.json())
-            .then(json => {
-                if (json.status === "ok"){
-                    for (let i = 0; i < 6; i++) {
-                        let index = Math.floor(Math.random() * 10000);
-                        // Make sure the same article doesn't appear twice
-                        while (articlesFromJSON.includes(json.articles[index])) {
-                            index = Math.floor(Math.random() * 10000);
-                        }
-                        articlesFromJSON.push(json.articles[index]);
-                        
-                    }
-                } else {
-                    console.error("JSON data could not be accessed")
-                }
-            });
-            this.setState({articles: articlesFromJSON});
-    }
-
-    // componentDidMount() {
-    //     this.handleRefresh();
-    // }
     
     componentDidMount() {
         let articlesFromJSON = [];
@@ -58,6 +30,7 @@ class News extends Component {
                 }
             });
             this.setState({articles: articlesFromJSON});
+        console.log(articlesFromJSON);
     }
 
     render() {
