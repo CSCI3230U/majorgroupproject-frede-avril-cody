@@ -59,9 +59,16 @@ class FollowRecommendations extends Component {
             <button key={i.rowid} data-key={i.rowid} onClick={this.handleFollow}>Follow</button></li>
         ));
         return(
-            <div className={`follow-recs`}>
-                <button onClick={this.handleRefresh}>Refresh</button>
-                <ul>{recommendations}</ul>
+            <div className={`follow-recs container`}>
+                <div className={``}>
+                    <div className={`row follow-recs-line follow-recs-side-padding`}>
+                        <h3>Follow Recommendations</h3>
+                    </div>
+                    <ul>{recommendations}</ul>
+                    <div className={`row follow-recs-footer follow-recs-side-padding`}>
+                        <a className={`follow-recs-refresh`} onClick={this.handleRefresh}>Refresh</a>
+                    </div>
+                </div>
             </div>
         );
     };
