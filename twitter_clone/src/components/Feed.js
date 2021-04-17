@@ -7,9 +7,13 @@ import {faHeart} from '@fortawesome/free-regular-svg-icons';
 import {faShareSquare} from '@fortawesome/free-regular-svg-icons';
 
 class Feed extends Component {
-    // constructor(props) {
-    //     super(props);
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            posts: [],
+            loaded: false,
+        };
+    }
 
     componentDidMount() {
         const params = {
@@ -24,12 +28,13 @@ class Feed extends Component {
             .then(res => res.json())
             .then(res => {
                 console.log(res);
+                this.setState({posts: res});
             });
     }
 
     render() {
-        return(
-            <div className={`feed_feed`}>
+        const posts = this.state.posts.map((post,index) => (
+            <div key={index} className={`post`}>
                 <div className={`container`}>
 
                 </div>
@@ -63,6 +68,12 @@ class Feed extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
+        ));
+
+        return(
+            <div className={`feed_feed`}>
+                {posts}
             </div>
         );
     };
