@@ -25,11 +25,15 @@ function findFollowRecommendations(session, req, res) {
         if (err) {
             console.error("Couldn't get the rowid for follow recs");
         } else {
-            if (user.rowid) {
-                retrieveRandomProfiles(user.rowid, req.profiles, res);
+            if (user) {
+                if (user.rowid) {
+                    retrieveRandomProfiles(user.rowid, req.profiles, res);
+                } else {
+                    console.error("That user wasn't found (follow recs)");
+                    return;
+                }
             } else {
-                console.error("That user wasn't found (follow recs)");
-                return;
+                res.json([]);
             }
         }
     });
@@ -66,7 +70,7 @@ function valid(identifier) {
 function registerNewUser(session, req, res) {
     const username = req.username;
     const password = req.password;
-    const handle = req.handle;
+    let handle = req.handle;
     const email = req.email;
 
     if (!valid(username)) {
@@ -77,19 +81,26 @@ function registerNewUser(session, req, res) {
         return;
     }
 
-    db.data.all(`SELECT * FROM users WHERE username = '${username}' OR\
+    handle = `@${handle}`;
+
+    db.data.all(`SELECT username FROM users WHERE username = '${username}' OR\
                     handle = '${handle}'`, function(err, users) {
         if (err) {
             console.error("Error retrieving users for registration validation");
         } else {
             if (users.length > 0) {
-                console.log("found a match");
+                if (users[0].username == username) {
+                    res.json(denyRegistration("That username is already taken!"));
+                } else {
+                    res.json(denyRegistration("That handle is already in use."));
+                }
             } else {
-                console.log("inserted"); // NEED TO APPEND @
+                db.data.run(`INSERT INTO users VALUES (?, ?, ?, ?)`,
+                            [username, password, handle, email]);
+                res.json({registered: true, username: username, message: "Registration success!"});
             }
         }
-        res.json({registered: false, message: "in dev"});
-        // db.data.all(`INSERT INTO users VALUES (?, ?, ?, ?)`, [])
+        // db.data.all()
     });
 }
 

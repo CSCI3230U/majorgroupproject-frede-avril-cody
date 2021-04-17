@@ -17,7 +17,12 @@ function getFeed(username, res) {
         if (err) {
             console.error("There was an error getting the feed");
         } else {
-            returnFeed(user.rowid, res);
+            if (user) {
+                returnFeed(user.rowid, res);
+            } else {
+                // if user just registered, user is undefined, but they will have no follows = no feed
+                res.json({});
+            }
         }
     });
 }
