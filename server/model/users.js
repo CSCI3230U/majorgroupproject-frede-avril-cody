@@ -54,11 +54,28 @@ function retrieveRandomProfiles(userId, numProfiles, res) {
     });
 }
 
+function denyRegistration(message) {
+    return {registered: false, message: message};
+}
+
+function valid(identifier) {
+    const validator = new RegExp(/^[a-zA-Z0-9]+$/);
+    return validator.test(identifier);
+}
+
 function registerNewUser(session, req, res) {
     const username = req.username;
     const password = req.password;
-    const handle = `@${req.handle}`;
+    const handle = req.handle;
     const email = req.email;
+
+    if (!valid(username)) {
+        res.json(denyRegistration("Invalid username"));
+        return;
+    } else if (!valid(handle)) {
+        res.json(denyRegistration("Invalid handle"));
+        return;
+    }
 
     db.data.all(`SELECT * FROM users WHERE username = '${username}' OR\
                     handle = '${handle}'`, function(err, users) {
@@ -67,9 +84,8 @@ function registerNewUser(session, req, res) {
         } else {
             if (users.length > 0) {
                 console.log("found a match");
-                console.log(users)
             } else {
-                console.log("inserted");
+                console.log("inserted"); // NEED TO APPEND @
             }
         }
         res.json({registered: false, message: "in dev"});
