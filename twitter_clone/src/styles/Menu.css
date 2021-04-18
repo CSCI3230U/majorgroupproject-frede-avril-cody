@@ -1,7 +1,6 @@
 .menu-menu {
     margin-top: 0.5rem;
     width: 100%;
-    padding: 0.5rem;
     font-weight: bold;
 }
 
@@ -13,6 +12,7 @@
 .menu-home-icon{
     color:#40acf0;
     margin-bottom: 1rem;
+    margin-top: 0.5rem;
 }
 
 .menu-tweet-button{
@@ -25,24 +25,23 @@
 }
 
 .menu-option{
-    color: black;
-    margin-top: 1rem;
+    margin-top: 0.4rem;
     font-size: 18px;
 }
 
 .menu-home-option{
-    color: black;
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
     font-size: 18px;
 }
 
 
 .menu-home{
     color:#40acf0;
+    padding-top: 0.5rem;
 }
 
 .menu-icon{
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     margin-bottom: 1rem;
     align-items: center;
 }
@@ -54,10 +53,36 @@
     border: 1px solid black;
 }
 
+.menu-more:hover{
+    border-color:#40acf0;
+}
+
 .menu-more-text{
     display: inline;
 }
 
 .menu-row{
     height: 5rem;
+}
+
+.menu-row{
+    height: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.menu-row:hover{
+    border-radius: 100rem;
+    background-color: #baeafdbb;
+    color: #40acf0;
+}
+
+
+.menu-hover:visited{
+    color:black;
+}
+
+
+.menu-hover:hover{
+    text-decoration: none;
 }

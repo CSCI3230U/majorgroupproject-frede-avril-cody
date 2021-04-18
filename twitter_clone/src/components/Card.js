@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import '../styles/Card.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 
 class Card extends Component {
     constructor(props) {
@@ -27,8 +29,7 @@ class Card extends Component {
                         <p>{this.props.handle}</p>
                     </div>
                     <div className={`col-3 inline`}>
-                        <img src={`images/more.png`} alt="more" className={`card-options inline`} onClick={this.handleLogoutClick}></img>
-                        {/* <button onClick={this.handleLogoutClick}>Logout</button> */}
+                        <FontAwesomeIcon className={`card-options inline fa-lg`} onClick={this.handleLogoutClick} icon={faEllipsisH}/>
                     </div>
                 </div>
             </div>

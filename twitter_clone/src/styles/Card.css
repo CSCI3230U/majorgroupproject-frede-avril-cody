@@ -16,7 +16,11 @@
 
 
 .card-options{
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     width:30px;
     height: auto;
+}
+
+.card-options:hover{
+    color:hsl(0, 0%, 100%);
 }
