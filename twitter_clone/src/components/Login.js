@@ -62,8 +62,8 @@ class Login extends Component {
                 <h2>{this.state.message} </h2>
                 <input placeholder="Username" type="text" onChange={this.handleUsernameChange} />
                 <input placeholder="Password" type="password" onChange={this.handlePasswordChange} />
-                <button onClick={this.handleLoginClick}>Login</button>
-                <button onClick={this.props.handleRegister}>Register</button>
+                <button onClick={this.handleLoginClick} className={`rounded-pill login-button`}>Login</button>
+                <button onClick={this.props.handleRegister} className={`rounded-pill login-button`}>Register</button>
             </div>
         );
     };
