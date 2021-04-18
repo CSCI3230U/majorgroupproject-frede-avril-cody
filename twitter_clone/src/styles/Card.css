@@ -1,6 +1,26 @@
 .card {
-    width: 100%;
-    padding: 0.5rem;
+    margin-right: 2rem;
+    padding-top: 1rem;
     border-radius: 100rem;
-    background-color: #d0d0d0;
+    border: none;
+}
+.card:hover {
+    border-radius: 100rem;
+    background-color: #baeafdbb;
+}
+.card-profilePic{
+    width: 50px;
+    height: auto;
+    border-radius: 50%;
+}
+
+
+.card-options{
+    margin-top: 1rem;
+    width:30px;
+    height: auto;
+}
+
+.card-options:hover{
+    color:hsl(0, 0%, 100%);
 }

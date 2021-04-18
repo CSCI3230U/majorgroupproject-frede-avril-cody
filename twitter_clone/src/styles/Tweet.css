@@ -30,8 +30,11 @@
      font-family: "Helvetica Neue", sans-serif; 
 }
 
-.tweet_profilePic{
-
+.tweet-profilePic{
+     margin-top: 0.5rem;
+     width: 50px;
+     height: auto;
+     border-radius: 50%;
 }
 
 .tweet_submit {
@@ -52,8 +55,10 @@
 
 .tweet_tweetInput {
      font-size: large;
-     border: none;
+     border: none; 
+     outline: none;
 }
+
 
 .tweet_form-control {
      border: 0;

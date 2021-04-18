@@ -59,11 +59,11 @@ class Login extends Component {
         return(
             // TODO refactor to handle enter press
             <div className={`login`}>
-                <h2>{this.state.message} </h2>
-                <input placeholder="Username" type="text" onChange={this.handleUsernameChange} />
-                <input placeholder="Password" type="password" onChange={this.handlePasswordChange} />
-                <button onClick={this.handleLoginClick}>Login</button>
-                <button onClick={this.props.handleRegister}>Register</button>
+                <h2 className={`login-text`}>{this.state.message} </h2>
+                <input placeholder="Username" type="text" onChange={this.handleUsernameChange} className={`login-input`}/>
+                <input placeholder="Password" type="password" onChange={this.handlePasswordChange} className={`login-input`}/>
+                <button onClick={this.handleLoginClick} className={`rounded-pill login-button`}>Login</button>
+                <button onClick={this.props.handleRegister} className={`rounded-pill login-button`}>Register</button>
             </div>
         );
     };

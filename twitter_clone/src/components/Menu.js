@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Menu.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faTwitter} from '@fortawesome/free-brands-svg-icons';
+import {faHome} from '@fortawesome/free-solid-svg-icons';
+import {faHashtag} from '@fortawesome/free-solid-svg-icons';
+import {faUsers} from '@fortawesome/free-solid-svg-icons';
+import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
+import {faUser} from '@fortawesome/free-regular-svg-icons';
+import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 
 class Menu extends Component{
     constructor() {
@@ -18,17 +26,71 @@ class Menu extends Component{
     // }
     render(){
         return(
-            <div className={`menu`}>
-                <ul>
-                    <li><Link to="/feed">Home</Link></li>
-                    <li><Link to="/explore">Explore</Link></li>
-                    <li><Link to="/messages">Messages</Link></li>
-                    <li><Link to="/connect">Connect</Link></li>
-                    <li><Link to="/profile">Profile</Link></li>
-                    <li>More</li>
-                </ul>
+            <div className={`menu-menu`}>
+                <FontAwesomeIcon className={`menu-twitter-icon`} icon={faTwitter} size="2x" />
+                <div className={`container`}>
+                    <Link to="/feed" className={`menu-hover`}>
+                        <div className={`row menu-row`}>
+                            <div className={`col-3`}>
+                                <FontAwesomeIcon className={`menu-home-icon`} icon={faHome} size="2x" />
+                            </div>
+                            <div className={`col menu-home-option`}>
+                                <p className={`menu-home`}>Home</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to="/explore" className={`menu-hover`}>
+                        <div className={`row menu-row`}>
+                            <div className={`col-3`}>
+                                <FontAwesomeIcon className={`menu-icon`} icon={faHashtag} size="2x" />
+                            </div>
+                            <div className={`col menu-option`}>
+                                <p className={`menu-option`}>Explore</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to="/messages" className={`menu-hover`}>
+                        <div className={`row menu-row`}>
+                            <div className={`col-3`}>
+                                <FontAwesomeIcon className={`menu-icon`} icon={faEnvelope} size="2x" />
+                            </div>
+                            <div className={`col menu-option`}>
+                                <p className={`menu-option`}>Messages</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to="/connect" className={`menu-hover`}>
+                        <div className={`row menu-row`}>
+                            <div className={`col-3`}>
+                                <FontAwesomeIcon className={`menu-icon`} icon={faUsers} size="2x" />
+                            </div>
+                            <div className={`col menu-option`}>
+                                <p className={`menu-option`}>Connect</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to="/profile" className={`menu-hover`}>
+                        <div className={`row menu-row`}>
+                            <div className={`col-3`}>
+                                <FontAwesomeIcon className={`menu-icon`} icon={faUser} size="2x" />
+                            </div>
+                            <div className={`col menu-option`}>
+                                <p className={`menu-option`}>Profile</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <div className={`row menu-row`}>
+                        <div className={`col-3`}>
+                            <FontAwesomeIcon className={`menu-icon`} icon={faEllipsisH} size="2x" />
+                        </div>
+                        <div className={`col menu-option`}>
+                            <p className={`menu-more-text`} >More</p>  
+                        </div>
+                    </div>
+                </div>
+                <br />
                 <div className=".btn">
-                    <button type="button">Tweet</button>
+                    <button type="button" className={`rounded-pill menu-tweet-button`}>Tweet</button>
                 </div>
             </div>
 

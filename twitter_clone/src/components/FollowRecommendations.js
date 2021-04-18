@@ -55,16 +55,24 @@ class FollowRecommendations extends Component {
 
     render() {
         const recommendations = this.state.recommendations.map(i => (
-            <li key={i.rowid}>{i.username + " " + i.handle}
-            <button key={i.rowid} data-key={i.rowid} onClick={this.handleFollow}>Follow</button></li>
+            <div key={i.rowid} className={`row news-line follow-recs-side-padding follow-recs-hover-effect`}>
+                <div className={`col-3 inline`}>
+                    <img src={`images/profile/${i.rowid}.png`} alt="profile" className={`card-profilePic inline`}></img>
+                </div>
+                <div className={`col-6 inline`}>
+                    <h6>{i.username}</h6>
+                    <p>{i.handle}</p>
+                </div>
+                <button data-key={i.rowid} onClick={this.handleFollow} className={`follow-recs-follow rounded-pill`}>Follow</button>
+            </div>
         ));
         return(
             <div className={`follow-recs container`}>
-                <div className={``}>
+                <div className={`follow-recs-fix`}>
                     <div className={`row follow-recs-line follow-recs-side-padding`}>
                         <h3>Follow Recommendations</h3>
                     </div>
-                    <ul>{recommendations}</ul>
+                    {recommendations}
                     <div className={`row follow-recs-footer follow-recs-side-padding`}>
                         <button className={`follow-recs-refresh`} onClick={this.handleRefresh}>Refresh</button>
                     </div>

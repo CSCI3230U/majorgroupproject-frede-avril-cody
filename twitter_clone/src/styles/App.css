@@ -4,10 +4,11 @@
     height: 100vh;
     width: 100vw;
     padding: 0 1rem 1rem 0;
+    overflow-x: hidden;
 }
 
 .leftSide {
-    width: 20rem;
+    width: 15rem;
 }
 
 .center {
@@ -20,6 +21,7 @@
 }
 
 .leftSide {
+    margin-right: 0.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

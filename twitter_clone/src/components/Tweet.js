@@ -12,7 +12,8 @@ class Tweet extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            content: ''
+            content: '',
+            userid: ''
         }
         this.handleText = this.handleText.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -44,6 +45,24 @@ class Tweet extends Component{
             });
     }
 
+    // componentDidMount(){
+    //     const params = {
+    //         username: this.props.username
+    //     };
+
+    //     const options = {
+    //         method: 'POST',
+    //         body: JSON.stringify(params)
+    //     };
+
+    //     fetch("http://localhost:4000/", options)
+    //         .then(res => res.json())
+    //         .then(res => {
+    //             console.log(res);
+    //             // this.setState({: res});
+    //         });
+    // }
+
     render() {
         return(
             <>
@@ -60,7 +79,7 @@ class Tweet extends Component{
                 <div className={`tweet_tweet container tweet_body`}>
                     <div className={`row`}>
                         <div className={`col-2 tweet_profilePic`}>
-
+                            <img src={`images/profile/1.png`} alt="profile" className={`tweet-profilePic`}></img>
                         </div>
                         <div className={`col`}>
                             <div className="tweet_tweetContent">

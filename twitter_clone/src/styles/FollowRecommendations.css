@@ -8,6 +8,7 @@
     padding-top: 0.5rem;
     background: hsl(0, 0%, 95%);
     border: 1px solid transparent;
+    font-size: 13px;
 }
 
 .follow-recs-side-padding{
@@ -30,4 +31,17 @@
     color: blue;
     text-decoration-color: blue;
     text-decoration: underline;
+}
+
+.follow-recs-follow{
+    margin-top: 0.5rem;
+    height: 2.5rem;
+    width: 5rem;
+    border: 2px solid rgb(54, 164, 207);
+    color:rgb(78, 172, 209);
+    font-weight: bold;
+}
+
+.follow-recs-fix{
+    width: 100%;
 }

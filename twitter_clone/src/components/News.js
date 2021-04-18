@@ -22,7 +22,7 @@ class News extends Component {
         let todayS = today.getFullYear() +'-'+ String(today.getMonth() + 1) +'-'+ String(today.getDate());
 
         // This link searches for *topic* related articles from today sorted by popularity
-        fetch(`https://newsapi.org/v2/everything?q=${topics[topicIndex]}&from=${todayS}&sortBy=popularity&apiKey=345c48473bcf47f98784d6cd773dd8fa`)
+        fetch(`https://newsapi.org/v2/everything?q=${topics[topicIndex]}&from=${todayS}&sortBy=popularity&apiKey=b72c0e52d76f4837b328597e977ad875`)
             .then(response => response.json())
             .then(json => {
                 let selectedArticles = [];
@@ -57,7 +57,7 @@ class News extends Component {
         let todayS = today.getFullYear() +'-'+ String(today.getMonth() + 1) +'-'+ String(today.getDate());
 
         // This link searches for *topic* related articles from today sorted by popularity
-        fetch(`https://newsapi.org/v2/everything?q=${topics[topicIndex]}&from=${todayS}&sortBy=popularity&apiKey=345c48473bcf47f98784d6cd773dd8fa`)
+        fetch(`https://newsapi.org/v2/everything?q=${topics[topicIndex]}&from=${todayS}&sortBy=popularity&apiKey=b72c0e52d76f4837b328597e977ad875`)
             .then(response => response.json())
             .then(json => {
                 let selectedArticles = this.state.articles;
