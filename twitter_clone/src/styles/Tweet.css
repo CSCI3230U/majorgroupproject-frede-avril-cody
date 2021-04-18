@@ -55,8 +55,10 @@
 
 .tweet_tweetInput {
      font-size: large;
-     border: none;
+     border: none; 
+     outline: none;
 }
+
 
 .tweet_form-control {
      border: 0;
