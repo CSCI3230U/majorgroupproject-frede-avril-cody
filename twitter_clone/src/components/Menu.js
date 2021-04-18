@@ -84,7 +84,7 @@ class Menu extends Component{
                             <FontAwesomeIcon className={`menu-icon`} icon={faEllipsisH} size="2x" />
                         </div>
                         <div className={`col menu-option`}>
-                            <p className={`menu-more-text`} >More</p>  
+                            <p className={`menu-option`}>More</p>  
                         </div>
                     </div>
                 </div>
