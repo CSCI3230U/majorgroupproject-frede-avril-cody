@@ -12,6 +12,7 @@
 
 .menu-home-icon{
     color:#40acf0;
+    margin-bottom: 1rem;
 }
 
 .menu-tweet-button{
@@ -25,12 +26,25 @@
 
 .menu-option{
     color: black;
-    margin: 2rem;
+    margin-top: 1rem;
     font-size: 18px;
 }
 
+.menu-home-option{
+    color: black;
+    margin-top: 0.5rem;
+    font-size: 18px;
+}
+
+
 .menu-home{
     color:#40acf0;
+}
+
+.menu-icon{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
 }
 
 .menu-more{
