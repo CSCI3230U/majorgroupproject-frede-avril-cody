@@ -68,7 +68,7 @@ class FollowRecommendations extends Component {
         ));
         return(
             <div className={`follow-recs container`}>
-                <div className={``}>
+                <div className={`follow-recs-fix`}>
                     <div className={`row follow-recs-line follow-recs-side-padding`}>
                         <h3>Follow Recommendations</h3>
                     </div>

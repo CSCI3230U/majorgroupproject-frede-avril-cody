@@ -9,6 +9,24 @@
     justify-content: center;
 }
 
+.login-text{
+    color: white;
+    font-weight: bold;
+}
+
 .login-button{
     width: 10rem;
+    border: none;
+    margin: 0.5rem;
+    background-color: #60cbf5;
+    color: white;
+    font-weight: bold;
+}
+
+.login-input{
+    border: none;
+    margin: 0.1rem;
+    border-radius: 10px;
+    padding: 0.2rem;
+    padding-left: 0.5rem;
 }
