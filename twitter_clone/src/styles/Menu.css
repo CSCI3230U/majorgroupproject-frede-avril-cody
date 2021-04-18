@@ -1,5 +1,49 @@
-.menu {
+.menu-menu {
+    margin-top: 0.5rem;
     width: 100%;
     padding: 0.5rem;
-    background-color: #d0d0d0;
+    font-weight: bold;
+}
+
+.menu-twitter-icon{
+    margin-bottom: 2rem;
+    color:#40acf0;
+}
+
+.menu-home-icon{
+    color:#40acf0;
+}
+
+.menu-tweet-button{
+    padding: 8px;
+    width: 100%;
+    border: none;
+    background-color: #40acf0;
+    font-weight: bold;
+    color: white;
+}
+
+.menu-option{
+    color: black;
+    margin: 2rem;
+    font-size: 18px;
+}
+
+.menu-home{
+    color:#40acf0;
+}
+
+.menu-more{
+    width:30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.menu-more-text{
+    display: inline;
+}
+
+.menu-row{
+    height: 5rem;
 }
