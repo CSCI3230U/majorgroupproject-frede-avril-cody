@@ -11,21 +11,34 @@ import '../styles/Messages.css';
 class Messages extends Component {
     constructor(props) {
         super(props);
+        
+        this.state = {
+            text: ''
+        }
         this.send = this.send.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
-    send(){
-        let text = document.getElementsByClassName("Input");
-        console.log(text.value);
+    send(event){
+        this.setState({text: event.target.value});
     }
+    handleClick(event){ // this function is supposed to call 
+
+        // console.log(event.target.value);
+        // console.log(this.state.text);
+        let text = this.state.text;
+        
+
+    }
+
     render() {
         return(
             <div className={`messages`}>
                 <div className="title"> 
                     <h2>Messages</h2>
                     <div id="icons">    
-                        <a> <FontAwesomeIcon className={`menu-icon`} 
+                        <a href="#"> <FontAwesomeIcon className={`menu-icon`} 
                         icon={faCog} size="2x" /></a>
-                        <a>
+                        <a href="#">
                         <FontAwesomeIcon className={`menu-icon`} 
                         icon={faCommentAlt} size="2x" />
                         </a>
@@ -37,11 +50,11 @@ class Messages extends Component {
                 </div>
                 <div className="sendAMessage"> 
                     <div className="textArea">
-                        <input type="text" className="Input"placeholder="Send something"/>
+                        <input type="text" onChange={this.send} placeholder="Send something"/>
                     </div>
                     <div id="sendBtn"> 
                         <button type="button"><FontAwesomeIcon className={`menu-icon`} 
-                        icon={faPaperPlane} size="1x" onClick={this.send}/></button>
+                        icon={faPaperPlane} size="1x" onClick={this.handleClick}/></button>
 
                     </div>
                 </div>
