@@ -41,7 +41,7 @@ function returnFeed(userId, res) {
 
 function insert(content, userId, username) {
     const hashtagRegex = new RegExp(/(\s#|^#)[a-zA-z0-9]+/g);
-    const hashtags = Array.from(content.matchAll(hashtagRegex), r => r[0].trim());
+    const hashtags = Array.from(content.matchAll(hashtagRegex), r => r[0].trim().toLowerCase());
 
     db.data.run(`INSERT INTO tweets (senderId, sender, message) VALUES (?, ?, ?)`,
                 [userId, username, content], function (err) {
@@ -80,7 +80,24 @@ function getMostTweeted(res) {
     })
 }
 
+function fakeInsert(content, userId, username) {
+    const hashtagRegex = new RegExp(/(\s#|^#)[a-zA-z0-9]+/g);
+    const hashtags = Array.from(content.matchAll(hashtagRegex), r => r[0].trim().toLowerCase()); // if error, check here
+
+    db.data.run(`INSERT INTO tweets (senderId, sender, message) VALUES (?, ?, ?)`,
+                [userId, username, content], function (err) {
+                    if (err) {
+                        console.error("There was an error inserting a tweet into the db");
+                        console.error(err)
+                    } else {
+                        const tweetId = this.lastID;
+                        tags.addHashtags(hashtags, tweetId);
+                    }
+                });
+}
+
 module.exports.tweet = tweet;
 module.exports.getAll = getAll;
 module.exports.getFeed = getFeed;
 module.exports.getMostTweeted = getMostTweeted;
+module.exports.fakeInsert = fakeInsert;
