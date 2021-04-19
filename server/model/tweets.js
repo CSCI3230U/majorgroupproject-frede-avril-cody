@@ -1,4 +1,5 @@
 const db = require('./database.js');
+const tags = require('./hashtags.js');
 
 function getAll(res) {
     db.data.all('SELECT * FROM tweets', function (err, tweets) {
@@ -39,8 +40,18 @@ function returnFeed(userId, res) {
 }
 
 function insert(content, userId, username) {
+    const hashtagRegex = new RegExp(/(\s#|^#)[a-zA-z0-9]+/g);
+    const hashtags = Array.from(content.matchAll(hashtagRegex), r => r[0].trim());
+
     db.data.run(`INSERT INTO tweets (senderId, sender, message) VALUES (?, ?, ?)`,
-                [userId, username, content]);
+                [userId, username, content], function (err) {
+                    if (err) {
+                        console.error("There was an error inserting a tweet into the db");
+                    } else {
+                        const tweetId = this.lastID;
+                        tags.addHashtags(hashtags, tweetId);
+                    }
+                });
 }
 
 function tweet(req) {

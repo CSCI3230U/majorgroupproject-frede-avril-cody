@@ -5,6 +5,7 @@ const followers = require('./model/followers.js');
 const tweets = require('./model/tweets.js');
 const users = require('./model/users.js');
 const messages = require('./model/messages.js');
+const tweetHashtags = require('./model/tweet_hashtags.js');
 const cors = require('cors');
 const app = express();
 
@@ -73,6 +74,11 @@ app.post('/saveMessage', (request, response) => {
 app.post('/getMessages', (request, response) => {
     console.log(request.body);
     messages.getMessages(request.body, response);
+});
+
+app.post('/searchTwitter', (request, response) => {
+    console.log(request.body);
+    tweetHashtags.findTweets(request.body.query, response);
 });
 
 app.get('/getMostTweeted', (request, response) => {

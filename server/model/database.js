@@ -42,13 +42,13 @@ db.serialize(async function() {
                                         nextReply INTEGER,
                                         message TEXT NOT NULL)`)
         .run(`CREATE TABLE IF NOT EXISTS hashtags (
-                                        frequency INTEGER DEFAULT 0,
+                                        frequency INTEGER DEFAULT 1,
                                         hashtag TEXT NOT NULL UNIQUE)`)
         .run(`CREATE TABLE IF NOT EXISTS tweetHashtags (
-                                        hashtagId INTEGER NOT NULL,
+                                        hashtag TEXT NOT NULL,
                                         tweetId INTEGER NOT NULL,
-                                        PRIMARY KEY (hashtagId, tweetId),
-                                        FOREIGN KEY (hashtagId) REFERENCES hashtags(rowid),
+                                        PRIMARY KEY (hashtag, tweetId),
+                                        FOREIGN KEY (hashtag) REFERENCES hashtags(hashtag),
                                         FOREIGN KEY (tweetId) REFERENCES tweets(rowid))`)
         .run(`CREATE TABLE IF NOT EXISTS users (
                                         username TEXT NOT NULL UNIQUE,
@@ -70,8 +70,6 @@ db.serialize(async function() {
                                         FOREIGN KEY (receiverId) REFERENCES users(rowid))`);
 
     const users = db.prepare('INSERT INTO users VALUES (?, ?, ?, ?)');
-    const hashtags = db.prepare('INSERT INTO hashtags (hashtag) VALUES (?)');
-    const tweetHashtags = db.prepare('INSERT INTO tweetHashtags (hashtagId, tweetId) VALUES (?, ?)');
     const followers = db.prepare('INSERT INTO followers (followerId, followedId) VALUES (?, ?)');
 
     const profs = ["Randy", "Lennart", "Mariana", "Mehran", "Paula", "Ilona",
@@ -99,20 +97,12 @@ db.serialize(async function() {
         });
     });
 
-    hashtags.run("testing");
-    hashtags.run("twitter");
-    hashtags.run("sqlite3");
-    hashtags.finalize();
-    tweetHashtags.finalize();
     followers.finalize();
 
     db.each('SELECT * FROM tweets', function (err, row) {
         console.log(row);
     });
     db.each('SELECT * FROM users', function (err, row) {
-        console.log(row);
-    });
-    db.each('SELECT * FROM hashtags', function (err, row) {
         console.log(row);
     });
 });

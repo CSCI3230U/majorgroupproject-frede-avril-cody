@@ -29,10 +29,33 @@ class Search extends Component {
         this.setState({focus: false});
     }
 
+    searchTwitter(query) {
+        const params = {
+            query: query
+        };
+        if (!params.query) {
+            return;
+        }
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/searchTwitter", options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                
+            });
+    }
+
     handleChange(event) {
-        this.setState({input: event.target.value});
-        // note - setState is asynch, this is 1 behind - can use e.target.value though
-        console.log(this.state.input);
+        const query = event.target.value;
+        this.setState({input: query});
+        if (query.length > 2) {
+            this.searchTwitter(query);
+        }
     }
 
     /* TODO decide if the search suggestions dropdown warrants a separate component
