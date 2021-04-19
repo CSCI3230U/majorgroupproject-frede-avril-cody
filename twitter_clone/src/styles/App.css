@@ -34,3 +34,11 @@ input {
 button {
     outline: none;
 }
+
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+}

@@ -82,7 +82,6 @@ class Menu extends Component{
                     <a  href="http://localhost:4000/analytics" target="_blank"
                         rel="noopener noreferrer">
                         <div className={`row menu-row`}>
-                        {/* // TODO fix styling */}
                             <div className={`col-3`}>
                                 {/* // TODO change to chart icon */}
                                 <FontAwesomeIcon className={`menu-icon`} icon={faEllipsisH} size="2x" />
