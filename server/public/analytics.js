@@ -1,14 +1,5 @@
 const randyQuotes = ['This is a balanced tree, even Thanos would approve - Randy 2019', 'You get wood, you get weapons, you get bombs... are there bombs in Fortnite? I have only played twice, but anyways... - Randy 2019', 'People think of K-maps and they think of K-pop, which is not as trendy as it used to be but you know, it is still fun... - Randy 2020'];
 
-
-var barData = [
-     {"handle": "@randy", "tweets": 13},
-     {"handle": "@mariana", "tweets": 3},
-     {"handle": "@joe", "tweets": 10},
-     {"handle": "@mihai", "tweets": 5},
-     {"handle": "@ken", "tweets": 1},
-];
-
 var pieData = [
      {"handle": "@randy", "likes": 13},
      {"handle": "@mariana", "likes": 3},
@@ -24,23 +15,27 @@ const chartWidth = width - 2 * margin;
 const chartHeight = height - 2 * margin;
 
 window.onload = function() {
-     drawBarChart();
+     fetch('http://localhost:4000/getMostTweeted')
+            .then((response) => response.json())
+            .then((json) => drawBarChart(json));
+
+     
      drawPieChart();
 };
 
 function getMostTweets(data){
      let mostTweets = 0;
      data.forEach(element => {
-          if (element.tweets > mostTweets) {
-               mostTweets = element.tweets;
+          if (element["COUNT(message)"] > mostTweets) {
+               mostTweets = element["COUNT(message)"];
           }
      });
 
      return mostTweets+1;
 }
 
-function drawBarChart(){
-     barData.sort((a, b) => (a.tweets > b.tweets) ? 1 : -1);
+function drawBarChart(barData){
+     barData.sort((a, b) => (a["COUNT(message)"] > b["COUNT(message)"]) ? 1 : -1);
 
      let colourScale = d3.scaleLinear()
                             .domain([0, getMostTweets(barData)])
@@ -53,7 +48,7 @@ function drawBarChart(){
                               .attr("height", height);
 
      const xScaleBar = d3.scaleBand()
-                         .domain(barData.map((data) => data.handle))
+                         .domain(barData.map((data) => data.sender))
                          .range([0, chartWidth])
                          .padding(0.3);
      
@@ -85,19 +80,18 @@ function drawBarChart(){
           .data(barData)
           .enter()
                .append('rect')
-                    .attr('x', (data) => xScaleBar(data.handle))
-                    .attr('y', (data) => yScaleBar(data.tweets))
+                    .attr('x', (data) => xScaleBar(data.sender))
+                    .attr('y', (data) => yScaleBar(data["COUNT(message)"]))
                     .attr('width', xScaleBar.bandwidth())
-                    .attr('height', (data) => chartHeight - yScaleBar(data.tweets))
-                    .attr('fill', (data) => colourScale(data.tweets))
+                    .attr('height', (data) => chartHeight - yScaleBar(data["COUNT(message)"]))
+                    .attr('fill', (data) => colourScale(data["COUNT(message)"]))
 }
+
 
 function drawPieChart(){
 
      // color change not currently working
-     let colourScale = d3.scaleOrdinal()
-                         .domain([0,getMostLikes(pieData)])
-                         .range(["#BADEED", "#98D0E7", "#60B6D9", "#3E9AC0"]);
+     let colourScale = d3.scaleOrdinal(["#DFF5FE","#BADEED", "#98D0E7", "#60B6D9", "#3E9AC0"]);
 
      // place bar chart in barChart div
      let pieSvg = d3.select("#pieChart")
@@ -106,7 +100,8 @@ function drawPieChart(){
                               .attr("height", height);
      
      // parse the data to get the angles
-     let parsedData = d3.pie().sort(null).value(function(d) {return d.likes})(pieData);
+     let parsedData = d3.pie().sort(null)
+                         .value(function(d) {return d.likes})(pieData);
      console.log(parsedData);
 
      // arc details
