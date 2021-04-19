@@ -87,6 +87,11 @@ app.post('/searchTwitter', (request, response) => {
     tweetHashtags.findTweets(request.body.query, response);
 });
 
+app.post('/searchUsers', (request, response) => {
+    console.log(request.body);
+    users.findUsers(request.body.username, response);
+});
+
 app.post('/getProfile', (request, response) => {
     console.log(request.body);
     users.getProfile(request.body, response);
@@ -100,7 +105,6 @@ app.post('/like', (request, response) => {
 app.get('/getMostTweeted', (request, response) => {
     tweets.getMostTweeted(response);
 });
-
 
 app.get('/analytics', (request, response) => {
     response.sendFile(__dirname + '/public/analytics.html');

@@ -218,8 +218,21 @@ function getUserFeed(user, res) {
     });
 }
 
+function findUsers(username, res) {
+    db.data.all(`SELECT username FROM users WHERE username LIKE '%${username}%'`,
+        function(err, users) {
+            if (err) {
+                console.error("There was an error finding the users for messages");
+                return [];
+            } else {
+                res.json(users);
+            }
+        });
+}
+
 module.exports.verifyUnique = verifyUniqueIdentifier;
 module.exports.getProfile = getUserProfile;
 module.exports.login = handleLogin;
+module.exports.findUsers = findUsers;
 module.exports.register = registerNewUser;
 module.exports.getFollowRecommendations = findFollowRecommendations;
