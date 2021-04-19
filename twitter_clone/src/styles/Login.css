@@ -18,9 +18,14 @@
     width: 10rem;
     border: none;
     margin: 0.5rem;
-    background-color: #60cbf5;
+    background-color: hsl(197,88%,67%);
     color: white;
     font-weight: bold;
+    outline: none;
+}
+
+.login-button:focus {
+    background-color: hsl(197,88%,72%);
 }
 
 .login-input{
@@ -29,4 +34,5 @@
     border-radius: 10px;
     padding: 0.2rem;
     padding-left: 0.5rem;
+    outline: none;
 }

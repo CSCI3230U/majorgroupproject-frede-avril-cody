@@ -34,7 +34,6 @@ class FollowRecommendations extends Component {
     }
 
     handleFollow(event) {
-        console.log(event.target.dataset.key);
         const params = {
             follower: this.props.username,
             followed: event.target.dataset.key
@@ -47,7 +46,7 @@ class FollowRecommendations extends Component {
         fetch("http://localhost:4000/follow", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                this.props.updateFeed(this.props.username);
             });
         // TODO Instead of follow, should have a '+'
         // Then, in this method, the '+' for event.target should be changed to a 'check'

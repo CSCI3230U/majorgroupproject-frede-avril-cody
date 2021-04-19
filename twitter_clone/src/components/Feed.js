@@ -10,15 +10,34 @@ class Feed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: [],
             loaded: false,
         };
         this.getTimeDisplay = this.getTimeDisplay.bind(this);
-        this.formatResponseTime = this.formatResponseTime.bind(this);
+        this.handleLike = this.handleLike.bind(this);
+        // this.formatResponseTime = this.formatResponseTime.bind(this);
     }
 
     componentDidMount() {
+        this.props.updateFeed(this.props.username);
+    }
+
+    // formatResponseTime(){
+    //     // let retrieved = ;
+    //     let formatted = this.props.posts;
+    //
+    //     formatted.forEach(post => {
+    //         let formattedTime = this.getTimeDisplay(post.time);
+    //         console.log("hey");
+    //         post["time"] = formattedTime;
+    //     });
+    //
+    //     this.setState({posts: formatted});
+    //     console.log(formatted);
+    // }
+
+    handleLike(event) {
         const params = {
+            tweetid: event.currentTarget.dataset.tweetid,
             username: this.props.username
         };
         const options = {
@@ -26,27 +45,11 @@ class Feed extends Component {
             body: JSON.stringify(params)
         };
 
-        fetch("http://localhost:4000/populateFeed", options)
+        fetch("http://localhost:4000/like", options)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                this.setState({posts: res});
             });
-
-    }
-
-    formatResponseTime(){
-        // let retrieved = ;
-        let formatted = this.state.posts;
-
-        formatted.forEach(post => {
-            let formattedTime = this.getTimeDisplay(post.time);
-            console.log("hey");
-            post["time"] = formattedTime;
-        });
-
-        this.setState({posts: formatted});
-        console.log(formatted);
     }
 
     getTimeDisplay(dateString){
@@ -71,14 +74,13 @@ class Feed extends Component {
     }
 
     render() {
-        const allPosts = this.state.posts;
+        const allPosts = this.props.tweets;
 
         const noPosts = (
             <div className={`feed_centered`}>
                 <h4>Follow some people!</h4>
             </div>);
-
-        const posts = this.state.posts.reverse().map((post,index) => (
+        const posts = this.props.tweets.reverse().map((post,index) => (
             <div key={index} className={`post`}>
                 <div className={`container`}>
 
@@ -106,8 +108,10 @@ class Feed extends Component {
                             <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faImage} size="1x" />
                             </div>
-                            <div className={`col inline feed_centered feed_icon`}>
-                                <FontAwesomeIcon className={`feed_postActionIcon`} icon={faHeart} size="1x" />
+                            <div className={`col inline feed_centered feed_icon myHover`}>
+                                    <button  onClick={this.handleLike} data-tweetid={post.rowid}>
+                                        <FontAwesomeIcon className={`feed_postActionIcon`} icon={faHeart} size="1x" />
+                                    </button>
                             </div>
                             <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faShareSquare} size="1x" />

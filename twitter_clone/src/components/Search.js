@@ -8,13 +8,15 @@ class Search extends Component {
         super(props);
         this.state = {
             focus: false,
-            input: ''
+            input: '',
+            results: []
         }
         this.searchInput = React.createRef();
         this.handleClick = this.handleClick.bind(this);
         this.handleFocus = this.handleFocus.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.getSubstring = this.getSubstring.bind(this);
     }
 
     handleClick() {
@@ -29,16 +31,49 @@ class Search extends Component {
         this.setState({focus: false});
     }
 
-    handleChange(event) {
-        this.setState({input: event.target.value});
-        // note - setState is asynch, this is 1 behind - can use e.target.value though
-        console.log(this.state.input);
+    searchTwitter(query) {
+        const params = {
+            query: query
+        };
+        if (!params.query) {
+            return;
+        }
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/searchTwitter", options)
+            .then(res => res.json())
+            .then(res => {
+                this.setState({results: res});
+            });
     }
 
-    /* TODO decide if the search suggestions dropdown warrants a separate component
-    - decide based on props/state management */
+    handleChange(event) {
+        const query = event.target.value;
+        this.setState({input: query});
+        if (query.length > 0) {
+            this.searchTwitter(query);
+        } else {
+            this.setState({results: []});
+        }
+    }
+
+    getSubstring(tweet) {
+        return tweet;
+    }
 
     render() {
+        const results = this.state.results.map(tweet => (
+            <li key={tweet.rowid}>
+                {this.getSubstring(tweet.message)}
+            </li>
+        ));
+        if (results.length > 5) {
+            results.length = 5;
+        }
         return(
             <>
                 <div    className={`rounded-pill search-container
@@ -47,22 +82,23 @@ class Search extends Component {
 
                     <FontAwesomeIcon className="search-icon" icon={faSearch} size="1x" />
 
-                    <input  type="search" name="search" placeholder="Search Twitter"
+                    <input  type="search" name="search" placeholder="Search hashtags"
                             className="search-input" onBlur={this.handleBlur}
                             onFocus={this.handleFocus} ref={this.searchInput}
-                            onChange={this.handleChange} value={this.state.input} />
+                            onChange={this.handleChange} value={this.state.input}
+                            autoComplete="off" />
                 </div>
                 {this.state.focus &&
                 <div className="search-suggestions">
                     {this.state.input === '' &&
-                    <p className="search-prompt">Try searching for people,
-                        topics, or keywords</p>
+                    <p className="search-prompt">Try searching for #hashtags</p>
                     }
-                    {this.state.input !== '' &&
+                    {this.state.input !== '' && this.state.results.length === 0 &&
+                    <p className="search-prompt">No results!</p>}
+                    {this.state.input !== '' && this.state.results.length !== 0 &&
                     <ul className="search-list">
-                        <li>Placeholder 1</li>
-                        <li>Placeholder 2</li>
-                        <li>Placeholder 3</li>
+                    {/* // if enter or click, go to #explore which displays all results */}
+                        {results}
                     </ul>}
                 </div>}
             </>

@@ -3,7 +3,7 @@
      border-right: 1px solid #ececec;
      height: 100%;
      overflow-y: scroll;
-     /* The height and scrolling of this will require some figuring out 
+     /* The height and scrolling of this will require some figuring out
      border: 1px solid blue; */
 }
 
@@ -33,7 +33,7 @@
 .feed_postActionIcon {
      color: #858585;
 }
-/* 
+/*
 .feed_icon:hover {
      background-color: #a2cee991;
      border-radius: 100%;

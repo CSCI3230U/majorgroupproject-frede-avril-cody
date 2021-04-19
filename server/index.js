@@ -5,6 +5,7 @@ const followers = require('./model/followers.js');
 const tweets = require('./model/tweets.js');
 const users = require('./model/users.js');
 const messages = require('./model/messages.js');
+const tweetHashtags = require('./model/tweet_hashtags.js');
 const cors = require('cors');
 const app = express();
 
@@ -45,7 +46,13 @@ app.post('/whoToFollow', (request, response) => {
 
 app.post('/follow', (request, response) => {
     console.log(request.body);
-    followers.addFollower(request.session, request.body);
+    followers.addFollower(request.body);
+    response.json({response: "received"});
+});
+
+app.post('/followByName', (request, response) => {
+    console.log(request.body);
+    followers.addFollowerByName(request.body);
     response.json({response: "received"});
 });
 
@@ -75,8 +82,28 @@ app.post('/getMessages', (request, response) => {
     messages.getMessages(request.body, response);
 });
 
+app.post('/searchTwitter', (request, response) => {
+    console.log(request.body);
+    tweetHashtags.findTweets(request.body.query, response);
+});
+
+app.post('/getProfile', (request, response) => {
+    console.log(request.body);
+    users.getProfile(request.body, response);
+});
+
+app.post('/like', (request, response) => {
+    tweets.like(request.body);
+    response.json({});
+});
+
 app.get('/getMostTweeted', (request, response) => {
     tweets.getMostTweeted(response);
+});
+
+
+app.get('/analytics', (request, response) => {
+    response.sendFile(__dirname + '/public/analytics.html');
 });
 
 app.set('port', process.env.PORT || 4000);

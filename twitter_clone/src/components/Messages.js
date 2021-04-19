@@ -16,19 +16,22 @@ class Messages extends Component {
         this.state = {
             text: '',
             messages: [],
-            receiver: ''
+            receiver: '',
+            interval: null
         }
         this.send = this.send.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.displayMessages = this.displayMessages.bind(this);
     }
+
     send(event){
         this.setState({text: event.target.value});
     }
 
-    componentDidMount() {
+    displayMessages() {
         const params = {
             sender: this.props.sender,
-            receiver: this.state.receiver
+            receiver: "Randy"
         };
 
         if (!params.receiver) {
@@ -47,10 +50,20 @@ class Messages extends Component {
             });
     }
 
+    componentDidMount() {
+        this.displayMessages();
+        const interval = setInterval(this.displayMessages, 5000);
+        this.setState({interval: interval});
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.interval);
+    }
+
     handleClick(event){ // this function is supposed to call
         const params = {
             sender: this.props.sender,
-            receiver: this.state.receiver,
+            receiver: "Randy",
             message: this.state.text
         };
 
@@ -69,12 +82,14 @@ class Messages extends Component {
             .then(res => res.json())
             .then(res => {
                 this.setState({messages: res});
+                console.log(res);
             });
+
     }
 
     render() {
         const messages = React.Children.toArray(this.state.messages.map(message => (
-            <OneMessage message={message} />
+            <OneMessage message={message} user={this.props.sender} />
         )));
         return(
             <div className={`messages`}>

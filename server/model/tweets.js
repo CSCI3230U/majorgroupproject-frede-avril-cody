@@ -1,4 +1,5 @@
 const db = require('./database.js');
+const tags = require('./hashtags.js');
 
 function getAll(res) {
     db.data.all('SELECT * FROM tweets', function (err, tweets) {
@@ -21,15 +22,15 @@ function getFeed(username, res) {
                 returnFeed(user.rowid, res);
             } else {
                 // if user just registered, user is undefined, but they will have no follows = no feed
-                res.json({});
+                res.json([]);
             }
         }
     });
 }
 
 function returnFeed(userId, res) {
-    db.data.all(`SELECT * FROM (SELECT * FROM tweets WHERE (${userId}, senderId) IN followers\
-                ORDER BY time DESC LIMIT 10) ORDER BY time ASC`, function (err, tweets) {
+    db.data.all(`SELECT rowid, * FROM (SELECT rowid, * FROM tweets WHERE (${userId}, senderId) IN followers\
+                ORDER BY time DESC LIMIT 30) ORDER BY time ASC`, function (err, tweets) {
         if (err) {
             console.error("There was an error retrieving tweets: " + err);
         } else {
@@ -39,8 +40,18 @@ function returnFeed(userId, res) {
 }
 
 function insert(content, userId, username) {
+    const hashtagRegex = new RegExp(/(\s#|^#)[a-zA-z0-9]+/g);
+    const hashtags = Array.from(content.matchAll(hashtagRegex), r => r[0].trim().toLowerCase());
+
     db.data.run(`INSERT INTO tweets (senderId, sender, message) VALUES (?, ?, ?)`,
-                [userId, username, content]);
+                [userId, username, content], function (err) {
+                    if (err) {
+                        console.error("There was an error inserting a tweet into the db");
+                    } else {
+                        const tweetId = this.lastID;
+                        tags.addHashtags(hashtags, tweetId);
+                    }
+                });
 }
 
 function tweet(req) {
@@ -69,7 +80,34 @@ function getMostTweeted(res) {
     })
 }
 
+function fakeInsert(content, userId, username) {
+    const hashtagRegex = new RegExp(/(\s#|^#)[a-zA-z0-9]+/g);
+    const hashtags = Array.from(content.matchAll(hashtagRegex), r => r[0].trim().toLowerCase()); // if error, check here
+
+    db.data.run(`INSERT INTO tweets (senderId, sender, message) VALUES (?, ?, ?)`,
+                [userId, username, content], function (err) {
+                    if (err) {
+                        console.error("There was an error inserting a tweet into the db");
+                        console.error(err)
+                    } else {
+                        const tweetId = this.lastID;
+                        tags.addHashtags(hashtags, tweetId);
+                    }
+                });
+}
+
+function like(req) {
+    db.data.run(`UPDATE tweets SET likes=likes + 1 WHERE rowid = ${req.tweetid}`,
+        function(err) {
+            if (err) {
+                console.error("Error updating the number of likes");
+            }
+        });
+}
+
 module.exports.tweet = tweet;
+module.exports.like = like;
 module.exports.getAll = getAll;
 module.exports.getFeed = getFeed;
 module.exports.getMostTweeted = getMostTweeted;
+module.exports.fakeInsert = fakeInsert;

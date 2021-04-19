@@ -10,6 +10,9 @@
     border: 1px solid black;
     margin-top: 15px;
 }
+.title h2{
+    font-family: bold;
+}
 #icons a{
     padding: 10px;
 }
@@ -34,4 +37,43 @@
 .textArea input{
     width: 100%;
     height: 100%;
+}
+.messageContainer{
+    margin:0;
+    width: 100%;
+    padding: 5px 0 5px 2px;
+    
+}
+#message{
+    background:#1da1f2;
+    border-radius: 10%;
+    margin:0;
+    /* margin: 5px 0 5px 2px; */
+    
+}
+#time{
+    font-size: xx-small;
+    margin:0;
+}
+
+.sender{
+    /* background: red; */
+    float: left;
+    border-end-end-radius: 25%;
+    margin: 10px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: red;
+}   
+.receiver{
+   
+    border-end-end-radius: 25%;
+    margin: 10px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: red;
 }
