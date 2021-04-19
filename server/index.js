@@ -106,6 +106,10 @@ app.get('/getMostTweeted', (request, response) => {
     tweets.getMostTweeted(response);
 });
 
+app.get('/getMostLiked', (request, response) => {
+    tweets.getMostLiked(response);
+});
+
 app.get('/analytics', (request, response) => {
     response.sendFile(__dirname + '/public/analytics.html');
 });
