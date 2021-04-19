@@ -19,8 +19,11 @@ window.onload = function() {
             .then((response) => response.json())
             .then((json) => drawBarChart(json));
 
-     
-     drawPieChart();
+     // fetch('http://localhost:4000/getMostLikes')
+     //        .then((response) => response.json())
+     //        .then((json) => drawPieChart(json)); 
+
+     drawPieChart(pieData);
 };
 
 function getMostTweets(data){
@@ -35,6 +38,7 @@ function getMostTweets(data){
 }
 
 function drawBarChart(barData){
+     console.log(barData);
      barData.sort((a, b) => (a["COUNT(message)"] > b["COUNT(message)"]) ? 1 : -1);
 
      let colourScale = d3.scaleLinear()
@@ -56,16 +60,10 @@ function drawBarChart(barData){
                          .domain([0,getMostTweets(barData)])
                          .range([chartHeight, 0]);
 
-     // title
-     barSvg.append('text')
-          .attr('x', width / 2)
-          .attr('y', margin)
-          .attr('text-anchor', 'middle')
-          .text('Users with most tweets');
 
      // create a group (g) for the bars
-    let g = barSvg.append('g')
-    .attr('transform', `translate(${margin}, ${margin})`);
+     let g = barSvg.append('g')
+                         .attr('transform', `translate(${margin}, ${margin})`);
 
      // y-axis
      g.append('g')
@@ -77,21 +75,20 @@ function drawBarChart(barData){
           .call(d3.axisBottom(xScaleBar));
 
      let rectangles = g.selectAll('rect')
-          .data(barData)
-          .enter()
-               .append('rect')
-                    .attr('x', (data) => xScaleBar(data.sender))
-                    .attr('y', (data) => yScaleBar(data["COUNT(message)"]))
-                    .attr('width', xScaleBar.bandwidth())
-                    .attr('height', (data) => chartHeight - yScaleBar(data["COUNT(message)"]))
-                    .attr('fill', (data) => colourScale(data["COUNT(message)"]))
+                         .data(barData)
+                         .enter()
+                              .append('rect')
+                                   .attr('x', (data) => xScaleBar(data.sender))
+                                   .attr('y', (data) => yScaleBar(data["COUNT(message)"]))
+                                   .attr('width', xScaleBar.bandwidth())
+                                   .attr('height', (data) => chartHeight - yScaleBar(data["COUNT(message)"]))
+                                   .attr('fill', (data) => colourScale(data["COUNT(message)"]))
 }
 
 
-function drawPieChart(){
+function drawPieChart(pieData){
 
-     // color change not currently working
-     let colourScale = d3.scaleOrdinal(["#DFF5FE","#BADEED", "#98D0E7", "#60B6D9", "#3E9AC0"]);
+     let colourScale = d3.scaleOrdinal(["#BADEED", "#98D0E7", "#60B6D9", "#519BBA", "#4F8298"]);
 
      // place bar chart in barChart div
      let pieSvg = d3.select("#pieChart")
@@ -114,28 +111,24 @@ function drawPieChart(){
      // pie pieces details
      let piePieces = pieSvg.append('g')
                               .attr("transform", "translate(400,250)")
-                              .selectAll("path").data(parsedData);
-
-     piePieces.enter()
-               .append("path")
-               .attr("d", arcs)
-               .attr("fill", (data) => colourScale(data.likes));
-
-     // 400 translation + 200 outer radius
-     let center = 400 + 200;
-
-     // append the handles to the data
-     pieSvg.append('text')
+                              .selectAll('path')
+                              .data(parsedData)
+                              .enter()
+                                   .append('path')
+                                        .attr('d', arcs)
+                                        .attr('fill', (data) => colourScale(data.data.likes));
+     // legend colors
+     pieSvg.selectAll('rect')
                .data(parsedData)
                .enter()
-               .text((data) => data.data.handle)
-               .attr("x", (data) => getlabely(data.data));
+                    .append('rect')
+                         .attr('x', 50)
+                         .attr('y', (data, i) => (i+1)*40)
+                         .attr('width', 30)
+                         .attr('height', 30)
+                         .attr('fill', (data) => colourScale(data.data.likes))
 
-
-}
-
-function getlabely(data){
-     return "translate(600)"
+     // legend text
 }
 
 function getLikes(data){
@@ -156,4 +149,15 @@ function getMostLikes(data){
      });
 
      return mostLikes+1;
+}
+
+function getLeastLikes(data){
+     let leastLikes = getMostLikes(data);
+     data.forEach(element => {
+          if (element.likes < leastLikes) {
+               leastLikes = element.likes;
+          }
+     });
+
+     return leastLikes;
 }
