@@ -49,6 +49,11 @@ class Register extends Component {
             return;
         }
 
+        if (!this.validPassword(params.password)) {
+            this.displayMessage('Passwords require at least 4 characters including at least one letter and one number');
+            return;
+        }
+
         if (params.password !== this.state.confirmedPassword) {
             this.displayMessage(`Passwords don't match!`);
             return;

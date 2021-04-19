@@ -85,7 +85,8 @@ class Tweet extends Component{
                             <div className="tweet_tweetContent">
                                 <input type="text" name="tweet" placeholder="What's happening?"
                                         className={'tweet_tweetInput tweet_form-control'}
-                                        onChange={this.handleText} />
+                                        onChange={this.handleText}
+                                        autoComplete="off" />
                             </div>
                             <div  className={`row`}>
                                 <div className="col extras">

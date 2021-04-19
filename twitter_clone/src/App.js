@@ -56,7 +56,7 @@ class App extends React.Component {
 
     handleRegister(username, handle) {
         this.setState({register: false});
-        this.handleLogin(username, handle)
+        this.handleLogin(username, handle);
     }
 
     handleRegisterClick() {

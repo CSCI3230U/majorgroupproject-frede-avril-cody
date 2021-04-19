@@ -85,7 +85,8 @@ class Search extends Component {
                     <input  type="search" name="search" placeholder="Search Twitter"
                             className="search-input" onBlur={this.handleBlur}
                             onFocus={this.handleFocus} ref={this.searchInput}
-                            onChange={this.handleChange} value={this.state.input} />
+                            onChange={this.handleChange} value={this.state.input}
+                            autoComplete="off" />
                 </div>
                 {this.state.focus &&
                 <div className="search-suggestions">
@@ -96,7 +97,7 @@ class Search extends Component {
                     <p className="search-prompt">Exact matches only</p>}
                     {this.state.input !== '' && this.state.results.length !== 0 &&
                     <ul className="search-list">
-                    // if enter or click, go to #explore which displays all results
+                    {/* // if enter or click, go to #explore which displays all results */}
                         {results}
                     </ul>}
                 </div>}

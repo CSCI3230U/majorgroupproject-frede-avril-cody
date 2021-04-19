@@ -102,6 +102,10 @@ function verifyUniqueIdentifier(req, res) {
     });
 }
 
+function validPassword(password) {
+    return password.length > 3 && password.search(/\d/) !== -1 && password.search(/[a-zA-z]/) !== -1;
+}
+
 function registerNewUser(session, req, res) {
     const username = req.username;
     const password = req.password;
@@ -110,6 +114,9 @@ function registerNewUser(session, req, res) {
 
     if (!valid(username)) {
         res.json(denyRegistration("Invalid username"));
+        return;
+    } else if (!validPassword(password)) {
+        res.json(denyRegistration("Invalid password"));
         return;
     } else if (!valid(handle)) {
         res.json(denyRegistration("Invalid handle"));
@@ -139,7 +146,8 @@ function registerNewUser(session, req, res) {
                 const hashedPassword = await bcrypt.hash(password, salt);
                 db.data.run(`INSERT INTO users VALUES (?, ?, ?, ?)`,
                             [username, hashedPassword, handle, email]);
-                res.json({registered: true, username: username, message: "Registration success!"});
+                res.json({registered: true, username: username, handle: handle,
+                    message: "Registration success!"});
             }
         }
         // db.data.all()
