@@ -26,13 +26,15 @@ class App extends React.Component {
             username: '',
             handle: '',
             register: false,
-            isConnectDisplayed: false
+            isConnectDisplayed: false,
+            posts: []
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleRegisterClick = this.handleRegisterClick.bind(this);
         this.connectDisplayed = this.connectDisplayed.bind(this);
+        this.updateFeed = this.updateFeed.bind(this);
     }
 
     connectDisplayed(flag) {
@@ -46,6 +48,8 @@ class App extends React.Component {
             handle: handle,
             isConnectDisplayed: false
         });
+        // setState is async, so need to pass username directly
+        this.updateFeed(username);
     }
 
     handleLogout() {
@@ -61,6 +65,23 @@ class App extends React.Component {
 
     handleRegisterClick() {
         this.setState({register: true});
+    }
+
+    updateFeed(username) {
+        const params = {
+            username: username
+        };
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/populateFeed", options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({posts: res});
+            });
     }
 
     render() {
@@ -95,7 +116,9 @@ class App extends React.Component {
                             <Route exact path="/feed" render={() =>
                                 <Fragment>
                                     <Tweet username={this.state.username} />
-                                    <Feed username={this.state.username} />
+                                    <Feed   username={this.state.username}
+                                            updateFeed={this.updateFeed}
+                                            posts={this.state.posts} />
                                 </Fragment>
                             }/>
 
@@ -106,7 +129,9 @@ class App extends React.Component {
                     <div className="rightSide">
                         <Search />
                         <News />
-                        {!this.state.isConnectDisplayed && <FollowRecommendations username={this.state.username} />}
+                        {!this.state.isConnectDisplayed &&
+                            <FollowRecommendations username={this.state.username}
+                                                updateFeed={this.updateFeed}/>}
                     </div>
                 </div>
             );

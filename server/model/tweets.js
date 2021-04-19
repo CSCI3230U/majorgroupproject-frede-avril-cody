@@ -22,7 +22,7 @@ function getFeed(username, res) {
                 returnFeed(user.rowid, res);
             } else {
                 // if user just registered, user is undefined, but they will have no follows = no feed
-                res.json({});
+                res.json([]);
             }
         }
     });

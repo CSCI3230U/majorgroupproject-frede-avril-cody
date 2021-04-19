@@ -10,44 +10,29 @@ class Feed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: [],
             loaded: false,
         };
         this.getTimeDisplay = this.getTimeDisplay.bind(this);
-        this.formatResponseTime = this.formatResponseTime.bind(this);
+        // this.formatResponseTime = this.formatResponseTime.bind(this);
     }
 
     componentDidMount() {
-        const params = {
-            username: this.props.username
-        };
-        const options = {
-            method: 'POST',
-            body: JSON.stringify(params)
-        };
-
-        fetch("http://localhost:4000/populateFeed", options)
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                this.setState({posts: res});
-            });
-
+        this.props.updateFeed(this.props.username);
     }
 
-    formatResponseTime(){
-        // let retrieved = ;
-        let formatted = this.state.posts;
-
-        formatted.forEach(post => {
-            let formattedTime = this.getTimeDisplay(post.time);
-            console.log("hey");
-            post["time"] = formattedTime;
-        });
-
-        this.setState({posts: formatted});
-        console.log(formatted);
-    }
+    // formatResponseTime(){
+    //     // let retrieved = ;
+    //     let formatted = this.props.posts;
+    //
+    //     formatted.forEach(post => {
+    //         let formattedTime = this.getTimeDisplay(post.time);
+    //         console.log("hey");
+    //         post["time"] = formattedTime;
+    //     });
+    //
+    //     this.setState({posts: formatted});
+    //     console.log(formatted);
+    // }
 
     getTimeDisplay(dateString){
         let display = "3h";
@@ -71,14 +56,14 @@ class Feed extends Component {
     }
 
     render() {
-        const allPosts = this.state.posts;
+        const allPosts = this.props.posts;
 
         const noPosts = (
             <div className={`feed_centered`}>
                 <h4>Follow some people!</h4>
             </div>);
-
-        const posts = this.state.posts.reverse().map((post,index) => (
+        console.log(this.props)
+        const posts = this.props.posts.reverse().map((post,index) => (
             <div key={index} className={`post`}>
                 <div className={`container`}>
 

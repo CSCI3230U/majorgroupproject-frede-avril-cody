@@ -26,3 +26,11 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+input {
+    outline: none;
+}
+
+button {
+    outline: none;
+}
