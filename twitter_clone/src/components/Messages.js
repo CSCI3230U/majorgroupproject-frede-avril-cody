@@ -31,7 +31,7 @@ class Messages extends Component {
     displayMessages() {
         const params = {
             sender: this.props.sender,
-            receiver: this.state.receiver
+            receiver: "Randy"
         };
 
         if (!params.receiver) {
@@ -63,7 +63,7 @@ class Messages extends Component {
     handleClick(event){ // this function is supposed to call
         const params = {
             sender: this.props.sender,
-            receiver: this.state.receiver,
+            receiver: "Randy",
             message: this.state.text
         };
 
@@ -82,12 +82,14 @@ class Messages extends Component {
             .then(res => res.json())
             .then(res => {
                 this.setState({messages: res});
+                console.log(res);
             });
+
     }
 
     render() {
         const messages = React.Children.toArray(this.state.messages.map(message => (
-            <OneMessage message={message} />
+            <OneMessage message={message} user={this.props.sender} />
         )));
         return(
             <div className={`messages`}>
