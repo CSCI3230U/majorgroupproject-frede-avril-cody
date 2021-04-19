@@ -6,16 +6,16 @@ class Explore extends Component {
 
     /* DEMO OF HOW TO RETRIEVE DATABASE DATA */
     // simplest - no params
-    componentDidMount() {
-        const options = {
-            method: 'GET'
-        };
-        fetch("http://localhost:4000/getMostLiked", options)
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-            });
-    }
+    // componentDidMount() {
+    //     const options = {
+    //         method: 'GET'
+    //     };
+    //     fetch("http://localhost:4000/getMostLiked", options)
+    //         .then(res => res.json())
+    //         .then(res => {
+    //             console.log(res);
+    //         });
+    // }
 
     // with params
     // componentDidMount() {

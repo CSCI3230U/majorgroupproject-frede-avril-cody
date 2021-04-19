@@ -12,7 +12,7 @@ class Card extends Component {
         }
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
         this.handleEllipsisClick = this.handleEllipsisClick.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
+        this.onMouseLeave = this.onMouseLeave.bind(this);
     }
 
     handleLogoutClick() {
@@ -23,14 +23,17 @@ class Card extends Component {
         this.setState({showLogout: true});
     }
 
-    handleBlur() {
-        console.log("handleBlur called")
+    onMouseLeave() {
+        this.setState({showLogout: false});
     }
 
     render() {
         return(
-            <div className={`card container`}>
-                {this.state.showLogout && <div className="card-logout"> </div>}
+            <div className={`card container`} onMouseLeave={this.onMouseLeave}>
+                {this.state.showLogout && <div className="card-logout">
+                <div className="card-logout-container" onClick={this.handleLogoutClick}>
+                <p className={`card-logout-text`}>
+                Logout from Twitter</p></div></div>}
                 <div className={`row card-vcentered inline`}>
                     <div className={`col-3 inline`}>
                         <img src={`images/profile/1.png`} alt="profile" className={`card-profilePic inline`}></img>
@@ -42,7 +45,6 @@ class Card extends Component {
                     <div className={`col-3 inline`}>
                         <FontAwesomeIcon    className={`card-options inline fa-lg`}
                                             onClick={this.handleEllipsisClick}
-                                            onBlur={this.handleBlur}
                                             icon={faEllipsisH}/>
                     </div>
                 </div>
