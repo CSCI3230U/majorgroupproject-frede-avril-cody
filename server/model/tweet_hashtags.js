@@ -13,14 +13,14 @@ function insert(hashtag, tweetId) {
 
 function findTweets(hashtag, res) {
     db.data.all(`SELECT tweetId FROM tweetHashtags WHERE hashtag = '${hashtag}'`,
-                function(err, tweets) {
-                    if (err) {
-                        console.error("There was an error finding the tweets with the hashtag");
-                        return [];
-                    } else {
-                        returnTweets(tweets.map(t => t.tweetId), res);
-                    }
-    });
+        function(err, tweets) {
+            if (err) {
+                console.error("There was an error finding the tweets with the hashtag");
+                return [];
+            } else {
+                returnTweets(tweets.map(t => t.tweetId), res);
+            }
+        });
 }
 
 function returnTweets(tweets, res) {

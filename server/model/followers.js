@@ -36,5 +36,6 @@ function insert(follower, followed) {
                 [follower, followed]);
 }
 
+module.exports.insert = insert;
 module.exports.addFollower = addFollower;
 module.exports.addFollowerByName = addFollowerByName;

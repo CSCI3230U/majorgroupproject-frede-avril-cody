@@ -1,4 +1,5 @@
 const db = require('./database.js');
+const followers = require('./followers.js');
 const emailValidator = require('validator');
 const bcrypt = require('bcrypt');
 
@@ -145,7 +146,13 @@ function registerNewUser(session, req, res) {
                 const salt = await bcrypt.genSalt(10);
                 const hashedPassword = await bcrypt.hash(password, salt);
                 db.data.run(`INSERT INTO users VALUES (?, ?, ?, ?)`,
-                            [username, hashedPassword, handle, email]);
+                            [username, hashedPassword, handle, email], function(err) {
+                                if (err) {
+                                    console.error(err)
+                                } else {
+                                    followers.insert(this.lastID, this.lastID);
+                                }
+                            });
                 res.json({registered: true, username: username, handle: handle,
                     message: "Registration success!"});
             }
@@ -169,18 +176,18 @@ function getUserProfile(req, res) {
 
 function getUserFollowCount(user, res) {
     db.data.all(`SELECT COUNT(followerId) FROM followers WHERE followerId = \
-                ${user.rowid} GROUP BY followerId`, function(err, follows) {
-                    if (err) {
-                        console.error("error retreiving number of follows");
-                    } else {
-                        if (follows.length > 0) {
-                            user.follows = follows[0]["COUNT(followerId)"];
-                        } else {
-                            user.follows = 0;
-                        }
-                        getUserFollowerCount(user, res);
-                    }
-                });
+        ${user.rowid} GROUP BY followerId`, function(err, follows) {
+            if (err) {
+                console.error("error retreiving number of follows");
+            } else {
+                if (follows.length > 0) {
+                    user.follows = follows[0]["COUNT(followerId)"];
+                } else {
+                    user.follows = 0;
+                }
+                getUserFollowerCount(user, res);
+            }
+        });
 }
 
 function getUserFollowerCount(user, res) {
