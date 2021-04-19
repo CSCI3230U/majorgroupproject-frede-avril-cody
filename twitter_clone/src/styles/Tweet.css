@@ -22,8 +22,9 @@
      color: #1DA1F2;
 }
 
-.tweet_homeText{
+.tweet-homeText{
      font-weight: bold;
+     padding-left: 0.5rem;
 }
 
 .tweet_body {
@@ -62,4 +63,13 @@
 
 .tweet_form-control {
      border: 0;
+}
+
+.tweet-sparkles{
+     width: 25px;
+     height: auto;
+}
+
+.tweet-sparkle-container{
+     text-align: right;
 }
