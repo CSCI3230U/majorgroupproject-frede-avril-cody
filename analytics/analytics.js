@@ -9,7 +9,13 @@ var barData = [
      {"handle": "@ken", "tweets": 1},
 ];
 var pieData = {};
-var linearData = {};
+var linearData = [
+     {"day": "2021-", "tweets": 13},
+     {"day": "@mariana", "tweets": 3},
+     {"day": "@joe", "tweets": 10},
+     {"day": "@mihai", "tweets": 5},
+     {"day": "@ken", "tweets": 1},
+];;
 
 const margin = 50;
 const width = 800;
@@ -18,6 +24,8 @@ const chartWidth = width - 2 * margin;
 const chartHeight = height - 2 * margin;
 
 window.onload = function() {
+
+     barData.sort((a, b) => (a.tweets > b.tweets) ? 1 : -1);
 
      const colourScale = d3.scaleLinear()
                             .domain([0, getMostTweets(barData)])
@@ -67,18 +75,6 @@ window.onload = function() {
                     .attr('width', xScaleBar.bandwidth())
                     .attr('height', (data) => chartHeight - yScaleBar(data.tweets))
                     .attr('fill', (data) => colourScale(data.tweets))
-                    .on('mouseenter', function(source, index) {
-                         d3.select(this)
-                              .transition()
-                              .duration(200)
-                              .attr('opacity', 0.5);
-                    })
-                    .on('mouseleave', function(source, index) {
-                         d3.select(this)
-                              .transition()
-                              .duration(200)
-                              .attr('opacity', 1.0);
-                    });
 
      
 
