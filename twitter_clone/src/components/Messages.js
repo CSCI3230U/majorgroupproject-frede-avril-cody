@@ -18,7 +18,8 @@ class Messages extends Component {
             messages: [],
             receiver: '',
             interval: null,
-            userList: []
+            userList: [],
+            id: 0
         }
         this.send = this.send.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -48,7 +49,7 @@ class Messages extends Component {
         fetch("http://localhost:4000/getMessages", options)
             .then(res => res.json())
             .then(res => {
-                this.setState({messages: res});
+                this.setState({id: res.id, messages: res.messages});
             });
     }
 
@@ -83,7 +84,7 @@ class Messages extends Component {
         fetch("http://localhost:4000/saveMessage", options)
             .then(res => res.json())
             .then(res => {
-                this.setState({messages: res});
+                this.setState({id: res.id, messages: res.messages});
                 console.log(res);
             });
 
@@ -123,7 +124,7 @@ class Messages extends Component {
 
     render() {
         const messages = React.Children.toArray(this.state.messages.map(message => (
-            <OneMessage message={message} user={this.props.sender} />
+            <OneMessage message={message} user={this.state.id} />
         )));
         return(
             <div className={`messages`}>

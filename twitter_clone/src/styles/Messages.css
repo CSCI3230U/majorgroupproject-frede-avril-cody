@@ -26,6 +26,10 @@
     height: 600px;
     border-right: 1px solid black;
     border-left: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: hsla(180, 50%, 50%, 0.12);
 }
 .sendAMessage{
     display: flex;
@@ -44,13 +48,13 @@
     height: 100%;
 }
 .messageContainer{
-    margin:0;
-    width: 100%;
-    padding: 5px 0 5px 2px;
-
+    margin: 0;
+    padding: 0.5rem;
+    border-radius: 100rem;
 }
+
 #message{
-    background:#1da1f2;
+    /* background:#1da1f2; */
     border-radius: 10%;
     margin:0;
     /* margin: 5px 0 5px 2px; */
@@ -66,21 +70,18 @@
     float: left;
     border-end-end-radius: 25%;
     margin: 10px;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background: red;
+    max-width: 75%;
+    align-self: flex-start;
+    background-color: hsla(240, 50%, 50%, 0.25);
 }
-.receiver{
 
+.receiver{
     border-end-end-radius: 25%;
     margin: 10px;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    background: red;
+    max-width: 75%;
+    align-self: flex-end;
+    text-align: right;
+    background-color: hsla(120, 50%, 50%, 0.25);
 }
 
 .messages-receiver-input {
