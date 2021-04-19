@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import '../styles/Login.css';
+import image from '../image/twitterBackground.png'; 
 
 class Login extends Component {
     constructor(props) {
@@ -58,9 +59,9 @@ class Login extends Component {
     render() {
         return(
             // TODO refactor to handle enter press
-            <div className="LoginPage">
-                <div>
-
+            <div className={`LoginPage`}>
+                <div className="loginImage" >
+                    <img src={image}/>
                 </div>
                 <div className={`login`}>
                     <h2 className={`login-text`}>{this.state.message} </h2>
