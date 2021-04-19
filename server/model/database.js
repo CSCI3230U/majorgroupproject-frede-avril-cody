@@ -30,6 +30,7 @@ db.serialize(async function() {
         .run("DROP TABLE IF EXISTS tweetHashtags")
         .run("DROP TABLE IF EXISTS users")
         .run("DROP TABLE IF EXISTS followers")
+        .run("DROP TABLE IF EXISTS messages")
         .run("DROP TABLE IF EXISTS totallyDoesnt");
 
     db  .run(`CREATE TABLE IF NOT EXISTS tweets (
@@ -59,7 +60,14 @@ db.serialize(async function() {
                                         followedId INTEGER NOT NULL,
                                         PRIMARY KEY (followerId, followedId),
                                         FOREIGN KEY (followerId) REFERENCES users(rowid),
-                                        FOREIGN KEY (followedId) REFERENCES users(rowid))`);
+                                        FOREIGN KEY (followedId) REFERENCES users(rowid))`)
+        .run(`CREATE TABLE IF NOT EXISTS messages (
+                                        senderId INTEGER NOT NULL,
+                                        receiverId INTEGER NOT NULL,
+                                        time DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                        message TEXT,
+                                        FOREIGN KEY (senderId) REFERENCES users(rowid),
+                                        FOREIGN KEY (receiverId) REFERENCES users(rowid))`);
 
     const users = db.prepare('INSERT INTO users VALUES (?, ?, ?, ?)');
     const hashtags = db.prepare('INSERT INTO hashtags (hashtag) VALUES (?)');

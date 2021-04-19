@@ -28,8 +28,8 @@ function getFeed(username, res) {
 }
 
 function returnFeed(userId, res) {
-    db.data.all(`SELECT * FROM tweets WHERE (${userId}, senderId) IN followers\
-                ORDER BY time LIMIT 10`, function (err, tweets) {
+    db.data.all(`SELECT * FROM (SELECT * FROM tweets WHERE (${userId}, senderId) IN followers\
+                ORDER BY time DESC LIMIT 10) ORDER BY time ASC`, function (err, tweets) {
         if (err) {
             console.error("There was an error retrieving tweets: " + err);
         } else {
@@ -58,6 +58,18 @@ function tweet(req) {
     });
 }
 
+function getMostTweeted(res) {
+    db.data.all(`SELECT sender, COUNT(message) FROM tweets GROUP BY senderId\
+                ORDER BY COUNT(message) DESC LIMIT 5`, function(err, users) {
+        if (err) {
+            console.error("There was an error getting data for the analytics page");
+        } else {
+            res.json(users);
+        }
+    })
+}
+
 module.exports.tweet = tweet;
 module.exports.getAll = getAll;
 module.exports.getFeed = getFeed;
+module.exports.getMostTweeted = getMostTweeted;
