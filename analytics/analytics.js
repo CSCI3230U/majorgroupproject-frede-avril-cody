@@ -24,12 +24,28 @@ const chartWidth = width - 2 * margin;
 const chartHeight = height - 2 * margin;
 
 window.onload = function() {
+     drawBarChart();
+     drawPieChart();
+     drawLinearPlot();
+};
 
+function getMostTweets(data){
+     let mostTweets = 0;
+     data.forEach(element => {
+          if (element.tweets > mostTweets) {
+               mostTweets = element.tweets;
+          }
+     });
+
+     return mostTweets+1;
+}
+
+function drawBarChart(){
      barData.sort((a, b) => (a.tweets > b.tweets) ? 1 : -1);
 
      const colourScale = d3.scaleLinear()
                             .domain([0, getMostTweets(barData)])
-                            .range(['#badcea', '#accaee']);
+                            .range(['#DFF5FE', '#accaee']);
 
      // place bar chart in barChart div
      var barSvg = d3.select("#barChart")
@@ -75,18 +91,14 @@ window.onload = function() {
                     .attr('width', xScaleBar.bandwidth())
                     .attr('height', (data) => chartHeight - yScaleBar(data.tweets))
                     .attr('fill', (data) => colourScale(data.tweets))
+}
+
+function drawPieChart(){
+
+
+}
+
+function drawLinearPlot(){
 
      
-
-};
-
-function getMostTweets(data){
-     let mostTweets = 0;
-     data.forEach(element => {
-          if (element.tweets > mostTweets) {
-               mostTweets = element.tweets;
-          }
-     });
-
-     return mostTweets+1;
 }
