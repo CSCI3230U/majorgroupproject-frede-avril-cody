@@ -13,6 +13,7 @@ class Feed extends Component {
             loaded: false,
         };
         this.getTimeDisplay = this.getTimeDisplay.bind(this);
+        this.handleLike = this.handleLike.bind(this);
         // this.formatResponseTime = this.formatResponseTime.bind(this);
     }
 
@@ -33,6 +34,23 @@ class Feed extends Component {
     //     this.setState({posts: formatted});
     //     console.log(formatted);
     // }
+
+    handleLike(event) {
+        const params = {
+            tweetid: event.currentTarget.dataset.tweetid,
+            username: this.props.username
+        };
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/like", options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+            });
+    }
 
     getTimeDisplay(dateString){
         let display = "3h";
@@ -56,14 +74,13 @@ class Feed extends Component {
     }
 
     render() {
-        const allPosts = this.props.posts;
+        const allPosts = this.props.tweets;
 
         const noPosts = (
             <div className={`feed_centered`}>
                 <h4>Follow some people!</h4>
             </div>);
-        console.log(this.props)
-        const posts = this.props.posts.reverse().map((post,index) => (
+        const posts = this.props.tweets.reverse().map((post,index) => (
             <div key={index} className={`post`}>
                 <div className={`container`}>
 
@@ -91,8 +108,10 @@ class Feed extends Component {
                             <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faImage} size="1x" />
                             </div>
-                            <div className={`col inline feed_centered feed_icon`}>
-                                <FontAwesomeIcon className={`feed_postActionIcon`} icon={faHeart} size="1x" />
+                            <div className={`col inline feed_centered feed_icon myHover`}>
+                                    <button  onClick={this.handleLike} data-tweetid={post.rowid}>
+                                        <FontAwesomeIcon className={`feed_postActionIcon`} icon={faHeart} size="1x" />
+                                    </button>
                             </div>
                             <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faShareSquare} size="1x" />

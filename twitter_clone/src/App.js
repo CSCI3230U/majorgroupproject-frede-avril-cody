@@ -27,7 +27,7 @@ class App extends React.Component {
             handle: '',
             register: false,
             isConnectDisplayed: false,
-            posts: []
+            tweets: []
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
@@ -76,11 +76,11 @@ class App extends React.Component {
             body: JSON.stringify(params)
         };
 
-        fetch("http://localhost:4000/populateFeed", options)
+            fetch("http://localhost:4000/populateFeed", options)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                this.setState({posts: res});
+                this.setState({tweets: res});
             });
     }
 
@@ -121,7 +121,7 @@ class App extends React.Component {
                                     <Tweet username={this.state.username} />
                                     <Feed   username={this.state.username}
                                             updateFeed={this.updateFeed}
-                                            posts={this.state.posts} />
+                                            tweets={this.state.tweets} />
                                 </Fragment>
                             }/>
 

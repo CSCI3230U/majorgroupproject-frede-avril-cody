@@ -54,7 +54,7 @@ class Search extends Component {
     handleChange(event) {
         const query = event.target.value;
         this.setState({input: query});
-        if (query.length > 2) {
+        if (query.length > 0) {
             this.searchTwitter(query);
         } else {
             this.setState({results: []});
@@ -82,7 +82,7 @@ class Search extends Component {
 
                     <FontAwesomeIcon className="search-icon" icon={faSearch} size="1x" />
 
-                    <input  type="search" name="search" placeholder="Search Twitter"
+                    <input  type="search" name="search" placeholder="Search hashtags"
                             className="search-input" onBlur={this.handleBlur}
                             onFocus={this.handleFocus} ref={this.searchInput}
                             onChange={this.handleChange} value={this.state.input}
@@ -94,7 +94,7 @@ class Search extends Component {
                     <p className="search-prompt">Try searching for #hashtags</p>
                     }
                     {this.state.input !== '' && this.state.results.length === 0 &&
-                    <p className="search-prompt">Exact matches only</p>}
+                    <p className="search-prompt">No results!</p>}
                     {this.state.input !== '' && this.state.results.length !== 0 &&
                     <ul className="search-list">
                     {/* // if enter or click, go to #explore which displays all results */}

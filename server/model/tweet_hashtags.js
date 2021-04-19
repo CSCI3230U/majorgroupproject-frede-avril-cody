@@ -12,7 +12,7 @@ function insert(hashtag, tweetId) {
 }
 
 function findTweets(hashtag, res) {
-    db.data.all(`SELECT tweetId FROM tweetHashtags WHERE hashtag = '${hashtag}'`,
+    db.data.all(`SELECT tweetId FROM tweetHashtags WHERE hashtag LIKE '%${hashtag}%'`,
         function(err, tweets) {
             if (err) {
                 console.error("There was an error finding the tweets with the hashtag");

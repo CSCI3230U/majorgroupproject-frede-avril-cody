@@ -92,9 +92,15 @@ app.post('/getProfile', (request, response) => {
     users.getProfile(request.body, response);
 });
 
+app.post('/like', (request, response) => {
+    tweets.like(request.body);
+    response.json({});
+});
+
 app.get('/getMostTweeted', (request, response) => {
     tweets.getMostTweeted(response);
 });
+
 
 app.get('/analytics', (request, response) => {
     response.sendFile(__dirname + '/public/analytics.html');

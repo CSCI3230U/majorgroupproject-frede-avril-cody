@@ -29,7 +29,7 @@ function getFeed(username, res) {
 }
 
 function returnFeed(userId, res) {
-    db.data.all(`SELECT * FROM (SELECT * FROM tweets WHERE (${userId}, senderId) IN followers\
+    db.data.all(`SELECT rowid, * FROM (SELECT rowid, * FROM tweets WHERE (${userId}, senderId) IN followers\
                 ORDER BY time DESC LIMIT 30) ORDER BY time ASC`, function (err, tweets) {
         if (err) {
             console.error("There was an error retrieving tweets: " + err);
@@ -96,7 +96,17 @@ function fakeInsert(content, userId, username) {
                 });
 }
 
+function like(req) {
+    db.data.run(`UPDATE tweets SET likes=likes + 1 WHERE rowid = ${req.tweetid}`,
+        function(err) {
+            if (err) {
+                console.error("Error updating the number of likes");
+            }
+        });
+}
+
 module.exports.tweet = tweet;
+module.exports.like = like;
 module.exports.getAll = getAll;
 module.exports.getFeed = getFeed;
 module.exports.getMostTweeted = getMostTweeted;
