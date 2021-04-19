@@ -86,7 +86,10 @@ class App extends React.Component {
                                 return <Connect connectDisplayed={this.connectDisplayed}
                                                 username={this.state.username}/>}}/>
                             <Route exact path="/explore" component={Explore}/>
-                            <Route exact path="/messages" component={Messages}/>
+
+                            <Route exact path="/messages" render={() => {
+                                return <Messages sender={this.state.username}/>}} />
+
                             <Route exact path="/profile" component={Profile}/>
 
                             <Route exact path="/feed" render={() =>

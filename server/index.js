@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const followers = require('./model/followers.js');
 const tweets = require('./model/tweets.js');
 const users = require('./model/users.js');
+const messages = require('./model/messages.js');
 const cors = require('cors');
 const app = express();
 
@@ -62,6 +63,11 @@ app.post('/tweet', (request, response) => {
     console.log(request.body);
     tweets.tweet(request.body);
     response.json({});
+});
+
+app.post('/saveMessage', (request, response) => {
+    console.log(request.body);
+    messages.saveMessage(request.body, response);
 });
 
 app.set('port', process.env.PORT || 4000);
