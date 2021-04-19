@@ -79,14 +79,19 @@ class Menu extends Component{
                             </div>
                         </div>
                     </Link>
-                    <div className={`row menu-row`}>
-                        <div className={`col-3`}>
-                            <FontAwesomeIcon className={`menu-icon`} icon={faEllipsisH} size="2x" />
+                    <a  href="http://localhost:4000/analytics" target="_blank"
+                        rel="noopener noreferrer">
+                        <div className={`row menu-row`}>
+                        {/* // TODO fix styling */}
+                            <div className={`col-3`}>
+                                {/* // TODO change to chart icon */}
+                                <FontAwesomeIcon className={`menu-icon`} icon={faEllipsisH} size="2x" />
+                            </div>
+                            <div className={`col menu-option`}>
+                                <p className={`menu-option`}>Analytics</p>
+                            </div>
                         </div>
-                        <div className={`col menu-option`}>
-                            <p className={`menu-option`}>More</p>  
-                        </div>
-                    </div>
+                    </a>
                 </div>
                 <br />
                 <div className=".btn">

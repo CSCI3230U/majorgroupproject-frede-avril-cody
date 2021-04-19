@@ -85,6 +85,10 @@ app.get('/getMostTweeted', (request, response) => {
     tweets.getMostTweeted(response);
 });
 
+app.get('/analytics', (request, response) => {
+    response.sendFile(__dirname + '/public/analytics.html');
+});
+
 app.set('port', process.env.PORT || 4000);
 app.listen(app.get('port'), function() {
     console.log(`Server listening on port ${app.get('port')}`)
