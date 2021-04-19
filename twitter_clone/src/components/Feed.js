@@ -34,7 +34,7 @@ class Feed extends Component {
             });
 
     }
-    
+
     formatResponseTime(){
         // let retrieved = ;
         let formatted = this.state.posts;
@@ -67,13 +67,13 @@ class Feed extends Component {
             }
         } else { // if the tweet wasn't posted today
             return display;
-        }   
+        }
     }
 
     render() {
         const allPosts = this.state.posts;
 
-        const noPosts = (   
+        const noPosts = (
             <div className={`feed_centered`}>
                 <h4>Follow some people!</h4>
             </div>);
@@ -119,7 +119,7 @@ class Feed extends Component {
         ));
 
         return(
-            
+
             <div className={`feed_feed`}>
                 {allPosts.length > 0 ? posts : noPosts}
             </div>
