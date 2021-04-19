@@ -66,7 +66,6 @@ db.serialize(async function() {
                                         receiverId INTEGER NOT NULL,
                                         time DATETIME DEFAULT CURRENT_TIMESTAMP,
                                         message TEXT,
-                                        PRIMARY KEY (senderId, receiverId),
                                         FOREIGN KEY (senderId) REFERENCES users(rowid),
                                         FOREIGN KEY (receiverId) REFERENCES users(rowid))`);
 

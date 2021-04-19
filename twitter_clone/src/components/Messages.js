@@ -15,11 +15,7 @@ class Messages extends Component {
 
         this.state = {
             text: '',
-            messages: [{message: "FakeMessage2", time: "2020-02-02", sender: true},
-                        {message: "FakeMessage2", time: "2020-02-02", sender: false},
-                        {message: "FakeMessage2", time: "2020-02-02", sender: true},
-                        {message: "FakeMessage2", time: "2020-02-02", sender: false},
-                        {message: "FakeMessage2", time: "2020-02-02", sender: true}]
+            messages: [{message: "FakeMessage2", time: "2020-02-02", sender: true}]
         }
         this.send = this.send.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -30,7 +26,7 @@ class Messages extends Component {
     handleClick(event){ // this function is supposed to call
         const params = {
             sender: this.props.sender,
-            receiver: "fakename",
+            receiver: "Randy",
             message: this.state.text
         };
         if (!params.message) {
