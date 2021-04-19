@@ -69,10 +69,11 @@ class Tweet extends Component{
                 <div className={`tweet_header container tweet_body`}>
                     <div className={`row`}>
                         <div className={`col`}>
-                            <h4 className={`tweet_inline tweet_homeText`}>Home</h4>
+                            <h4 className={`tweet_inline tweet-homeText`}>Home</h4>
                         </div>
-                        <div className={`col-md-1`}>
-                            <FontAwesomeIcon className={`tweet_star`} icon={faStar} size="1x" />
+                        <div className={`col-md-2 tweet-sparkle-container`}>
+                            {/* <FontAwesomeIcon className={`tweet_star`} icon={faStar} size="1x" /> */}
+                            <img src={`images/icons/sparkles.png`} alt="sparkles" className={`tweet-sparkles`}></img>
                         </div>
                     </div>
                 </div>

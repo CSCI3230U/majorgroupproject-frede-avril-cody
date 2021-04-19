@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+     <link rel="stylesheet" href="analytics.css" />
+
+     <script src="https://d3js.org/d3.v5.min.js"></script>
+     <script src="analytics.js"></script>
+
+     <title>Analytics</title>
+</head>
+<body>
+     <nav class="navbar" role="navigation" aria-label="main navigation">
+          <div class="hero is-info" style="width: 100%;">
+               <div class="hero-body">
+                   <div class="columns is-mobile is-centered">
+                       <h1 class="title">Twitter-Clone Analytics</h1>
+                   </div>
+                   <div class="columns is-mobile is-centered">
+                       <h3>An overview of the site</h3>
+                   </div>
+               </div>
+           </div>
+
+     </nav>
+     <div class="barChart">
+          <h5>Top 5 users with most Tweets</h5>
+          <div id="barChart">
+
+          </div>
+     </div>
+     <div class="pieChart">
+          <h5>Top 5 users with most Likes</h5>
+          <div id="pieChart">
+
+          </div>
+     </div>
+   
+</body>
+</html>
