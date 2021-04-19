@@ -5,7 +5,7 @@ function newMessage(content, res) {
     const receiver = content.receiver;
     const message = content.message;
 
-    db.data.all(`SELECT rowid, username, handle FROM users WHERE username = '${sender}'\
+    db.data.all(`SELECT rowid, username FROM users WHERE username = '${sender}'\
                 OR\ username = '${receiver}'`, function(err, users) {
                     if (err || users.length < 2) {
                         console.error("There was an error finding the users for a message insert");
@@ -45,4 +45,23 @@ function sendMessages(senderId, receiverId, res) {
                 });
 }
 
+function getMessages(content, res) {
+    const sender = content.sender;
+    const receiver = content.receiver;
+
+    db.data.all(`SELECT rowid, username FROM users WHERE username = '${sender}'\
+                OR\ username = '${receiver}'`, function(err, users) {
+                    if (err || users.length < 2) {
+                        console.error("There was an error finding the users for a messages request");
+                    } else {
+                        const flag = users[0].username === sender;
+                        const senderId = flag ? users[0].rowid : users[1].rowid;
+                        const receiverId = flag ? users[1].rowid : users[0].rowid;
+
+                        sendMessages(senderId, receiverId, res);
+                    }
+                });
+}
+
 module.exports.saveMessage = newMessage;
+module.exports.getMessages = getMessages;

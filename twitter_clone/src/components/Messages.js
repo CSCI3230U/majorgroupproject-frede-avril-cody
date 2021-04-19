@@ -15,7 +15,7 @@ class Messages extends Component {
 
         this.state = {
             text: '',
-            messages: [{message: "FakeMessage2", time: "2020-02-02", sender: true}]
+            messages: []
         }
         this.send = this.send.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -23,6 +23,25 @@ class Messages extends Component {
     send(event){
         this.setState({text: event.target.value});
     }
+
+    componentDidMount() {
+        const params = {
+            sender: this.props.sender,
+            receiver: "Randy"
+        };
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/getMessages", options)
+            .then(res => res.json())
+            .then(res => {
+                this.setState({messages: res});
+            });
+    }
+
     handleClick(event){ // this function is supposed to call
         const params = {
             sender: this.props.sender,
@@ -47,9 +66,9 @@ class Messages extends Component {
     }
 
     render() {
-        const messages = this.state.messages.map(message => (
-            <OneMessage key={message.time} message={message} />
-        ));
+        const messages = React.Children.toArray(this.state.messages.map(message => (
+            <OneMessage message={message} />
+        )));
         return(
             <div className={`messages`}>
                 <div className="title">

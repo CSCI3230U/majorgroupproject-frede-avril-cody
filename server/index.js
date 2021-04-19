@@ -70,6 +70,11 @@ app.post('/saveMessage', (request, response) => {
     messages.saveMessage(request.body, response);
 });
 
+app.post('/getMessages', (request, response) => {
+    console.log(request.body);
+    messages.getMessages(request.body, response);
+});
+
 app.get('/getMostTweeted', (request, response) => {
     tweets.getMostTweeted(response);
 });
