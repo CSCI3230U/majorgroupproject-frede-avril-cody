@@ -15,7 +15,8 @@ class Messages extends Component {
 
         this.state = {
             text: '',
-            messages: []
+            messages: [],
+            receiver: ''
         }
         this.send = this.send.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -27,8 +28,12 @@ class Messages extends Component {
     componentDidMount() {
         const params = {
             sender: this.props.sender,
-            receiver: "Randy"
+            receiver: this.state.receiver
         };
+
+        if (!params.receiver) {
+            console.log("no receiver");
+        }
 
         const options = {
             method: 'POST',
@@ -45,11 +50,13 @@ class Messages extends Component {
     handleClick(event){ // this function is supposed to call
         const params = {
             sender: this.props.sender,
-            receiver: "Randy",
+            receiver: this.state.receiver,
             message: this.state.text
         };
-        if (!params.message) {
-            console.log("no message");
+
+        this.setState({text: ''});
+        if (!params.message || !params.receiver) {
+            console.log("no receiver");
             return;
         }
 
@@ -87,7 +94,8 @@ class Messages extends Component {
                 </div>
                 <div className="sendAMessage">
                     <div className="textArea">
-                        <input type="text" onChange={this.send} placeholder="Send something"/>
+                        <input type="text" onChange={this.send}
+                        value={this.state.text} placeholder="Send something"/>
                     </div>
                     <div id="sendBtn">
                         <button type="button"><FontAwesomeIcon className={`menu-icon`}

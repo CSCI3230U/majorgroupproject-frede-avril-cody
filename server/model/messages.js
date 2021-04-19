@@ -35,11 +35,12 @@ function insert(senderId, receiverId, message, res) {
 
 function sendMessages(senderId, receiverId, res) {
     db.data.all(`SELECT * FROM messages WHERE (senderId, receiverId) IN (SELECT \
-                '${senderId}', '${receiverId}' UNION SELECT '${senderId}', \
-                '${receiverId}')`, function(err, messages) {
+                '${senderId}', '${receiverId}' UNION SELECT '${receiverId}', \
+                '${senderId}')`, function(err, messages) {
                     if (err) {
                         console.error("There was an error retrieving the messages");
                     } else {
+                        console.log(messages);
                         res.json(messages);
                     }
                 });
