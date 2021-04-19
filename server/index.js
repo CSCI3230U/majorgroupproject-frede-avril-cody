@@ -46,7 +46,13 @@ app.post('/whoToFollow', (request, response) => {
 
 app.post('/follow', (request, response) => {
     console.log(request.body);
-    followers.addFollower(request.session, request.body);
+    followers.addFollower(request.body);
+    response.json({response: "received"});
+});
+
+app.post('/followByName', (request, response) => {
+    console.log(request.body);
+    followers.addFollowerByName(request.body);
     response.json({response: "received"});
 });
 

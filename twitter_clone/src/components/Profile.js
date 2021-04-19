@@ -6,6 +6,7 @@ class Profile extends Component {
         super(props);
         this.state = {
         };
+        this.handleFollow = this.handleFollow.bind(this);
     }
 
     componentDidMount() {
@@ -39,7 +40,7 @@ class Profile extends Component {
         fetch("http://localhost:4000/followByName", options)
             .then(res => res.json())
             .then(res => {
-                this.props.updateFeed(this.props.profileName);
+                console.log(res)
             });
         // TODO Instead of follow, should have a '+'
         // Then, in this method, the '+' for event.target should be changed to a 'check'
