@@ -81,6 +81,11 @@ app.post('/searchTwitter', (request, response) => {
     tweetHashtags.findTweets(request.body.query, response);
 });
 
+app.post('/getProfile', (request, response) => {
+    console.log(request.body);
+    users.getProfile(request.body, response);
+});
+
 app.get('/getMostTweeted', (request, response) => {
     tweets.getMostTweeted(response);
 });

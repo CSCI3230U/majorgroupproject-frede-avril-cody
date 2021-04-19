@@ -111,7 +111,10 @@ class App extends React.Component {
                             <Route exact path="/messages" render={() => {
                                 return <Messages sender={this.state.username}/>}} />
 
-                            <Route exact path="/profile" component={Profile}/>
+                            <Route exact path="/profile" render={() => {
+                                return <Profile profileName={this.state.username}
+                                                username={this.state.username} />
+                            }}/>
 
                             <Route exact path="/feed" render={() =>
                                 <Fragment>

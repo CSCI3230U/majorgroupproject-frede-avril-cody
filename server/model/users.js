@@ -154,7 +154,65 @@ function registerNewUser(session, req, res) {
     });
 }
 
+function getUserProfile(req, res) {
+    const username = req.profileName;
+
+    db.data.get(`SELECT rowid, username, handle FROM users WHERE username = \
+                                '${username}'`, function(err, user) {
+        if (err) {
+            console.error("There was an error getting the user for a profile retrieval");
+        } else {
+            getUserFollowCount(user, res);
+        }
+    });
+}
+
+function getUserFollowCount(user, res) {
+    db.data.all(`SELECT COUNT(followerId) FROM followers WHERE followerId = \
+                ${user.rowid} GROUP BY followerId`, function(err, follows) {
+                    if (err) {
+                        console.error("error retreiving number of follows");
+                    } else {
+                        if (follows.length > 0) {
+                            user.follows = follows[0]["COUNT(followerId)"];
+                        } else {
+                            user.follows = 0;
+                        }
+                        getUserFollowerCount(user, res);
+                    }
+                });
+}
+
+function getUserFollowerCount(user, res) {
+    db.data.all(`SELECT COUNT(followedId) FROM followers WHERE followedId = \
+                ${user.rowid} GROUP BY followedId`, function(err, followers) {
+                    if (err) {
+                        console.error("error retreiving number of followers");
+                    } else {
+                        if (followers.length > 0) {
+                            user.followers = followers[0]["COUNT(followedId)"];
+                        } else {
+                            user.followers = 0;
+                        }
+                        getUserFeed(user, res);
+                    }
+                });
+}
+
+function getUserFeed(user, res) {
+    db.data.all(`SELECT * FROM tweets WHERE senderId = ${user.rowid} ORDER BY \
+                time DESC LIMIT 30`, function(err, tweets) {
+        if (err) {
+            console.error("error retreiving an individual's feed");
+        } else {
+            user.tweets = tweets;
+            res.json(user);
+        }
+    });
+}
+
 module.exports.verifyUnique = verifyUniqueIdentifier;
+module.exports.getProfile = getUserProfile;
 module.exports.login = handleLogin;
 module.exports.register = registerNewUser;
 module.exports.getFollowRecommendations = findFollowRecommendations;

@@ -71,7 +71,6 @@ db.serialize(async function() {
                                         FOREIGN KEY (receiverId) REFERENCES users(rowid))`);
 
     const users = db.prepare('INSERT INTO users VALUES (?, ?, ?, ?)');
-    const followers = db.prepare('INSERT INTO followers (followerId, followedId) VALUES (?, ?)');
 
     const profs = ["Randy", "Lennart", "Mariana", "Mehran", "Paula", "Ilona",
                     "Ken", "Mihai", "Joe", "Rupinder"];
@@ -95,15 +94,6 @@ db.serialize(async function() {
                 }, i*1000);
             }
         });
-    });
-
-    followers.finalize();
-
-    db.each('SELECT * FROM tweets', function (err, row) {
-        console.log(row);
-    });
-    db.each('SELECT * FROM users', function (err, row) {
-        console.log(row);
     });
 });
 

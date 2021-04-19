@@ -30,7 +30,7 @@ function getFeed(username, res) {
 
 function returnFeed(userId, res) {
     db.data.all(`SELECT * FROM (SELECT * FROM tweets WHERE (${userId}, senderId) IN followers\
-                ORDER BY time DESC LIMIT 10) ORDER BY time ASC`, function (err, tweets) {
+                ORDER BY time DESC LIMIT 30) ORDER BY time ASC`, function (err, tweets) {
         if (err) {
             console.error("There was an error retrieving tweets: " + err);
         } else {
