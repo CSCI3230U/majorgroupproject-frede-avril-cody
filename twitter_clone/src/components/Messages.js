@@ -16,16 +16,19 @@ class Messages extends Component {
         this.state = {
             text: '',
             messages: [],
-            receiver: ''
+            receiver: '',
+            interval: null
         }
         this.send = this.send.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.displayMessages = this.displayMessages.bind(this);
     }
+
     send(event){
         this.setState({text: event.target.value});
     }
 
-    componentDidMount() {
+    displayMessages() {
         const params = {
             sender: this.props.sender,
             receiver: this.state.receiver
@@ -45,6 +48,16 @@ class Messages extends Component {
             .then(res => {
                 this.setState({messages: res});
             });
+    }
+
+    componentDidMount() {
+        this.displayMessages();
+        const interval = setInterval(this.displayMessages, 5000);
+        this.setState({interval: interval});
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.interval);
     }
 
     handleClick(event){ // this function is supposed to call
