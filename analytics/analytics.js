@@ -8,14 +8,14 @@ var barData = [
      {"handle": "@mihai", "tweets": 5},
      {"handle": "@ken", "tweets": 1},
 ];
-var pieData = {};
-var linearData = [
-     {"day": "2021-", "tweets": 13},
-     {"day": "@mariana", "tweets": 3},
-     {"day": "@joe", "tweets": 10},
-     {"day": "@mihai", "tweets": 5},
-     {"day": "@ken", "tweets": 1},
-];;
+
+var pieData = [
+     {"handle": "@randy", "likes": 13},
+     {"handle": "@mariana", "likes": 3},
+     {"handle": "@joe", "likes": 10},
+     {"handle": "@mihai", "likes": 5},
+     {"handle": "@ken", "likes": 1},
+];
 
 const margin = 50;
 const width = 800;
@@ -26,7 +26,6 @@ const chartHeight = height - 2 * margin;
 window.onload = function() {
      drawBarChart();
      drawPieChart();
-     drawLinearPlot();
 };
 
 function getMostTweets(data){
@@ -43,7 +42,7 @@ function getMostTweets(data){
 function drawBarChart(){
      barData.sort((a, b) => (a.tweets > b.tweets) ? 1 : -1);
 
-     const colourScale = d3.scaleLinear()
+     let colourScale = d3.scaleLinear()
                             .domain([0, getMostTweets(barData)])
                             .range(['#DFF5FE', '#accaee']);
 
@@ -95,10 +94,71 @@ function drawBarChart(){
 
 function drawPieChart(){
 
+     // color change not currently working
+     let colourScale = d3.scaleOrdinal()
+                         .domain([0,getMostLikes(pieData)])
+                         .range(["#BADEED", "#98D0E7", "#60B6D9", "#3E9AC0"]);
+
+     // place bar chart in barChart div
+     let pieSvg = d3.select("#pieChart")
+                         .append("svg")
+                              .attr("width", width)
+                              .attr("height", height);
+     
+     // parse the data to get the angles
+     let parsedData = d3.pie().sort(null).value(function(d) {return d.likes})(pieData);
+     console.log(parsedData);
+
+     // arc details
+     let arcs = d3.arc()
+                    .innerRadius(100)
+                    .outerRadius(200)
+                    .padAngle(0.1)
+                    .padRadius(50);
+
+     // pie pieces details
+     let piePieces = pieSvg.append('g')
+                              .attr("transform", "translate(400,250)")
+                              .selectAll("path").data(parsedData);
+
+     piePieces.enter()
+               .append("path")
+               .attr("d", arcs)
+               .attr("fill", (data) => colourScale(data.likes));
+
+     // 400 translation + 200 outer radius
+     let center = 400 + 200;
+
+     // append the handles to the data
+     pieSvg.append('text')
+               .data(parsedData)
+               .enter()
+               .text((data) => data.data.handle)
+               .attr("x", (data) => getlabely(data.data));
+
 
 }
 
-function drawLinearPlot(){
+function getlabely(data){
+     return "translate(600)"
+}
 
-     
+function getLikes(data){
+     let likes = [];
+     data.forEach(element => {
+          likes.push(element.likes);
+     });
+
+     return likes;
+}
+
+function getMostLikes(data){
+     let mostLikes = 0;
+     data.forEach(element => {
+          if (element.likes > mostLikes) {
+               mostLikes = element.likes;
+          }
+     });
+
+     return mostLikes+1;
 }
