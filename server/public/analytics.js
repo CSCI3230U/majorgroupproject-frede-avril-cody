@@ -1,13 +1,5 @@
 const randyQuotes = ['This is a balanced tree, even Thanos would approve - Randy 2019', 'You get wood, you get weapons, you get bombs... are there bombs in Fortnite? I have only played twice, but anyways... - Randy 2019', 'People think of K-maps and they think of K-pop, which is not as trendy as it used to be but you know, it is still fun... - Randy 2020'];
 
-var pieData = [
-     {"handle": "@randy", "likes": 13},
-     {"handle": "@mariana", "likes": 3},
-     {"handle": "@joe", "likes": 10},
-     {"handle": "@mihai", "likes": 5},
-     {"handle": "@ken", "likes": 1},
-];
-
 const margin = 50;
 const width = 800;
 const height = 500;
@@ -19,11 +11,10 @@ window.onload = function() {
             .then((response) => response.json())
             .then((json) => drawBarChart(json));
 
-     // fetch('http://localhost:4000/getMostLikes')
-     //        .then((response) => response.json())
-     //        .then((json) => drawPieChart(json)); 
+     fetch('http://localhost:4000/getMostLiked')
+            .then((response) => response.json())
+            .then((json) => drawPieChart(json)); 
 
-     drawPieChart(pieData);
 };
 
 function getMostTweets(data){
@@ -38,7 +29,7 @@ function getMostTweets(data){
 }
 
 function drawBarChart(barData){
-     console.log(barData);
+     
      barData.sort((a, b) => (a["COUNT(message)"] > b["COUNT(message)"]) ? 1 : -1);
 
      let colourScale = d3.scaleLinear()
@@ -87,7 +78,7 @@ function drawBarChart(barData){
 
 
 function drawPieChart(pieData){
-
+     console.log(pieData);
      let colourScale = d3.scaleOrdinal(["#BADEED", "#98D0E7", "#60B6D9", "#519BBA", "#4F8298"]);
 
      // place bar chart in barChart div
@@ -98,7 +89,7 @@ function drawPieChart(pieData){
      
      // parse the data to get the angles
      let parsedData = d3.pie().sort(null)
-                         .value(function(d) {return d.likes})(pieData);
+                         .value(function(d) {return d["SUM(likes)"]})(pieData);
      console.log(parsedData);
 
      // arc details
@@ -116,7 +107,7 @@ function drawPieChart(pieData){
                               .enter()
                                    .append('path')
                                         .attr('d', arcs)
-                                        .attr('fill', (data) => colourScale(data.data.likes));
+                                        .attr('fill', (data) => colourScale(data.data["SUM(likes)"]));
      // legend colors
      pieSvg.selectAll('rect')
                .data(parsedData)
@@ -126,7 +117,7 @@ function drawPieChart(pieData){
                          .attr('y', (data, i) => (i+1)*40)
                          .attr('width', 30)
                          .attr('height', 30)
-                         .attr('fill', (data) => colourScale(data.data.likes))
+                         .attr('fill', (data) => colourScale(data.data["SUM(likes)"]))
 
      // // legend text
      pieSvg.selectAll('text')
@@ -135,13 +126,13 @@ function drawPieChart(pieData){
                     .append('text')
                          .attr('x', 90)
                          .attr('y', (data, i) => (i+1)*40 + 20)
-                         .text(data => `${data.data.handle}`);
+                         .text(data => `${data.data.sender}`);
 }
 
 function getLikes(data){
      let likes = [];
      data.forEach(element => {
-          likes.push(element.likes);
+          likes.push(element["SUM(likes)"]);
      });
 
      return likes;
@@ -151,7 +142,7 @@ function getMostLikes(data){
      let mostLikes = 0;
      data.forEach(element => {
           if (element.likes > mostLikes) {
-               mostLikes = element.likes;
+               mostLikes = element["SUM(likes)"];
           }
      });
 
@@ -161,8 +152,8 @@ function getMostLikes(data){
 function getLeastLikes(data){
      let leastLikes = getMostLikes(data);
      data.forEach(element => {
-          if (element.likes < leastLikes) {
-               leastLikes = element.likes;
+          if (element["SUM(likes)"] < leastLikes) {
+               leastLikes = element["SUM(likes)"];
           }
      });
 
