@@ -19,9 +19,13 @@
     padding: 8px;
     width: 100%;
     border: none;
-    background-color: #40acf0;
+    background-color: hsl(203,85%,60%);
     font-weight: bold;
     color: white;
+}
+
+.menu-tweet-button:hover {
+    background-color: hsl(203,85%,70%);
 }
 
 .menu-option{
