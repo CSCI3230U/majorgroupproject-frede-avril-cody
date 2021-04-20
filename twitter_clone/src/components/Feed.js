@@ -12,21 +12,19 @@ class Feed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // loaded: false,
             imgUrl: `images/profile/1.png`
         };
         this.handleLike = this.handleLike.bind(this);
         this.getImgUrl = this.getImgUrl.bind(this);
     }
 
+    // load feed
     componentDidMount() {
-        // if (!this.props.hashtagFlag) {
-            this.props.updateFeed(this.props.username);
-        // } else {
-        //     this.props.resetHashtagFlag();
-        // }
+        this.props.updateFeed(this.props.username);
     }
 
+    // handle a click of the like
+    // users are allowed to like multiple times
     handleLike(event) {
         const params = {
             tweetid: event.currentTarget.dataset.tweetid,
@@ -44,9 +42,10 @@ class Feed extends Component {
         this.componentDidMount();
     }
 
+    // get the img url based on the id
     getImgUrl(id) {
         if (id === 1) {
-            return `images/profile/4randy.png`;
+            return `images/profile/4randy.png`; // special pic for randy
         } else {
             const index = id%18;
             return `images/profile/${index}.png`

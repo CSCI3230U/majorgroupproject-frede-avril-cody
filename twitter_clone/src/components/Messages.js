@@ -45,7 +45,7 @@ class Messages extends Component {
         };
 
         if (!params.receiver) {
-            console.log("no receiver");
+            return;
         }
 
         const options = {
@@ -80,7 +80,6 @@ class Messages extends Component {
 
         this.setState({text: ''});
         if (!params.message || !params.receiver) {
-            console.log("no receiver");
             return;
         }
 
@@ -93,7 +92,6 @@ class Messages extends Component {
             .then(res => res.json())
             .then(res => {
                 this.setState({id: res.id, messages: res.messages});
-                console.log(res);
             });
     }
     handleKeyPress(event) {
@@ -107,7 +105,6 @@ class Messages extends Component {
     }
 
     handleReceiverInput(event) {
-        console.log(event.target)
         const input = event.target.value;
         this.setState({receiver: input}, this.displayMessages);
         if (input.length > 0) {
@@ -133,7 +130,6 @@ class Messages extends Component {
         fetch("http://localhost:4000/searchUsers", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 this.setState({userList: res});
             });
     }
@@ -151,7 +147,6 @@ class Messages extends Component {
             .then(res => res.json())
             .then(res => {
                 let followed = res.followed;
-                console.log(followed);
                 this.setState({followed: followed});
             });
     }

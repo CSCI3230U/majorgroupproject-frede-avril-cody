@@ -12,19 +12,7 @@ import {faChartPie} from '@fortawesome/free-solid-svg-icons';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 //
 class Menu extends Component{
-    constructor() {
-        super();
 
-        this.state = {
-
-        }
-        // this.setActiveTab = this.setActiveTab.bind(this)
-    }
-    // changeCurrentPageComponent(e){
-    //     e.preventDefault();
-
-
-    // }
     render(){
         return(
             <div className={`menu-menu`}>

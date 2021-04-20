@@ -30,7 +30,6 @@ class Profile extends Component {
             tweetid: event.currentTarget.dataset.tweetid,
             username: this.props.username
         };
-        console.log(params)
         const options = {
             method: 'POST',
             body: JSON.stringify(params)
@@ -39,7 +38,7 @@ class Profile extends Component {
         fetch("http://localhost:4000/like", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                // do nothing explicitly
             });
 
         this.componentDidMount();
@@ -58,7 +57,6 @@ class Profile extends Component {
         fetch("http://localhost:4000/getProfile", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res)
                 let tweets = res.tweets;
                 let user = res.username;
                 let handle = res.handle;

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSyncAlt} from '@fortawesome/free-solid-svg-icons';
 
+// shows random users you may want to follow
 class FollowRecommendations extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +17,7 @@ class FollowRecommendations extends Component {
         this.updateProfileName = this.updateProfileName.bind(this);
     }
 
+    // handle a click of the refresh icon
     handleRefresh() {
         const params = {
             username: this.props.username,
@@ -33,10 +35,12 @@ class FollowRecommendations extends Component {
             });
     }
 
+    // same behaviour as handleRefresh
     componentDidMount() {
         this.handleRefresh();
     }
 
+    // handle a click of the follow button
     handleFollow(event) {
         const params = {
             follower: this.props.username,
@@ -47,6 +51,10 @@ class FollowRecommendations extends Component {
             body: JSON.stringify(params)
         };
 
+        /*  This is a hacky way to do this, we know if a user is displayed they
+            are not followed, so we can use that to display the correct follow
+            status without additional database queries. The logic doesn't hold
+            up if you count server restarts, not intended to, just a quick fix. */
         if (event.target.dataset.following === "false") {
             event.target.dataset.following = "true";
             event.target.innerText = "Following!";
@@ -60,9 +68,9 @@ class FollowRecommendations extends Component {
             .then(res => {
                 this.props.updateFeed(this.props.username);
             });
-        // TODO Instead of follow, should have a '+'
-        // Then, in this method, the '+' for event.target should be changed to a 'check'
     }
+
+    // get the img url based on the id
     getImgUrl(id) {
         if (id === 1) {
             return `images/profile/4randy.png`;
@@ -72,6 +80,7 @@ class FollowRecommendations extends Component {
         }
     }
 
+    // on a click on the username, update the App's state accordingly
     updateProfileName(e) {
         this.props.updateProfileName(e.target.innerText);
     }

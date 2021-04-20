@@ -17,13 +17,13 @@ class Login extends Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
 
+    // handles a click of the login button
     handleLoginClick() {
         const params = {
             username: this.state.username,
             password: this.state.password
         };
         if (!params.username || !params.password) {
-            // todo could implement a handler to update the message appropriately
             return;
         }
         const options = {
@@ -34,7 +34,6 @@ class Login extends Component {
         fetch("http://localhost:4000/login", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 if (res.authenticated) {
                     this.props.handleLogin(res.username, res.handle);
                 } else {
@@ -44,21 +43,21 @@ class Login extends Component {
 
     }
 
+    // update message based on unsuccessful login
     loginUnsuccessful() {
         this.setState({message: 'Login unsuccessful, please try again'})
     }
 
+    // reset message if username or password is changed
     handleUsernameChange(event) {
         this.setState({username: event.target.value, message: 'Please login'});
     }
-
     handlePasswordChange(event) {
         this.setState({password: event.target.value, message: 'Please login'});
     }
 
     render() {
         return(
-            // TODO refactor to handle enter press
             <div className={`LoginPage`}>
                 <div className="loginImage" >
                     <img src={image} alt="login background not found"/>

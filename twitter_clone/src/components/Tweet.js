@@ -36,7 +36,6 @@ class Tweet extends Component{
             content: this.state.content
         };
         if (!params.content || params.content.length > 140) {
-            console.log("empty or too long");
             return;
         }
 
@@ -53,24 +52,6 @@ class Tweet extends Component{
                 this.props.updateFeed(this.props.username);
             });
     }
-
-    // componentDidMount(){
-    //     const params = {
-    //         username: this.props.username
-    //     };
-
-    //     const options = {
-    //         method: 'POST',
-    //         body: JSON.stringify(params)
-    //     };
-
-    //     fetch("http://localhost:4000/", options)
-    //         .then(res => res.json())
-    //         .then(res => {
-    //             console.log(res);
-    //             // this.setState({: res});
-    //         });
-    // }
 
     getImgUrl(id) {
         if (id === 1) {
@@ -93,7 +74,6 @@ class Tweet extends Component{
         fetch("http://localhost:4000/getUserId", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 this.setState({imgUrl: this.getImgUrl(res.id)});
             });
     }

@@ -55,7 +55,6 @@ class Card extends Component {
         fetch("http://localhost:4000/getUserId", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 this.setState({imgUrl: this.getImgUrl(res.id)});
             });
     }

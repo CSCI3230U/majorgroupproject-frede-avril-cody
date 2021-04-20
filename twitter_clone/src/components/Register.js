@@ -94,7 +94,6 @@ class Register extends Component {
         fetch("http://localhost:4000/register", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 if (res.registered) {
                     this.props.handleRegister(res.username, res.handle);
                 } else {
@@ -147,9 +146,7 @@ class Register extends Component {
         const unique = await this.verifyUniqueness(type, identifier);
 
         if (unique && this.validName(identifier)) {
-            console.log(this.state)
             this.setState({[style]: 'register-valid'});
-            console.log(this.state)
         } else {
             this.setState({[style]: 'register-invalid'});
         }

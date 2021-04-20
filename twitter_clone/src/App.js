@@ -96,7 +96,6 @@ class App extends React.Component {
         fetch("http://localhost:4000/populateFeed", options)
         .then(res => res.json())
         .then(res => {
-            console.log(res);
             this.setState({tweets: res});
         });
     }
