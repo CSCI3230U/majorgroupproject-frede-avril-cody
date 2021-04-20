@@ -14,7 +14,9 @@ class Connect extends Component {
     render() {
         return(
             <div className={`connect`}>
-                <FollowRecommendations username={this.props.username}/>
+                <FollowRecommendations  username={this.props.username}
+                                        updateProfileName={this.props.updateProfileName}
+                                        updateFeed={this.props.updateFeed}/>
             </div>
         );
     };

@@ -112,7 +112,9 @@ class App extends React.Component {
                                 return <Redirect to="/feed"/>}} />
                             <Route exact path="/connect" render={() => {
                                 return <Connect connectDisplayed={this.connectDisplayed}
-                                                username={this.state.username}/>}}/>
+                                                username={this.state.username}
+                                                updateFeed={this.updateFeed}
+                                                updateProfileName={this.updateProfileName}/>}}/>
                             <Route exact path="/explore" component={Explore}/>
 
                             <Route exact path="/messages" render={() => {
