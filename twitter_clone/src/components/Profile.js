@@ -15,8 +15,8 @@ class Profile extends Component {
             tweets: [],
             user: '',
             handle: '',
-            followers: '',
-            followed: '',
+            followers: 0,
+            followed: 0,
             id: '',
         };
         this.handleFollow = this.handleFollow.bind(this);
@@ -35,17 +35,17 @@ class Profile extends Component {
         fetch("http://localhost:4000/getProfile", options)
             .then(res => res.json())
             .then(res => {
+                console.log(res)
                 let tweets = res.tweets;
                 let user = res.username;
                 let handle = res.handle;
                 let followers = res.followers;
-                let followed = res.followed;
+                let followed = res.follows;
                 let id = res.rowid;
                 this.setState({tweets: tweets, user: user, handle: handle, followers: followers, followed: followed, id: id});
             });
     }
 
-    // handleFollow is untested
     handleFollow(event) {
         const params = {
             follower: this.props.username,
