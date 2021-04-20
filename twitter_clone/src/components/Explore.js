@@ -48,25 +48,25 @@ class Explore extends Component {
                 </div>
                 <div className="hashtagContainer">
                     <div className={`hashtag`}>
-                        #tag one
+                        #instagram
                     </div>
                     <div className={`hashtag`}>
-                        #tag one
+                        #help
                     </div>
                     <div className={`hashtag`}>
-                        #tag one
+                        #Chavintrial
                     </div>
                     <div className={`hashtag`}>
-                        #tag one
+                        #Bitcon
                     </div>
                     <div className={`hashtag`}>
-                        #tag one
+                        #Stocks
                     </div>
                     <div className={`hashtag`}>
-                        #tag one
+                        #FacebookUnderFire
                     </div>
                     <div className={`hashtag`}>
-                        #tag one
+                        #Cats
                     </div>
                 </div>
             </div>
