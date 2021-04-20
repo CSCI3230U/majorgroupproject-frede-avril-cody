@@ -60,7 +60,7 @@ function drawBarChart(barData){
 
      let colourScale = d3.scaleLinear()
                             .domain([0, getMostTweets(barData)])
-                            .range(['#DFF5FE', '#accaee']);
+                            .range(['#DFF5FE', '#2E9DCA']);
 
      // place bar chart in barChart div
      var barSvg = d3.select("#barChart")
