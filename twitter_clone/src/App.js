@@ -28,7 +28,8 @@ class App extends React.Component {
             register: false,
             isConnectDisplayed: false,
             tweets: [],
-            profileName: ''
+            profileName: '',
+            justLoggedIn: false
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
@@ -49,8 +50,10 @@ class App extends React.Component {
             username: username,
             profileName: username,
             handle: handle,
-            isConnectDisplayed: false
+            isConnectDisplayed: false,
+            justLoggedIn: true
         });
+
         // setState is async, so need to pass username directly
         this.updateFeed(username);
     }
@@ -99,6 +102,10 @@ class App extends React.Component {
             return <Login   handleLogin={this.handleLogin}
                             displayRegister={this.displayRegister}/>;
         } else {
+            const flag = this.state.justLoggedIn;
+            if (flag) {
+                this.setState({justLoggedIn: false});
+            }
             return (
                 <div className="App">
                     <div className="leftSide">
@@ -108,6 +115,7 @@ class App extends React.Component {
                                 handleLogout={this.handleLogout}/>
                     </div>
                     <div className="center">
+                        {flag ? <Redirect to="/feed"/> :
                         <Switch>
                             <Route exact path="/" render={() => {
                                 return <Redirect to="/feed"/>}} />
@@ -137,7 +145,7 @@ class App extends React.Component {
                             }/>
 
                             <Route component={NotFound} />
-                        </Switch>
+                        </Switch>}
                     </div>
 
                     <div className="rightSide">
