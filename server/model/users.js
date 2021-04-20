@@ -242,15 +242,11 @@ function getRequestorId(user, requestor, res) {
 }
 // pt6 of callback hell... next time, async + await
 function sendProfile(user, requestorId, res) {
-    console.log("peppa")
-    console.log(user.rowid)
-    console.log(requestorId)
     db.data.get(`SELECT * FROM followers WHERE (followerId, followedId) IN \
                 (SELECT ${requestorId}, ${user.rowid})`, function (err, row) {
         if (err) {
-            console.log(err);
+            console.error(err);
         } else {
-            console.log(row)
             if (row) {
                 user.isFollowing = true;
                 res.json(user);
@@ -303,7 +299,6 @@ function sendFollows(id, res) {
         if (err) {
             console.error("There was an error getting the list of follows");
         } else {
-            console.log(follows)
             res.json({followed: follows});
         }
     });

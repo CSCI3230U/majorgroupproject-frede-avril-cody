@@ -40,7 +40,6 @@ function sendMessages(senderId, receiverId, res) {
                     if (err) {
                         console.error("There was an error retrieving the messages");
                     } else {
-                        console.log(messages);
                         res.json({id: senderId, messages: messages});
                     }
                 });

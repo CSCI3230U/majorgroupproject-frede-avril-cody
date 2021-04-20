@@ -13,9 +13,7 @@ function getAll(res) {
 }
 // given a username, get their feed based on their followers pt1
 function getFeed(username, res) {
-    console.log(`requesting ${username}`)
     db.data.get(`SELECT rowid FROM users WHERE username = '${username}'`, function(err, user) {
-        console.log(`got ${user}`)
         if (err) {
             console.error("There was an error getting the feed");
         } else {
@@ -87,7 +85,6 @@ function getMostLiked(res) {
         if (err) {
             console.error("There was an error getting data for the analytics page");
         } else {
-            console.log(users);
             res.json(users);
         }
     });
