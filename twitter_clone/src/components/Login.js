@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import '../styles/Login.css';
-import image from '../image/twitterBackground.png'; 
+import image from '../image/twitterBackground.png'; // picture from https://twitter.com
 
 class Login extends Component {
     constructor(props) {
