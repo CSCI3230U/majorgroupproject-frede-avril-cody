@@ -115,6 +115,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-./server/data/twitterClone.db
-./server/package-lock.json
-./twitter_clone/package-lock.json
+server/package-lock.json
+twitter_clone/package-lock.json
