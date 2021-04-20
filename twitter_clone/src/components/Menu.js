@@ -94,7 +94,7 @@ class Menu extends Component{
                 </div>
                 <br />
                 <div className=".btn">
-                    <button type="button" className={`rounded-pill menu-tweet-button`}>Tweet</button>
+                    <Link to="/feed"><button type="button" className={`rounded-pill menu-tweet-button`}>Tweet</button></Link>
                 </div>
             </div>
 
