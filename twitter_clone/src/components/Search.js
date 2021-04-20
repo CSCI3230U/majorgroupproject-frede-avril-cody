@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import '../styles/Search.css';
 
+// the search component, used to look up tweets by hashtag
 class Search extends Component {
     constructor(props) {
         super(props);
@@ -21,22 +22,27 @@ class Search extends Component {
         this.handleSuggestionClick = this.handleSuggestionClick.bind(this);
     }
 
+    // handle a click in the search input
     handleClick() {
         this.searchInput.current.focus();
     }
 
+    // handle the search input gaining focus
     handleFocus() {
         this.setState({focus: true});
     }
 
+    // handle the search input losing focus
     handleBlur() {
         this.setState({focus: false});
     }
 
+    // handle a click of the suggestions
     handleSuggestionClick() {
         this.props.updateFeed(this.state.results);
     }
 
+    // query the db for the given hashtag (LIKE hashtag, not exact match)
     searchTwitter(query) {
         const params = {
             query: query
@@ -57,12 +63,14 @@ class Search extends Component {
             });
     }
 
+    // updates feed when enter is pressed
     handleSearch(e) {
         if (e.code === "Enter") {
             this.props.updateFeed(this.state.results);
         }
     }
 
+    // handles a change in the search input
     handleChange(event) {
         const query = event.target.value;
         this.setState({input: query});
@@ -73,6 +81,7 @@ class Search extends Component {
         }
     }
 
+    // unimplemented, was gonna highlight the hashtag, not enough time
     getSubstring(tweet) {
         return tweet;
     }
@@ -109,7 +118,6 @@ class Search extends Component {
                     <p className="search-prompt">No results!</p>}
                     {this.state.input !== '' && this.state.results.length !== 0 &&
                     <ul onMouseDown={this.handleSuggestionClick} className="search-list">
-                    {/* // if enter or click, go to #explore which displays all results */}
                         {results}
                     </ul>}
                 </div>}

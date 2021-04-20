@@ -4,6 +4,7 @@ import '../styles/Login.css';
 import image from "../image/twitterBackground.png" // picture from https://twitter.com
 const validator = require('validator');
 
+// the registration page
 class Register extends Component {
     defaultMessage = 'Please complete this form to register';
     constructor(props) {
@@ -11,13 +12,13 @@ class Register extends Component {
         this.state = {
             username: '',
             password: '',
-            confirmedPassword: '',
+            confirmedPassword: '',  // these 5 self-explanatory
             handle: '',
             email: '',
-            message: this.defaultMessage,
+            message: this.defaultMessage,       // the user feedback message
             usernameStyle: 'login-default',
             handleStyle: 'login-default',
-            passwordStyle: 'login-default',
+            passwordStyle: 'login-default',     // these 5 used to style inputs appropriately
             confirmPasswordStyle: 'login-default',
             emailStyle: 'login-default'
         }
@@ -33,6 +34,7 @@ class Register extends Component {
         this.displayMessage = this.displayMessage.bind(this);
     }
 
+    // perform the client-side validation and send register request if ok
     handleRegisterClick() {
         const params = {
             username: this.state.username,
@@ -102,10 +104,12 @@ class Register extends Component {
             });
     }
 
+    // helper to display the given message
     displayMessage(message) {
         this.setState({message: message})
     }
 
+    // verify the currently entered identifier is unique
     async verifyUniqueness(key, value) {
         const params = {
             [key]: value
@@ -123,15 +127,22 @@ class Register extends Component {
             });
     }
 
+    // return true if name is valid, false otherwise
+    // valid names consist of letters and numbers, only
     validName(name) {
         const validator = new RegExp(/^[a-zA-Z0-9]+$/);
         return validator.test(name);
     }
 
+    // return true if password matches requirements, false otherwise
+    // valid passwords are 4 or more chars and contain at least one number and letter
     validPassword(password) {
-        return password.length > 3 && password.search(/\d/) !== -1 && password.search(/[a-zA-z]/) !== -1;
+        return  password.length > 3 &&
+                password.search(/\d/) !== -1 &&
+                password.search(/[a-zA-z]/) !== -1;
     }
 
+    // handle a change in the username or handle inputs
     async handleChange(event) {
         const type = event.target.dataset.type;
         const style = type + "Style"
@@ -152,6 +163,7 @@ class Register extends Component {
         }
     }
 
+    // handle a change in the password input
     handlePasswordChange(event) {
         const password = event.target.value;
         this.setState({password: password, message: this.defaultMessage});
@@ -167,6 +179,7 @@ class Register extends Component {
         }
     }
 
+    // handle a change in the passwordconfirm input
     handleConfirmPasswordChange(event) {
         const confirmedPassword = event.target.value;
         this.setState({confirmedPassword: confirmedPassword, message: this.defaultMessage});
@@ -177,6 +190,7 @@ class Register extends Component {
         }
     }
 
+    // handle a change in the email input
     handleEmailChange(event) {
         const email = event.target.value;
         this.setState({email: email, message: this.defaultMessage});
@@ -187,6 +201,7 @@ class Register extends Component {
         }
     }
 
+    // handle a click of the back to login button
     handleBackToLogin() {
         this.props.displayRegister(false);
     }

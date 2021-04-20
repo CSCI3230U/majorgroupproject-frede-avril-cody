@@ -27,6 +27,8 @@ class Profile extends Component {
         this.handleLike = this.handleLike.bind(this);
     }
 
+    // handles a click of the like button
+    // a user can like a tweet multiple times
     handleLike(event) {
         const params = {
             tweetid: event.currentTarget.dataset.tweetid,
@@ -46,6 +48,7 @@ class Profile extends Component {
         this.componentDidMount();
     }
 
+    // get the data to display
     getProfileData() {
         const params = {
             profileName: this.props.profileName,
@@ -76,16 +79,19 @@ class Profile extends Component {
             });
     }
 
+    // load data on component mount
     componentDidMount() {
         this.getProfileData();
     }
 
+    // force update if the profileName has changed
     componentDidUpdate(prevProps) {
         if (prevProps.profileName !== this.props.profileName) {
             this.getProfileData();
         }
     }
 
+    // handle a click of the follow button
     handleFollow(event) {
         const params = {
             follower: this.props.username,
@@ -101,8 +107,6 @@ class Profile extends Component {
             .then(res => {
                 this.getProfileData();
             });
-        // TODO Instead of follow, should have a '+'
-        // Then, in this method, the '+' for event.target should be changed to a 'check'
     }
 
     // get the img url based on the id
@@ -114,7 +118,8 @@ class Profile extends Component {
             return `images/profile/${index}.png`
         }
     }
-
+    
+    // note: unlike in follow recs, this one DOES query the db for follow button display
     render() {
         const allTweets = this.state.tweets;
 

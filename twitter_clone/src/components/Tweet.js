@@ -7,11 +7,12 @@ import {faCalendarAlt} from '@fortawesome/free-regular-svg-icons';
 import {faChartBar} from '@fortawesome/free-regular-svg-icons';
 import "../styles/Tweet.css";
 
+// Tweeting! It's what it's all about!
 class Tweet extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            content: '',
+            content: '',    // the content of the tweet
             userid: ''
         }
         this.handleText = this.handleText.bind(this);
@@ -20,16 +21,19 @@ class Tweet extends Component{
         this.getImgUrl = this.getImgUrl.bind(this);
     }
 
+    // handle a change of the input
     handleText(event) {
         this.setState({content: event.target.value});
     }
 
+    // send tweet if enter pressed
     handleKeyPress(event) {
         if (event.code === "Enter") {
             this.handleClick();
         }
     }
 
+    // send tweet when button clicked
     handleClick() {
         const params = {
             username: this.props.username,
@@ -53,6 +57,7 @@ class Tweet extends Component{
             });
     }
 
+    // display the correct pfp
     getImgUrl(id) {
         if (id === 1) {
             return `images/profile/4randy.png`;
@@ -62,6 +67,7 @@ class Tweet extends Component{
         }
     }
 
+    // get pfp url on mount
     componentDidMount() {
         const params = {
             username: this.props.username
@@ -87,7 +93,6 @@ class Tweet extends Component{
                             <h4 className={`tweet_inline tweet-homeText`}>Home</h4>
                         </div>
                         <div className={`col-md-2 tweet-sparkle-container`}>
-                            {/* <FontAwesomeIcon className={`tweet_star`} icon={faStar} size="1x" /> */}
                             <img src={`images/icons/sparkles.png`} alt="sparkles" className={`tweet-sparkles`}></img>
                         </div>
                     </div>
