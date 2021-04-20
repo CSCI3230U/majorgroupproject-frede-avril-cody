@@ -54,10 +54,10 @@
 
 #message{
     /* background:#1da1f2; */
-    border-radius: 20%;
+    /* border-radius: 50%; */
     margin:0;
     background-color: #1DA1F2;
-    padding: 0 5px 0 5px;
+    padding: 0.5rem;
     /* margin: 5px 0 5px 2px; */
 
 }
@@ -108,4 +108,12 @@
     font-weight: bold;
 }
 
+.message-blue-box{
+    text-decoration-color: white;
+    color: white;
+    border-radius: 10px;
+    margin: 1px;
+    background-color: #1DA1F2;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
 
