@@ -46,3 +46,21 @@
     display: inline;
 }
 
+.profile-like{
+    border:none;
+    background-color: transparent;
+    border-radius: 50%;
+}
+
+.profile-like:hover{
+    border:none;
+    background-color: #e2848491;
+    border-radius: 50%;
+    color:#d84c4cde;
+}
+
+.profile-like-icon:hover{
+    color:#d84c4cde;
+}
+
+

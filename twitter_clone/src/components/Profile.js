@@ -101,8 +101,8 @@ class Profile extends Component {
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faImage} size="1x" />
                             </div>
                             <div className={`col inline feed_centered feed_icon myHover`}>
-                                    <button  onClick={this.handleLike} data-tweetid={post.rowid}>
-                                        <FontAwesomeIcon className={`feed_postActionIcon`} icon={faHeart} size="1x" />
+                                    <button className={`profile-like`} onClick={this.handleLike} data-tweetid={post.rowid}>
+                                        <FontAwesomeIcon className={`profile-like-icon feed_postActionIcon`} icon={faHeart} size="1x" />
                                     </button>
                             </div>
                             <div className={`col inline feed_centered feed_icon`}>

@@ -139,16 +139,16 @@ class Messages extends Component {
         return(
             <div className={`messages`}>
                 <div className="messages-title">
-                    <h2>Messages</h2>
+                    <h2 className={`messages-title-text`}>Messages</h2>
                     <div id="icons">
                         <input type="search" name="receiver" placeholder="Recipient"
                         className="messages-receiver-input" onBlur={this.handleBlur}
                         onFocus={this.handleFocus} onChange={this.handleReceiverInput}
                         value={this.state.receiver} autoComplete="off" />
-                        <a href="#"> <FontAwesomeIcon className={`menu-icon`}
+                        <a href="#"> <FontAwesomeIcon className={`message-icon`}
                         icon={faCog} size="2x" /></a>
                         <a href="#">
-                        <FontAwesomeIcon className={`menu-icon`}
+                        <FontAwesomeIcon className={`message-icon`}
                         icon={faCommentAlt} size="2x" />
                         </a>
                     </div>
@@ -163,7 +163,7 @@ class Messages extends Component {
                         placeholder="Send something"/>
                     </div>
                     <div id="sendBtn">
-                        <button type="button"><FontAwesomeIcon className={`menu-icon`}
+                        <button type="button" className={`message-send-button`}><FontAwesomeIcon className={`message-icon`}
                         icon={faPaperPlane} size="1x" onClick={this.handleClick}/></button>
 
                     </div>
