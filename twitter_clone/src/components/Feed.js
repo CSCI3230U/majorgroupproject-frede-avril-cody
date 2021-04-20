@@ -11,9 +11,11 @@ class Feed extends Component {
         super(props);
         this.state = {
             loaded: false,
+            imgUrl: `images/profile/1.png`
         };
         this.getTimeDisplay = this.getTimeDisplay.bind(this);
         this.handleLike = this.handleLike.bind(this);
+        this.getImgUrl = this.getImgUrl.bind(this);
         // this.formatResponseTime = this.formatResponseTime.bind(this);
     }
 
@@ -73,6 +75,15 @@ class Feed extends Component {
         }
     }
 
+    getImgUrl(id) {
+        if (id === 1) {
+            return `images/profile/4randy.png`;
+        } else {
+            const index = id%18;
+            return `images/profile/${index}.png`
+        }
+    }
+
     render() {
         const allPosts = this.props.tweets;
 
@@ -89,7 +100,7 @@ class Feed extends Component {
                     <div className={`row`}>
                         <div className={`col-2`}>
                             <div className="feed-profilePic-container">
-                                <img src={`images/profile/${post.senderId}.png`} alt="profile" className={`feed-profilePic`}></img>
+                                <img src={this.getImgUrl(post.senderId)} alt="profile" className={`feed-profilePic`}></img>
                             </div>
                         </div>
                         <div className={`col`}>

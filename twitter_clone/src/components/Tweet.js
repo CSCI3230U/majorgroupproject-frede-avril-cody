@@ -17,6 +17,7 @@ class Tweet extends Component{
         }
         this.handleText = this.handleText.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.getImgUrl = this.getImgUrl.bind(this);
     }
 
     handleText(event) {
@@ -63,6 +64,32 @@ class Tweet extends Component{
     //         });
     // }
 
+    getImgUrl(id) {
+        if (id === 1) {
+            return `images/profile/4randy.png`;
+        } else {
+            const index = id%18;
+            return `images/profile/${index}.png`
+        }
+    }
+
+    componentDidMount() {
+        const params = {
+            username: this.props.username
+        };
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/getUserId", options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({imgUrl: this.getImgUrl(res.id)});
+            });
+    }
+
     render() {
         return(
             <>
@@ -80,7 +107,7 @@ class Tweet extends Component{
                 <div className={`tweet_tweet container tweet_body`}>
                     <div className={`row`}>
                         <div className={`col-2 tweet_profilePic`}>
-                            <img src={`images/profile/1.png`} alt="profile" className={`tweet-profilePic`}></img>
+                            <img src={this.state.imgUrl} alt="profile" className={`tweet-profilePic`}></img>
                         </div>
                         <div className={`col`}>
                             <div className="tweet_tweetContent">
