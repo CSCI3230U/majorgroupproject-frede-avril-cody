@@ -7,6 +7,7 @@ class OneMessage extends Component {
         super(props);
         this.isSender = this.isSender.bind(this);
     }
+
     isSender(personOne, personTwo){
         if(personOne === personTwo){
             return true
@@ -18,16 +19,14 @@ class OneMessage extends Component {
     render() {
         // conditionally render to left or right based on this.props.sender
         let _class = "sender";
-        if(this.isSender(this.props.user,this.props.sender)){
+        if (this.props.user === this.props.message.senderId) {
             _class = "receiver";
         }
         return(
-            <> 
-                <div className={_class}>
-                    <div className="messageContainer"> 
-                        <p id="message">{`${this.props.message.message}`}</p> 
-                        <p id="time">{`${this.props.message.time}`}</p>
-                    </div>
+            <>
+                <div className={`messageContainer ${_class}`}>
+                    <p id="message">{`${this.props.message.message}`}</p>
+                    <p id="time">{`${this.props.message.time}`}</p>
                 </div>
             </>
         );

@@ -41,7 +41,7 @@ function sendMessages(senderId, receiverId, res) {
                         console.error("There was an error retrieving the messages");
                     } else {
                         console.log(messages);
-                        res.json(messages);
+                        res.json({id: senderId, messages: messages});
                     }
                 });
 }
@@ -52,8 +52,10 @@ function getMessages(content, res) {
 
     db.data.all(`SELECT rowid, username FROM users WHERE username = '${sender}'\
                 OR\ username = '${receiver}'`, function(err, users) {
-                    if (err || users.length < 2) {
+                    if (err) {
                         console.error("There was an error finding the users for a messages request");
+                    } else if (users.length < 2) {
+                        res.json({id: 0, messages: []});
                     } else {
                         const flag = users[0].username === sender;
                         const senderId = flag ? users[0].rowid : users[1].rowid;

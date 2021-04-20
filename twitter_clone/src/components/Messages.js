@@ -17,11 +17,14 @@ class Messages extends Component {
             text: '',
             messages: [],
             receiver: '',
-            interval: null
+            interval: null,
+            userList: [],
+            id: 0
         }
         this.send = this.send.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.displayMessages = this.displayMessages.bind(this);
+        this.handleReceiverInput = this.handleReceiverInput.bind(this);
     }
 
     send(event){
@@ -31,7 +34,7 @@ class Messages extends Component {
     displayMessages() {
         const params = {
             sender: this.props.sender,
-            receiver: "Randy"
+            receiver: this.state.receiver
         };
 
         if (!params.receiver) {
@@ -46,7 +49,7 @@ class Messages extends Component {
         fetch("http://localhost:4000/getMessages", options)
             .then(res => res.json())
             .then(res => {
-                this.setState({messages: res});
+                this.setState({id: res.id, messages: res.messages});
             });
     }
 
@@ -63,7 +66,7 @@ class Messages extends Component {
     handleClick(event){ // this function is supposed to call
         const params = {
             sender: this.props.sender,
-            receiver: "Randy",
+            receiver: this.state.receiver,
             message: this.state.text
         };
 
@@ -81,21 +84,57 @@ class Messages extends Component {
         fetch("http://localhost:4000/saveMessage", options)
             .then(res => res.json())
             .then(res => {
-                this.setState({messages: res});
+                this.setState({id: res.id, messages: res.messages});
                 console.log(res);
             });
 
     }
 
+    handleReceiverInput(event) {
+        console.log(event.target)
+        const input = event.target.value;
+        this.setState({receiver: input}, this.displayMessages);
+        if (input.length > 0) {
+            this.searchUsers(input);
+        } else {
+            this.setState({userList: []});
+        }
+    }
+
+    searchUsers(name) {
+        const params = {
+            username: name
+        };
+        if (!params.username) {
+            return;
+        }
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/searchUsers", options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({userList: res});
+            });
+    }
+
     render() {
         const messages = React.Children.toArray(this.state.messages.map(message => (
-            <OneMessage message={message} user={this.props.sender} />
+            <OneMessage message={message} user={this.state.id} />
         )));
         return(
             <div className={`messages`}>
-                <div className="title">
+                <div className="messages-title">
                     <h2>Messages</h2>
                     <div id="icons">
+                        <input type="search" name="receiver" placeholder="Recipient"
+                        className="messages-receiver-input" onBlur={this.handleBlur}
+                        onFocus={this.handleFocus} onChange={this.handleReceiverInput}
+                        value={this.state.receiver} autoComplete="off" />
                         <a href="#"> <FontAwesomeIcon className={`menu-icon`}
                         icon={faCog} size="2x" /></a>
                         <a href="#">
