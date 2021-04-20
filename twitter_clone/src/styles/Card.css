@@ -3,6 +3,9 @@
     padding-top: 1rem;
     border-radius: 100rem;
     border: none;
+    position: fixed;
+    bottom: 0;
+    width: 15rem;
 }
 .card:hover {
     border-radius: 100rem;
