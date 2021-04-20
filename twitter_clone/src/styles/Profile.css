@@ -73,3 +73,9 @@
     color:rgb(78, 172, 209);
     font-weight: bold;
 }
+
+
+.likes-display{
+    display: inline;
+    padding-left: 0.2rem;
+}
