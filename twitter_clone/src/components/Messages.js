@@ -160,7 +160,7 @@ class Messages extends Component {
     }
 
     setReciever(event){
-        const input = event.target.text;
+        const input = event.target.value;
         this.setState({receiver: input}, this.displayMessages);
         if (input.length > 0) {
             this.searchUsers(input);
@@ -174,7 +174,7 @@ class Messages extends Component {
     render() {
         const followed = this.state.followed.map((user,index) => (
             <div key={index} className={`user`}>
-                <a class="dropdown-item" href="#" onClick={this.setReciever}>{user.username} | {user.handle}</a>
+                <button className={`dropdown-item`} onClick={this.setReciever} value={user.username}>{user.username} | {user.handle}</button>
             </div>
         ));
         
@@ -187,21 +187,20 @@ class Messages extends Component {
                     <h2 className={`messages-title-text`}>Messages</h2>
                     <div id="icons">
                         <input type="search" name="receiver" placeholder="Recipient"
-                                lassName="messages-receiver-input" onBlur={this.handleBlur}
+                                className="rounded-pill messages-receiver-input" onBlur={this.handleBlur}
                                 onFocus={this.handleFocus} onChange={this.handleReceiverInput}
-                                value={this.state.receiver} autoComplete="off" 
-                                className={`rounded-pill messages-reciever-input`}/>
-                        <button class="btn" type="button">
+                                value={this.state.receiver} autoComplete="off"/>
+                        <button className="btn" type="button">
                             <FontAwesomeIcon className={`message-icon`} icon={faCog} size="2x" />
                         </button>
-                        <div class="dropdown">
-                            <button class="btn dropdown-toggle" type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={this.dropdown}>
+                        <div className="dropdown">
+                            <button className="btn dropdown-toggle" type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={this.dropdown}>
                                 <FontAwesomeIcon className={`message-icon`} icon={faCommentAlt} size="2x" />
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#" onClick={this.setReciever}>Joe</a>
-                                <a class="dropdown-item" href="#" onClick={this.setReciever}>Randy</a>
-                                <a class="dropdown-item" href="#" onClick={this.setReciever}>Rupinder</a>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <button className={`dropdown-item`} onClick={this.setReciever} value="Joe">Joe</button>
+                                <button className={`dropdown-item`} onClick={this.setReciever} value="Randy">Randy</button>
+                                <button className={`dropdown-item`} onClick={this.setReciever} value="Rupinder">Rupinder</button>
                                 {followed}
                             </div>
                         </div>

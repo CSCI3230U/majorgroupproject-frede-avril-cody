@@ -130,4 +130,6 @@
     background-color: #eeeeee;
 }
 
-
+.dropdown-item{
+    border: none;
+}
