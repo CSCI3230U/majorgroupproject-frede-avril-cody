@@ -46,6 +46,14 @@ class FollowRecommendations extends Component {
             body: JSON.stringify(params)
         };
 
+        if (event.target.dataset.following === "false") {
+            event.target.dataset.following = "true";
+            event.target.innerText = "Following!";
+        } else {
+            event.target.dataset.following = "false";
+            event.target.innerText = "Follow";
+        }
+
         fetch("http://localhost:4000/follow", options)
             .then(res => res.json())
             .then(res => {
@@ -77,7 +85,10 @@ class FollowRecommendations extends Component {
                     <Link to="/profile" onClick={this.updateProfileName}><h6>{i.username}</h6></Link>
                     <p>{i.handle}</p>
                 </div>
-                <button data-key={i.rowid} onClick={this.handleFollow} className={`follow-recs-follow rounded-pill`}>Follow</button>
+                <button data-key={i.rowid}
+                        data-following="false"
+                        onClick={this.handleFollow}
+                        className={`follow-recs-follow rounded-pill`}>Follow</button>
             </div>
         ));
         return(
