@@ -61,7 +61,7 @@ class Login extends Component {
             // TODO refactor to handle enter press
             <div className={`LoginPage`}>
                 <div className="loginImage" >
-                    <img src={image}/>
+                    <img src={image} alt="login background"/>
                 </div>
                 <div className={`login`}>
                     <h2 className={`login-text`}>{this.state.message} </h2>
