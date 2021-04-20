@@ -22,7 +22,9 @@ class Messages extends Component {
             id: 0
         }
         this.send = this.send.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.displayMessages = this.displayMessages.bind(this);
         this.handleReceiverInput = this.handleReceiverInput.bind(this);
     }
@@ -63,7 +65,7 @@ class Messages extends Component {
         clearInterval(this.state.interval);
     }
 
-    handleClick(event){ // this function is supposed to call
+    sendMessage() {
         const params = {
             sender: this.props.sender,
             receiver: this.state.receiver,
@@ -87,7 +89,15 @@ class Messages extends Component {
                 this.setState({id: res.id, messages: res.messages});
                 console.log(res);
             });
+    }
+    handleKeyPress(event) {
+        if (event.code === "Enter") {
+            this.sendMessage();
+        }
+    }
 
+    handleClick(event){
+        this.sendMessage();
     }
 
     handleReceiverInput(event) {
@@ -149,7 +159,8 @@ class Messages extends Component {
                 <div className="sendAMessage">
                     <div className="textArea">
                         <input type="text" onChange={this.send}
-                        value={this.state.text} placeholder="Send something"/>
+                        value={this.state.text} onKeyPress={this.handleKeyPress}
+                        placeholder="Send something"/>
                     </div>
                     <div id="sendBtn">
                         <button type="button"><FontAwesomeIcon className={`menu-icon`}
