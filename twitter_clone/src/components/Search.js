@@ -18,6 +18,7 @@ class Search extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.getSubstring = this.getSubstring.bind(this);
+        this.handleSuggestionClick = this.handleSuggestionClick.bind(this);
     }
 
     handleClick() {
@@ -30,6 +31,10 @@ class Search extends Component {
 
     handleBlur() {
         this.setState({focus: false});
+    }
+
+    handleSuggestionClick() {
+        this.props.updateFeed(this.state.results);
     }
 
     searchTwitter(query) {
@@ -103,7 +108,7 @@ class Search extends Component {
                     {this.state.input !== '' && this.state.results.length === 0 &&
                     <p className="search-prompt">No results!</p>}
                     {this.state.input !== '' && this.state.results.length !== 0 &&
-                    <ul className="search-list">
+                    <ul onMouseDown={this.handleSuggestionClick} className="search-list">
                     {/* // if enter or click, go to #explore which displays all results */}
                         {results}
                     </ul>}
