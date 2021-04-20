@@ -26,3 +26,7 @@ All the work was done in the dev branch and Cody merged the dev branch to main
 
 Although the commits may not display it completely, the work was split up evenly amoungst our groups and 
 meeting were had as a collabrative coding session to discuss issues others were having and to debug.
+
+The independent study presentation file can be found at:
+
+https://docs.google.com/presentation/d/1-HCSL0n5i-yfPi3MN888sw8t6RsxgY0Y_DfXvdSTmVc/edit?usp=sharing
