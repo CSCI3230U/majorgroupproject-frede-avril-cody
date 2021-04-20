@@ -12,6 +12,11 @@ class Profile extends Component {
         super(props);
         this.state = {
             tweets: [],
+            user: '',
+            handle: '',
+            followers: '',
+            followed: '',
+            id: '',
         };
         this.handleFollow = this.handleFollow.bind(this);
     }
@@ -29,7 +34,13 @@ class Profile extends Component {
         fetch("http://localhost:4000/getProfile", options)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                let tweets = res.tweets;
+                let user = res.username;
+                let handle = res.handle;
+                let followers = res.followers;
+                let followed = res.followed;
+                let id = res.rowid;
+                this.setState({tweets: tweets, user: user, handle: handle, followers: followers, followed: followed, id: id});
             });
     }
 
@@ -117,10 +128,10 @@ class Profile extends Component {
                     <div className={`profile-details`}>
                         <div className={`row container`}>
                             <div className={`col`}>
-                                <img src={`images/profile/1.png`} alt="profile" className={`profile-profilePic`}></img>
-                                <h3>{this.props.profileName}</h3>
-                                <p>@{this.props.username}</p>
-                                <p className={`profile-inline`}>{this.state.following} | Following</p>
+                                <img src={`images/profile/${this.state.id}.png`} alt="main profile" className={`profile-profilePic`}></img>
+                                <h3>{this.state.user}</h3>
+                                <p>{this.state.handle}</p>
+                                <p className={`profile-inline`}>{this.state.followed} | Following</p>
                                 <p className={`profile-inline`}>{this.state.followers} | Followers</p>
                             </div>
                             <div className={`col-2 profile-button-col`}>

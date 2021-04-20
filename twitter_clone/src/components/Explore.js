@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
+import Search from "./Search.js"
 import '../styles/Explore.css';
 
 class Explore extends Component {
@@ -38,7 +39,36 @@ class Explore extends Component {
     render() {
         return(
             <div className={`explore`}>
-                <h2>Explore</h2>
+                <div className={`title`}>
+                    <h2>Explore</h2>
+                </div>
+                <div className={`search`}>
+                    <Search/>
+
+                </div>
+                <div className="hashtagContainer">
+                    <div className={`hashtag`}>
+                        #instagram
+                    </div>
+                    <div className={`hashtag`}>
+                        #help
+                    </div>
+                    <div className={`hashtag`}>
+                        #Chavintrial
+                    </div>
+                    <div className={`hashtag`}>
+                        #Bitcon
+                    </div>
+                    <div className={`hashtag`}>
+                        #Stocks
+                    </div>
+                    <div className={`hashtag`}>
+                        #FacebookUnderFire
+                    </div>
+                    <div className={`hashtag`}>
+                        #Cats
+                    </div>
+                </div>
             </div>
         );
     };
