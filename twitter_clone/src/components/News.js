@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../styles/News.css';
 
+// the news feed
 class News extends Component {
     constructor(props) {
         super(props);
@@ -11,7 +12,7 @@ class News extends Component {
         };
         this.showMore = this.showMore.bind(this);
     }
-    
+
     componentDidMount() {
         // get topics to filter JSON
         let topics = ["Twitter", "Facebook", "News", "Canada", "Work"]
@@ -44,7 +45,7 @@ class News extends Component {
             });
 
         this.setState({loaded: true});
-            
+
     }
 
     showMore(){
@@ -79,7 +80,7 @@ class News extends Component {
             });
     }
 
-    render() { 
+    render() {
 
         const news = this.state.articles.map((article,index) => (
             <div key={index} className={`row news-line news-side-padding news-articles-hover-effect`}>

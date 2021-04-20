@@ -1,27 +1,25 @@
 import React, {Component} from 'react';
-// import ReactDOM from 'react-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import {faCog} from '@fortawesome/free-solid-svg-icons';
-// import {faCommentAltPlus} from '@fortawesome/free-solid-svg-icons';
 import {faCommentAlt} from '@fortawesome/free-regular-svg-icons';
 import OneMessage from './OneMessage.js';
 import '../styles/Messages.css';
 import $ from "jquery";
 
-
+// the messaging system
 class Messages extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            text: '',
-            messages: [],
-            receiver: '',
-            interval: null,
-            userList: [],
-            id: 0,
-            followed: []
+            text: '',       // currently entered text
+            messages: [],   // the messages that are received from server
+            receiver: '',   // the person we are communicating with
+            interval: null, // stores the setInterval
+            userList: [],   // pretty sure not implemented, too risky to delete though
+            id: 0,          // our rowid
+            followed: []    // a list of users we follow
         }
         this.send = this.send.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
@@ -34,10 +32,12 @@ class Messages extends Component {
         this.setReciever = this.setReciever.bind(this);
     }
 
+    // send a message
     send(event){
         this.setState({text: event.target.value});
     }
 
+    // retrieve the messages between us and the receiver
     displayMessages() {
         const params = {
             sender: this.props.sender,
@@ -60,17 +60,22 @@ class Messages extends Component {
             });
     }
 
+    // set up
     componentDidMount() {
         this.getFollowed();
         this.displayMessages();
+        /* don't know sockets for browsers yet, workaround so we can see
+        incoming messages within 5s */
         const interval = setInterval(this.displayMessages, 5000);
         this.setState({interval: interval});
     }
 
+    // remove the interval
     componentWillUnmount() {
         clearInterval(this.state.interval);
     }
 
+    // send a message to the server
     sendMessage() {
         const params = {
             sender: this.props.sender,
@@ -94,16 +99,20 @@ class Messages extends Component {
                 this.setState({id: res.id, messages: res.messages});
             });
     }
+
+    // handle an enter press
     handleKeyPress(event) {
         if (event.code === "Enter") {
             this.sendMessage();
         }
     }
 
+    // handle a click of the send button
     handleClick(event){
         this.sendMessage();
     }
 
+    // handle an update of the receiver field
     handleReceiverInput(event) {
         const input = event.target.value;
         this.setState({receiver: input}, this.displayMessages);
@@ -114,6 +123,7 @@ class Messages extends Component {
         }
     }
 
+    // pretty sure not used, too risky to delete
     searchUsers(name) {
         const params = {
             username: name
@@ -134,6 +144,7 @@ class Messages extends Component {
             });
     }
 
+    // gets a list of the users you follow for autoComplete receiver field
     getFollowed(){
         const params = {
             sender: this.props.sender
@@ -151,10 +162,12 @@ class Messages extends Component {
             });
     }
 
+    // for selection of receiver
     dropdown(){
         $('.dropdown-menu').toggleClass('show');
     }
 
+    // update the receiver
     setReciever(event){
         const input = event.target.value;
         this.setState({receiver: input}, this.displayMessages);
@@ -167,6 +180,7 @@ class Messages extends Component {
         this.dropdown();
     }
 
+    // note: the cog icon does nothing
     render() {
         const followed = this.state.followed.map((user,index) => (
             <button className={`dropdown-item`} onClick={this.setReciever} key={user.rowid} value={user.username}>{user.username} | {user.handle}</button>
@@ -192,9 +206,6 @@ class Messages extends Component {
                                 <FontAwesomeIcon className={`message-icon`} icon={faCommentAlt} size="2x" />
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                {/*// <button className={`dropdown-item`} onClick={this.setReciever} value="Joe">Joe</button>
-                                // <button className={`dropdown-item`} onClick={this.setReciever} value="Randy">Randy</button>
-                                // <button className={`dropdown-item`} onClick={this.setReciever} value="Rupinder">Rupinder</button>*/}
                                 {followed}
                             </div>
                         </div>

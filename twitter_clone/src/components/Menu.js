@@ -10,7 +10,8 @@ import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
 import {faUser} from '@fortawesome/free-regular-svg-icons';
 import {faChartPie} from '@fortawesome/free-solid-svg-icons';
 import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
-//
+
+// the left menu
 class Menu extends Component{
 
     render(){

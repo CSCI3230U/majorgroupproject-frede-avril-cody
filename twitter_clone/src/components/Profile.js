@@ -8,18 +8,20 @@ import {faHeart} from '@fortawesome/free-regular-svg-icons';
 import {faShareSquare} from '@fortawesome/free-regular-svg-icons';
 import { formatTime } from '../utilities.js';
 
+// shows a user's profile information and tweets
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tweets: [],
-            user: '',
-            handle: '',
-            followers: 0,
-            followed: 0,
-            id: '',
+            tweets: [],         // the tweets to display
+            user: '',           // the user to display
+            handle: '',         // the user's handle
+            followers: 0,       // the number of followers they have
+            followed: 0,        // the number of users they follow
+            id: '',             // the id
             isFollowing: false
         };
+        this.getImgUrl = this.getImgUrl.bind(this);
         this.handleFollow = this.handleFollow.bind(this);
         this.getProfileData = this.getProfileData.bind(this);
         this.handleLike = this.handleLike.bind(this);
@@ -103,6 +105,16 @@ class Profile extends Component {
         // Then, in this method, the '+' for event.target should be changed to a 'check'
     }
 
+    // get the img url based on the id
+    getImgUrl(id) {
+        if (id === 1) {
+            return `images/profile/4randy.png`; // special pic for randy
+        } else {
+            const index = id%18;
+            return `images/profile/${index}.png`
+        }
+    }
+
     render() {
         const allTweets = this.state.tweets;
 
@@ -120,7 +132,7 @@ class Profile extends Component {
                     <div className={`row`}>
                         <div className={`col-2`}>
                             <div className="feed-profilePic-container">
-                                <img src={`images/profile/${post.senderId}.png`} alt="profile" className={`feed-profilePic`}></img>
+                                <img src={this.getImgUrl(post.senderId)} alt="profile" className={`feed-profilePic`}></img>
                             </div>
                         </div>
                         <div className={`col`}>
