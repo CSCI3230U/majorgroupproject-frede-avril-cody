@@ -12,6 +12,7 @@
     align-items: center;
     justify-content: space-around;
     margin-top: 15px;
+    padding-bottom: 1rem;
 }
 
 #icons {
@@ -122,4 +123,5 @@
     padding: 0.5rem;
     background-color: #eeeeee;
 }
+
 

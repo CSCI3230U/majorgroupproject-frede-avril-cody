@@ -167,6 +167,8 @@ class Messages extends Component {
         } else {
             this.setState({userList: []});
         }
+
+        this.dropdown();
     }
 
     render() {
