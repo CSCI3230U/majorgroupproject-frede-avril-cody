@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../styles/FollowRecommendations.css';
+import { Link } from 'react-router-dom';
 
 class FollowRecommendations extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class FollowRecommendations extends Component {
         this.handleRefresh = this.handleRefresh.bind(this);
         this.handleFollow = this.handleFollow.bind(this);
         this.getImgUrl = this.getImgUrl.bind(this);
+        this.updateProfileName = this.updateProfileName.bind(this);
     }
 
     handleRefresh() {
@@ -61,6 +63,10 @@ class FollowRecommendations extends Component {
         }
     }
 
+    updateProfileName(e) {
+        this.props.updateProfileName(e.target.innerText);
+    }
+
     render() {
         const recommendations = this.state.recommendations.map(i => (
             <div key={i.rowid} className={`row news-line follow-recs-side-padding follow-recs-hover-effect`}>
@@ -68,7 +74,7 @@ class FollowRecommendations extends Component {
                     <img src={this.getImgUrl(i.rowid)} alt="profile" className={`card-profilePic inline`}></img>
                 </div>
                 <div className={`col-6 inline`}>
-                    <h6>{i.username}</h6>
+                    <Link to="/profile" onClick={this.updateProfileName}><h6>{i.username}</h6></Link>
                     <p>{i.handle}</p>
                 </div>
                 <button data-key={i.rowid} onClick={this.handleFollow} className={`follow-recs-follow rounded-pill`}>Follow</button>

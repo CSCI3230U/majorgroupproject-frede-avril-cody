@@ -27,7 +27,8 @@ class App extends React.Component {
             handle: '',
             register: false,
             isConnectDisplayed: false,
-            tweets: []
+            tweets: [],
+            profileName: ''
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
@@ -35,6 +36,7 @@ class App extends React.Component {
         this.handleRegisterClick = this.handleRegisterClick.bind(this);
         this.connectDisplayed = this.connectDisplayed.bind(this);
         this.updateFeed = this.updateFeed.bind(this);
+        this.updateProfileName = this.updateProfileName.bind(this);
     }
 
     connectDisplayed(flag) {
@@ -45,6 +47,7 @@ class App extends React.Component {
         this.setState({
             loggedIn: true,
             username: username,
+            profileName: username,
             handle: handle,
             isConnectDisplayed: false
         });
@@ -84,6 +87,10 @@ class App extends React.Component {
             });
     }
 
+    updateProfileName(username) {
+        this.setState({profileName: username});
+    }
+
     render() {
         if (this.state.register) {
             return <Register handleRegister={this.handleRegister} />;
@@ -112,7 +119,7 @@ class App extends React.Component {
                                 return <Messages sender={this.state.username}/>}} />
 
                             <Route exact path="/profile" render={() => {
-                                return <Profile profileName={this.state.username}
+                                return <Profile profileName={this.state.profileName}
                                                 username={this.state.username} />
                             }}/>
 
@@ -135,7 +142,8 @@ class App extends React.Component {
                         <News />
                         {!this.state.isConnectDisplayed &&
                             <FollowRecommendations username={this.state.username}
-                                                updateFeed={this.updateFeed}/>}
+                                                updateFeed={this.updateFeed}
+                                                updateProfileName={this.updateProfileName}/>}
                     </div>
                 </div>
             );

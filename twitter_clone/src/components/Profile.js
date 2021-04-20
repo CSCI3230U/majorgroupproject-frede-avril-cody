@@ -19,8 +19,8 @@ class Profile extends Component {
     componentDidMount() {
         const params = {
             profileName: this.props.profileName
-        };
 
+        };
         const options = {
             method: 'POST',
             body: JSON.stringify(params)
@@ -124,14 +124,14 @@ class Profile extends Component {
                                 <p className={`profile-inline`}>{this.state.followers} | Followers</p>
                             </div>
                             <div className={`col-2 profile-button-col`}>
-                                <button onClick={this.handleFollow} className={`follow-recs-follow rounded-pill`}>Follow</button> 
+                                <button onClick={this.handleFollow} className={`follow-recs-follow rounded-pill`}>Follow</button>
                             </div>
                         </div>
                     </div>
                     {allTweets.length > 0 ? tweets : noTweets}
                 </div>
 
-                
+
             </div>
         );
     };
