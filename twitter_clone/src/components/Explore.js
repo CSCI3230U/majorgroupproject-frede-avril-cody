@@ -8,9 +8,9 @@ class Explore extends Component {
     // simplest - no params
     // componentDidMount() {
     //     const options = {
-    //         method: 'POST'
+    //         method: 'GET'
     //     };
-    //     fetch("http://localhost:4000/tweets", options)
+    //     fetch("http://localhost:4000/getMostLiked", options)
     //         .then(res => res.json())
     //         .then(res => {
     //             console.log(res);

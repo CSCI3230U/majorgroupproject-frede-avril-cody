@@ -80,6 +80,18 @@ function getMostTweeted(res) {
     })
 }
 
+function getMostLiked(res) {
+    db.data.all(`SELECT sender, SUM(likes) FROM tweets GROUP BY senderId\
+                ORDER BY SUM(likes) DESC LIMIT 5`, function(err, users) {
+        if (err) {
+            console.error("There was an error getting data for the analytics page");
+        } else {
+            console.log(users);
+            res.json(users);
+        }
+    });
+}
+
 function fakeInsert(content, userId, username) {
     const hashtagRegex = new RegExp(/(\s#|^#)[a-zA-z0-9]+/g);
     const hashtags = Array.from(content.matchAll(hashtagRegex), r => r[0].trim().toLowerCase()); // if error, check here
@@ -110,4 +122,5 @@ module.exports.like = like;
 module.exports.getAll = getAll;
 module.exports.getFeed = getFeed;
 module.exports.getMostTweeted = getMostTweeted;
+module.exports.getMostLiked = getMostLiked;
 module.exports.fakeInsert = fakeInsert;
