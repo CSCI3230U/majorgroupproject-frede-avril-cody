@@ -21,6 +21,8 @@ The feed will not display anything until you follow someone at the bottom right 
 In order to send someone a message you must enter the recipent for example "Paula" hit enter and type your message
 and click send.
 
+All the work was done in the dev branch and Cody merged the dev branch to main
+
 
 Although the commits may not display it completely, the work was split up evenly amoungst our groups and 
 meeting were had as a collabrative coding session to discuss issues others were having and to debug.
