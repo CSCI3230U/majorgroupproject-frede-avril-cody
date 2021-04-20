@@ -108,7 +108,7 @@ class Profile extends Component {
         const tweets = this.state.tweets.reverse().map((post,index) => (
             <div key={index} className={`post`}>
                 <div className={`container`}>
-
+                    
                 </div>
                 <div className={`feed_post`}>
                     <div className={`row`}>
@@ -157,7 +157,9 @@ class Profile extends Component {
                     </div>
                 </div>
                 <div className={`profile-body`}>
-                    <div className={`profile-background`}></div>
+                    <div className={`profile-background`}>
+                        <img src={`images/profile/profileBackground.jpg`} alt="profileBack" className={`profile-background`}></img>
+                    </div>
                     <div className={`profile-details`}>
                         <div className={`row container`}>
                             <div className={`col-9`}>
