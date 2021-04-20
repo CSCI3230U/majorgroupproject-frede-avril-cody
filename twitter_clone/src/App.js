@@ -29,7 +29,8 @@ class App extends React.Component {
             isConnectDisplayed: false,
             tweets: [],
             profileName: '',
-            justLoggedIn: false
+            justLoggedIn: false,
+            hashtagFlag: false
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
@@ -37,7 +38,9 @@ class App extends React.Component {
         this.displayRegister = this.displayRegister.bind(this);
         this.connectDisplayed = this.connectDisplayed.bind(this);
         this.updateFeed = this.updateFeed.bind(this);
+        this.updateFeedByHashtag = this.updateFeedByHashtag.bind(this);
         this.updateProfileName = this.updateProfileName.bind(this);
+        // this.resetHashtagFlag = this.resetHashtagFlag.bind(this);
     }
 
     connectDisplayed(flag) {
@@ -90,6 +93,15 @@ class App extends React.Component {
             });
     }
 
+    updateFeedByHashtag(tweets) {
+        this.setState({tweets: tweets, hashtagFlag: true});
+    }
+
+    // resetHashtagFlag() {
+    //     console.log("called")
+    //     this.setState({hashtagFlag: false});
+    // }
+
     updateProfileName(username) {
         this.setState({profileName: username});
     }
@@ -140,7 +152,9 @@ class App extends React.Component {
                                             updateFeed={this.updateFeed}/>
                                     <Feed   username={this.state.username}
                                             updateFeed={this.updateFeed}
-                                            tweets={this.state.tweets} />
+                                            tweets={this.state.tweets}
+                                            hashtagFlag={this.state.hashtagFlag} />
+                                            {/*// resetHashtagFlag={this.resetHashtagFlag} />*/}
                                 </Fragment>
                             }/>
 
@@ -149,7 +163,7 @@ class App extends React.Component {
                     </div>
 
                     <div className="rightSide">
-                        <Search />
+                        <Search updateFeed={this.updateFeedByHashtag}/>
                         <News />
                         {!this.state.isConnectDisplayed &&
                             <FollowRecommendations username={this.state.username}

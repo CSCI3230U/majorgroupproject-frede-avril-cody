@@ -16,6 +16,7 @@ class Search extends Component {
         this.handleFocus = this.handleFocus.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
         this.getSubstring = this.getSubstring.bind(this);
     }
 
@@ -49,6 +50,12 @@ class Search extends Component {
             .then(res => {
                 this.setState({results: res});
             });
+    }
+
+    handleSearch(e) {
+        if (e.code === "Enter") {
+            this.props.updateFeed(this.state.results);
+        }
     }
 
     handleChange(event) {
@@ -86,7 +93,7 @@ class Search extends Component {
                             className="search-input" onBlur={this.handleBlur}
                             onFocus={this.handleFocus} ref={this.searchInput}
                             onChange={this.handleChange} value={this.state.input}
-                            autoComplete="off" />
+                            autoComplete="off" onKeyPress={this.handleSearch}/>
                 </div>
                 {this.state.focus &&
                 <div className="search-suggestions">

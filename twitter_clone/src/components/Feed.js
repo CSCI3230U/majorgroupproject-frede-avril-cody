@@ -19,7 +19,11 @@ class Feed extends Component {
     }
 
     componentDidMount() {
-        this.props.updateFeed(this.props.username);
+        // if (!this.props.hashtagFlag) {
+            this.props.updateFeed(this.props.username);
+        // } else {
+        //     this.props.resetHashtagFlag();
+        // }
     }
 
     handleLike(event) {
