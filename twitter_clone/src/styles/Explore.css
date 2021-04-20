@@ -1,11 +1,13 @@
 .explore {
     width: 100%;
-    border-radius: 0.5rem;
-
+    position: sticky;
+    height: 100vh;
+    padding: 10px;
+    border: 1px solid #ececec;
 }
 .title{
-    border: 1px solid black;
-    margin-bottom: 15px;
+    border-bottom: 1px solid #ececec;
+    padding: 0.5rem;
 }
 .title h2{
     padding: 0.5rem;
@@ -13,10 +15,11 @@
 .hashTagContainer{
     height: 900px;
     width: 100%;
-    border: 1px solid black;
 }
 .hashtag{
     /* border: .5px solid black; */
     padding: 10px;
-    color: #1DA1F2
+    color: #1DA1F2;
+    border-bottom: 1px solid #ececec;
+    border-top: 1px solid #ececec;
 }

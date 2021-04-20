@@ -7,6 +7,7 @@ import {faCog} from '@fortawesome/free-solid-svg-icons';
 import {faCommentAlt} from '@fortawesome/free-regular-svg-icons';
 import OneMessage from './OneMessage.js';
 import '../styles/Messages.css';
+import $ from "jquery";
 
 
 class Messages extends Component {
@@ -19,7 +20,8 @@ class Messages extends Component {
             receiver: '',
             interval: null,
             userList: [],
-            id: 0
+            id: 0,
+            followed: []
         }
         this.send = this.send.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
@@ -27,6 +29,9 @@ class Messages extends Component {
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.displayMessages = this.displayMessages.bind(this);
         this.handleReceiverInput = this.handleReceiverInput.bind(this);
+        this.getFollowed = this.getFollowed.bind(this);
+        this.dropdown = this.dropdown.bind(this);
+        this.setReciever = this.setReciever.bind(this);
     }
 
     send(event){
@@ -132,25 +137,73 @@ class Messages extends Component {
             });
     }
 
+    getFollowed(){
+        const params = {
+            profileName: this.props.sender
+
+        };
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/getFollowed", options)
+            .then(res => res.json())
+            .then(res => {
+                let followed = res.followed;
+                this.setState({followed: followed});
+            });
+    }
+
+    dropdown(){
+        $('.dropdown-menu').toggleClass('show');
+    }
+
+    setReciever(event){
+        const input = event.target.value;
+        this.setState({receiver: input}, this.displayMessages);
+        if (input.length > 0) {
+            this.searchUsers(input);
+        } else {
+            this.setState({userList: []});
+        }
+
+        this.dropdown();
+    }
+
     render() {
+        const followed = this.state.followed.map((user,index) => (
+            <div key={index} className={`user`}>
+                <button className={`dropdown-item`} onClick={this.setReciever} value={user.username}>{user.username} | {user.handle}</button>
+            </div>
+        ));
+        
         const messages = React.Children.toArray(this.state.messages.map(message => (
             <OneMessage message={message} user={this.state.id} />
         )));
         return(
             <div className={`messages`}>
                 <div className="messages-title">
-                    <h2>Messages</h2>
+                    <h2 className={`messages-title-text`}>Messages</h2>
                     <div id="icons">
                         <input type="search" name="receiver" placeholder="Recipient"
-                        className="messages-receiver-input" onBlur={this.handleBlur}
-                        onFocus={this.handleFocus} onChange={this.handleReceiverInput}
-                        value={this.state.receiver} autoComplete="off" />
-                        <a href="#"> <FontAwesomeIcon className={`menu-icon`}
-                        icon={faCog} size="2x" /></a>
-                        <a href="#">
-                        <FontAwesomeIcon className={`menu-icon`}
-                        icon={faCommentAlt} size="2x" />
-                        </a>
+                                className="rounded-pill messages-receiver-input" onBlur={this.handleBlur}
+                                onFocus={this.handleFocus} onChange={this.handleReceiverInput}
+                                value={this.state.receiver} autoComplete="off"/>
+                        <button className="btn" type="button">
+                            <FontAwesomeIcon className={`message-icon`} icon={faCog} size="2x" />
+                        </button>
+                        <div className="dropdown">
+                            <button className="btn dropdown-toggle" type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={this.dropdown}>
+                                <FontAwesomeIcon className={`message-icon`} icon={faCommentAlt} size="2x" />
+                            </button>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <button className={`dropdown-item`} onClick={this.setReciever} value="Joe">Joe</button>
+                                <button className={`dropdown-item`} onClick={this.setReciever} value="Randy">Randy</button>
+                                <button className={`dropdown-item`} onClick={this.setReciever} value="Rupinder">Rupinder</button>
+                                {followed}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="messageArea">
@@ -163,7 +216,7 @@ class Messages extends Component {
                         placeholder="Send something"/>
                     </div>
                     <div id="sendBtn">
-                        <button type="button"><FontAwesomeIcon className={`menu-icon`}
+                        <button type="button" className={`message-send-button`}><FontAwesomeIcon className={`message-icon`}
                         icon={faPaperPlane} size="1x" onClick={this.handleClick}/></button>
 
                     </div>

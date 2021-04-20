@@ -25,7 +25,7 @@ class OneMessage extends Component {
         return(
             <>
                 <div className={`messageContainer ${_class}`}>
-                    <p id="message">{`${this.props.message.message}`}</p>
+                    <p className={`message-blue-box`}>{`${this.props.message.message}`}</p>
                     <p id="time">{`${this.props.message.time}`}</p>
                 </div>
             </>

@@ -44,3 +44,20 @@
      text-align:center;
      padding: 10px;
 }
+
+.feed_like{
+     border:none;
+     background-color: transparent;
+     border-radius: 50%;
+}
+
+.feed_like:hover{
+     border:none;
+     background-color: #e2848491;
+     border-radius: 50%;
+     color:#d84c4cde;
+}
+
+.feed_like_icon:hover{
+     color:#d84c4cde;
+}
