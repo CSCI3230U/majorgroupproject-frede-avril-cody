@@ -208,7 +208,7 @@ function getUserFollowerCount(user, requestor, res) {
 }
 
 function getUserFeed(user, requestor, res) {
-    db.data.all(`SELECT * FROM tweets WHERE senderId = ${user.rowid} ORDER BY \
+    db.data.all(`SELECT rowid, * FROM tweets WHERE senderId = ${user.rowid} ORDER BY \
                 time DESC LIMIT 30`, function(err, tweets) {
         if (err) {
             console.error("error retreiving an individual's feed");

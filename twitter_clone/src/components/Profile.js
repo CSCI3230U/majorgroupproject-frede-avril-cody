@@ -22,6 +22,25 @@ class Profile extends Component {
         };
         this.handleFollow = this.handleFollow.bind(this);
         this.getProfileData = this.getProfileData.bind(this);
+        this.handleLike = this.handleLike.bind(this);
+    }
+
+    handleLike(event) {
+        const params = {
+            tweetid: event.currentTarget.dataset.tweetid,
+            username: this.props.username
+        };
+        console.log(params)
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/like", options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+            });
     }
 
     getProfileData() {
