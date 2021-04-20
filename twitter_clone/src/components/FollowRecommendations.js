@@ -18,7 +18,7 @@ class FollowRecommendations extends Component {
     handleRefresh() {
         const params = {
             username: this.props.username,
-            profiles: 8
+            profiles: 5
         };
         const options = {
             method: 'POST',

@@ -79,7 +79,7 @@ class Profile extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.profileName != this.props.profileName) {
+        if (prevProps.profileName !== this.props.profileName) {
             this.getProfileData();
         }
     }
