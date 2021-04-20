@@ -6,6 +6,9 @@ const height = 500;
 const chartWidth = width - 2 * margin;
 const chartHeight = height - 2 * margin;
 
+var barChartHtmlTable;
+var pieChartHtmlTable;
+
 window.onload = function() {
      fetch('http://localhost:4000/getMostTweeted')
             .then((response) => response.json())
@@ -15,6 +18,29 @@ window.onload = function() {
             .then((response) => response.json())
             .then((json) => drawPieChart(json)); 
 
+     $('#barData').click(function() {
+          let modal = document.getElementById('barChartModal');
+          modal.appendChild(barChartHtmlTable);
+          $('#barModal').toggleClass("is-active");
+
+          $('.modal-close').click(function(){
+               if ($('#barModal').hasClass("is-active")) {
+                    $('#barModal').toggleClass("is-active");
+               }
+          });
+     });
+
+     $('#pieData').click(function() {
+          let modal = document.getElementById('pieChartModal');
+          modal.appendChild(pieChartHtmlTable);
+          $('#pieModal').toggleClass("is-active");
+
+          $('.modal-close').click(function(){
+               if ($('#pieModal').hasClass("is-active")) {
+                    $('#pieModal').toggleClass("is-active");
+               }
+          });
+     });
 };
 
 function getMostTweets(data){
@@ -74,6 +100,8 @@ function drawBarChart(barData){
                                    .attr('width', xScaleBar.bandwidth())
                                    .attr('height', (data) => chartHeight - yScaleBar(data["COUNT(message)"]))
                                    .attr('fill', (data) => colourScale(data["COUNT(message)"]))
+
+     barChartHtmlTable = createTable(barData, "Users", "Tweets", "COUNT(message)");
 }
 
 
@@ -127,6 +155,8 @@ function drawPieChart(pieData){
                          .attr('x', 90)
                          .attr('y', (data, i) => (i+1)*40 + 20)
                          .text(data => `${data.data.sender}`);
+     
+     pieChartHtmlTable = createTable(pieData, "Users", "Likes", "SUM(likes)");
 }
 
 function getLikes(data){
@@ -158,4 +188,34 @@ function getLeastLikes(data){
      });
 
      return leastLikes;
+}
+
+function createTable(data, header1, header2, attribute){
+     let table = document.createElement('table');
+     let tr = document.createElement('tr');
+     tr.className = "bold";
+     let td1 = document.createElement('td');
+     let text = document.createTextNode(header1);
+     td1.appendChild(text);
+     let td2 = document.createElement('td');
+     text = document.createTextNode(header2);
+     td2.appendChild(text);
+     tr.appendChild(td1);
+     tr.appendChild(td2);
+     table.appendChild(tr);
+
+     data.forEach(element => {
+          let tr = document.createElement('tr');
+          let td1 = document.createElement('td');
+          let text = document.createTextNode(element.sender);
+          td1.appendChild(text);
+          let td2 = document.createElement('td');
+          text = document.createTextNode(element[`${attribute}`]);
+          td2.appendChild(text);
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+          table.appendChild(tr);
+     });
+
+     return table
 }
