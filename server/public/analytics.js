@@ -128,7 +128,14 @@ function drawPieChart(pieData){
                          .attr('height', 30)
                          .attr('fill', (data) => colourScale(data.data.likes))
 
-     // legend text
+     // // legend text
+     pieSvg.selectAll('text')
+               .data(parsedData)
+               .enter()
+                    .append('text')
+                         .attr('x', 90)
+                         .attr('y', (data, i) => (i+1)*40 + 20)
+                         .text(data => `${data.data.handle}`);
 }
 
 function getLikes(data){
