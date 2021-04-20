@@ -13,11 +13,46 @@ body{
 }
 
 .barChart{
+     text-align: center;
      grid-row: 2;
      grid-column: 2;
 }
 
 .pieChart{
+     text-align: center;
      grid-row: 3;
      grid-column: 2;
+}
+
+h5{
+     margin: 0.5rem;
+     font-size: 18px;
+}
+
+#barChartModal{
+     text-align: center;
+     background-color: white;
+     padding: 1rem;
+     border-radius: 20px;
+     width: 15rem;
+}
+
+#pieChartModal{
+     text-align: center;
+     background-color: white;
+     padding: 1rem;
+     border-radius: 20px;
+     width: 15rem;
+}
+
+table {
+     font-size: 20px;
+}
+
+td {
+     padding: 0.5rem;
+}
+
+.bold{
+     font-weight: bold;
 }

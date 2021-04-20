@@ -230,9 +230,20 @@ function findUsers(username, res) {
         });
 }
 
+function getRowId(req, res) {
+    db.data.get(`SELECT rowid FROM users WHERE username = '${req.username}'`, function(err, user) {
+        if (err) {
+            console.error("There was an error retrieving the user from the database");
+        } else {
+            res.json({id: user.rowid});
+        }
+    });
+}
+
 module.exports.verifyUnique = verifyUniqueIdentifier;
 module.exports.getProfile = getUserProfile;
 module.exports.login = handleLogin;
+module.exports.getId = getRowId;
 module.exports.findUsers = findUsers;
 module.exports.register = registerNewUser;
 module.exports.getFollowRecommendations = findFollowRecommendations;

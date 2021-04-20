@@ -17,13 +17,21 @@ class Tweet extends Component{
         }
         this.handleText = this.handleText.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.getImgUrl = this.getImgUrl.bind(this);
     }
 
     handleText(event) {
         this.setState({content: event.target.value});
     }
 
-    handleClick(event) {
+    handleKeyPress(event) {
+        if (event.code === "Enter") {
+            this.handleClick();
+        }
+    }
+
+    handleClick() {
         const params = {
             username: this.props.username,
             content: this.state.content
@@ -33,6 +41,8 @@ class Tweet extends Component{
             return;
         }
 
+        this.setState({content: ''});
+
         const options = {
             method: 'POST',
             body: JSON.stringify(params)
@@ -41,7 +51,7 @@ class Tweet extends Component{
         fetch("http://localhost:4000/tweet", options)
             .then(res => res.json())
             .then(res => {
-                // refresh feed
+                this.props.updateFeed(this.props.username);
             });
     }
 
@@ -63,6 +73,32 @@ class Tweet extends Component{
     //         });
     // }
 
+    getImgUrl(id) {
+        if (id === 1) {
+            return `images/profile/4randy.png`;
+        } else {
+            const index = id%18;
+            return `images/profile/${index}.png`
+        }
+    }
+
+    componentDidMount() {
+        const params = {
+            username: this.props.username
+        };
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(params)
+        };
+
+        fetch("http://localhost:4000/getUserId", options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({imgUrl: this.getImgUrl(res.id)});
+            });
+    }
+
     render() {
         return(
             <>
@@ -80,13 +116,15 @@ class Tweet extends Component{
                 <div className={`tweet_tweet container tweet_body`}>
                     <div className={`row`}>
                         <div className={`col-2 tweet_profilePic`}>
-                            <img src={`images/profile/1.png`} alt="profile" className={`tweet-profilePic`}></img>
+                            <img src={this.state.imgUrl} alt="profile" className={`tweet-profilePic`}></img>
                         </div>
                         <div className={`col`}>
                             <div className="tweet_tweetContent">
                                 <input type="text" name="tweet" placeholder="What's happening?"
                                         className={'tweet_tweetInput tweet_form-control'}
                                         onChange={this.handleText}
+                                        onKeyPress={this.handleKeyPress}
+                                        value={this.state.content}
                                         autoComplete="off" />
                             </div>
                             <div  className={`row`}>
@@ -99,7 +137,9 @@ class Tweet extends Component{
                                 </div>
                                 <div className="col-3">
                                     <button className={'rounded-pill  tweet_submit'}
-                                            onClick={this.handleClick}>Tweet</button>
+                                            onClick={this.handleClick}>
+                                        Tweet
+                                    </button>
                                 </div>
                             </div>
                         </div>
