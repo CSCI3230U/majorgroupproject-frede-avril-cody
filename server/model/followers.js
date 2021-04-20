@@ -32,8 +32,18 @@ function addFollower(req) {
 }
 
 function insert(follower, followed) {
-    db.data.run('INSERT OR IGNORE INTO followers (followerId, followedId) VALUES (?, ?)',
-                [follower, followed]);
+    db.data.get(`SELECT * FROM followers WHERE (followerId, followedId) IN \
+                (SELECT '${follower}', '${followed}')`, function(err, row) {
+                    if (err) {
+                        console.error(err);
+                    } else if (!row) {
+                        db.data.run(`INSERT INTO followers (followerId, followedId) \
+                                    VALUES (?, ?)`, [follower, followed]);
+                    } else {
+                        db.data.run(`DELETE FROM followers WHERE (followerId, \
+                                    followedId) IN (SELECT '${follower}', '${followed}')`);
+                    }
+    });
 }
 
 module.exports.insert = insert;
