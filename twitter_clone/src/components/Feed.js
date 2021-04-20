@@ -5,6 +5,7 @@ import {faComment} from '@fortawesome/free-regular-svg-icons';
 import {faImage} from '@fortawesome/free-regular-svg-icons';
 import {faHeart} from '@fortawesome/free-regular-svg-icons';
 import {faShareSquare} from '@fortawesome/free-regular-svg-icons';
+import { formatTime } from '../utilities.js';
 
 class Feed extends Component {
     constructor(props) {
@@ -13,29 +14,13 @@ class Feed extends Component {
             loaded: false,
             imgUrl: `images/profile/1.png`
         };
-        this.getTimeDisplay = this.getTimeDisplay.bind(this);
         this.handleLike = this.handleLike.bind(this);
         this.getImgUrl = this.getImgUrl.bind(this);
-        // this.formatResponseTime = this.formatResponseTime.bind(this);
     }
 
     componentDidMount() {
         this.props.updateFeed(this.props.username);
     }
-
-    // formatResponseTime(){
-    //     // let retrieved = ;
-    //     let formatted = this.props.posts;
-    //
-    //     formatted.forEach(post => {
-    //         let formattedTime = this.getTimeDisplay(post.time);
-    //         console.log("hey");
-    //         post["time"] = formattedTime;
-    //     });
-    //
-    //     this.setState({posts: formatted});
-    //     console.log(formatted);
-    // }
 
     handleLike(event) {
         const params = {
@@ -52,27 +37,6 @@ class Feed extends Component {
             .then(res => {
                 console.log(res);
             });
-    }
-
-    getTimeDisplay(dateString){
-        let display = "3h";
-        let dateList = dateString.split(" ");
-        let calendar = dateList[0].split("-");
-        let time = dateList[1].split(":");
-
-        let today = new Date();
-
-        // if the tweet was done today
-        if (calendar[2] === String(today.getDate())) {
-            // if the tweet was posted in the same hour
-            if (time[0] === String(today.getHours())){
-                return display;
-            } else { // if the tweet was poster earlier than an hour ago
-                return display;
-            }
-        } else { // if the tweet wasn't posted today
-            return display;
-        }
     }
 
     getImgUrl(id) {
@@ -105,7 +69,7 @@ class Feed extends Component {
                         </div>
                         <div className={`col`}>
                             <div className="feed_postContent">
-                                <p><b>{post.sender}</b> · {post.time}</p>
+                                <p><b>{post.sender}</b> · {formatTime(post.time)}</p>
                                 <p>{post.message}</p>
                             </div>
                         </div>

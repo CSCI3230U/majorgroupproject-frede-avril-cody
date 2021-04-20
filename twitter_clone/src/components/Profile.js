@@ -6,6 +6,7 @@ import {faComment} from '@fortawesome/free-regular-svg-icons';
 import {faImage} from '@fortawesome/free-regular-svg-icons';
 import {faHeart} from '@fortawesome/free-regular-svg-icons';
 import {faShareSquare} from '@fortawesome/free-regular-svg-icons';
+import { formatTime } from '../utilities.js';
 
 class Profile extends Component {
     constructor(props) {
@@ -86,7 +87,7 @@ class Profile extends Component {
                         </div>
                         <div className={`col`}>
                             <div className="feed_postContent">
-                                <p><b>{post.sender}</b> · {post.time}</p>
+                                <p><b>{post.sender}</b> · {formatTime(post.time)}</p>
                                 <p>{post.message}</p>
                             </div>
                         </div>

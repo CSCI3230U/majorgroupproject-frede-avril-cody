@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
+import { formatTime } from '../utilities.js';
+
 // this component is used make the a single message,
 // whether on the right side if your sending it or
 // lefts side if reciving
+
+
 class OneMessage extends Component {
     constructor(props) {
         super(props);
@@ -26,7 +30,7 @@ class OneMessage extends Component {
             <>
                 <div className={`messageContainer ${_class}`}>
                     <p className={`message-blue-box`}>{`${this.props.message.message}`}</p>
-                    <p id="time">{`${this.props.message.time}`}</p>
+                    <p id="time">{`${formatTime(this.props.message.time)}`}</p>
                 </div>
             </>
         );
