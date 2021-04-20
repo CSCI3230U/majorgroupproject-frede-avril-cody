@@ -54,5 +54,14 @@
     height: 5rem;
 }
 .search-list {
+    list-style-type: none;
+}
+.search-list li {
+    padding: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.search-list li:hover {
+    color: hsl(203, 89%, 53%);
 
 }
