@@ -7,8 +7,10 @@ function newMessage(content, res) {
 
     db.data.all(`SELECT rowid, username FROM users WHERE username = '${sender}'\
                 OR\ username = '${receiver}'`, function(err, users) {
-                    if (err || users.length < 2) {
+                    if (err || users.length < 1) {
                         console.error("There was an error finding the users for a message insert");
+                    } else if (users.length < 2) {
+                        insert(users[0].rowid, users[0].rowid, message, res);
                     } else {
                         const flag = users[0].username === sender;
                         const senderId = flag ? users[0].rowid : users[1].rowid;
@@ -17,9 +19,6 @@ function newMessage(content, res) {
                         insert(senderId, receiverId, message, res);
                     }
                 });
-
-    // {message: "FakeMessage2", time: "2020-02-02", sender: true} array of this
-
 }
 
 function insert(senderId, receiverId, message, res) {
@@ -54,8 +53,10 @@ function getMessages(content, res) {
                 OR\ username = '${receiver}'`, function(err, users) {
                     if (err) {
                         console.error("There was an error finding the users for a messages request");
-                    } else if (users.length < 2) {
+                    } else if (users.length < 1) {
                         res.json({id: 0, messages: []});
+                    } else if (users.length < 2) {
+                        sendMessages(users[0].rowid, users[0].rowid, res);
                     } else {
                         const flag = users[0].username === sender;
                         const senderId = flag ? users[0].rowid : users[1].rowid;
