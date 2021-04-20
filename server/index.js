@@ -72,6 +72,11 @@ app.post('/tweet', (request, response) => {
     response.json({});
 });
 
+app.post('/getUserId', (request, response) => {
+    console.log(request.body);
+    users.getId(request.body, response);
+});
+
 app.post('/saveMessage', (request, response) => {
     console.log(request.body);
     messages.saveMessage(request.body, response);

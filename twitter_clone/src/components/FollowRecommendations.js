@@ -10,6 +10,7 @@ class FollowRecommendations extends Component {
         // this.handleChange = this.handleChange.bind(this);
         this.handleRefresh = this.handleRefresh.bind(this);
         this.handleFollow = this.handleFollow.bind(this);
+        this.getImgUrl = this.getImgUrl.bind(this);
     }
 
     handleRefresh() {
@@ -51,12 +52,20 @@ class FollowRecommendations extends Component {
         // TODO Instead of follow, should have a '+'
         // Then, in this method, the '+' for event.target should be changed to a 'check'
     }
+    getImgUrl(id) {
+        if (id === 1) {
+            return `images/profile/4randy.png`;
+        } else {
+            const index = id%18;
+            return `images/profile/${index}.png`
+        }
+    }
 
     render() {
         const recommendations = this.state.recommendations.map(i => (
             <div key={i.rowid} className={`row news-line follow-recs-side-padding follow-recs-hover-effect`}>
                 <div className={`col-3 inline`}>
-                    <img src={`images/profile/${i.rowid}.png`} alt="profile" className={`card-profilePic inline`}></img>
+                    <img src={this.getImgUrl(i.rowid)} alt="profile" className={`card-profilePic inline`}></img>
                 </div>
                 <div className={`col-6 inline`}>
                     <h6>{i.username}</h6>
