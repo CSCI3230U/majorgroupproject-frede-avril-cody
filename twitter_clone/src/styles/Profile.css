@@ -64,3 +64,11 @@
 }
 
 
+.profile-follow{
+    margin-top: 0.5rem;
+    height: 3.5rem;
+    width: 7rem;
+    border: 2px solid rgb(54, 164, 207);
+    color:rgb(78, 172, 209);
+    font-weight: bold;
+}

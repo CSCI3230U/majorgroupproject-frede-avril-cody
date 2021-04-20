@@ -141,15 +141,17 @@ class Profile extends Component {
                     <div className={`profile-background`}></div>
                     <div className={`profile-details`}>
                         <div className={`row container`}>
-                            <div className={`col`}>
+                            <div className={`col-9`}>
                                 <img src={`images/profile/${this.state.id}.png`} alt="main profile" className={`profile-profilePic`}></img>
                                 <h3>{this.state.user}</h3>
                                 <p>{this.state.handle}</p>
                                 <p className={`profile-inline`}>{this.state.followed} | Following</p>
                                 <p className={`profile-inline`}>{this.state.followers} | Followers</p>
                             </div>
-                            <div className={`col-2 profile-button-col`}>
-                                <button onClick={this.handleFollow} className={`follow-recs-follow rounded-pill`}>{this.state.isFollowing ? "Following!" : "Follow"}</button>
+                            <div className={`col-3 profile-button-col`}>
+                                <button onClick={this.handleFollow}
+                                        className={`profile-follow rounded-pill`}>
+                                        {this.state.isFollowing ? "Following!" : "Follow"}</button>
                             </div>
                         </div>
                     </div>
