@@ -26,6 +26,7 @@ class Register extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleConfirmPasswordChange = this.handleConfirmPasswordChange.bind(this);
+        this.handleBackToLogin = this.handleBackToLogin.bind(this);
         this.verifyUniqueness = this.verifyUniqueness.bind(this);
         this.validName = this.validName.bind(this);
         this.validPassword = this.validPassword.bind(this);
@@ -189,6 +190,9 @@ class Register extends Component {
         }
     }
 
+    handleBackToLogin() {
+        this.props.displayRegister(false);
+    }
 
     render() {
         return(
@@ -209,7 +213,8 @@ class Register extends Component {
                             className={this.state.handleStyle} onChange={this.handleChange} />
                     <input  placeholder="Email" type="email"
                             className={this.state.emailStyle} onChange={this.handleEmailChange} />
-                    <button onClick={this.handleRegisterClick}>Register</button>
+                    <button className={"login-button"} onClick={this.handleRegisterClick}>Register</button>
+                    <button className={"login-button"} onClick={this.handleBackToLogin}>Back To Login</button>
                 </div>
             </div>
         );

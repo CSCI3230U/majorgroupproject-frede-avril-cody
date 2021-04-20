@@ -33,7 +33,7 @@ class App extends React.Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
-        this.handleRegisterClick = this.handleRegisterClick.bind(this);
+        this.displayRegister = this.displayRegister.bind(this);
         this.connectDisplayed = this.connectDisplayed.bind(this);
         this.updateFeed = this.updateFeed.bind(this);
         this.updateProfileName = this.updateProfileName.bind(this);
@@ -66,8 +66,8 @@ class App extends React.Component {
         this.handleLogin(username, handle);
     }
 
-    handleRegisterClick() {
-        this.setState({register: true});
+    displayRegister(flag) {
+        this.setState({register: flag});
     }
 
     updateFeed(username) {
@@ -93,10 +93,11 @@ class App extends React.Component {
 
     render() {
         if (this.state.register) {
-            return <Register handleRegister={this.handleRegister} />;
+            return <Register    handleRegister={this.handleRegister}
+                                displayRegister={this.displayRegister}/>;
         } else if (!this.state.loggedIn) {
             return <Login   handleLogin={this.handleLogin}
-                            handleRegister={this.handleRegisterClick}/>;
+                            displayRegister={this.displayRegister}/>;
         } else {
             return (
                 <div className="App">

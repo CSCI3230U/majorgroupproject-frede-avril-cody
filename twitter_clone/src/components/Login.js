@@ -68,10 +68,10 @@ class Login extends Component {
                     <input placeholder="Username" type="text" onChange={this.handleUsernameChange} className={`login-input`}/>
                     <input placeholder="Password" type="password" onChange={this.handlePasswordChange} className={`login-input`}/>
                     <button onClick={this.handleLoginClick} className={`rounded-pill login-button`}>Login</button>
-                    <button onClick={this.props.handleRegister} className={`rounded-pill login-button`}>Register</button>
+                    <button onClick={this.props.displayRegister} className={`rounded-pill login-button`}>Register</button>
                 </div>
             </div>
-            
+
         );
     };
 }
