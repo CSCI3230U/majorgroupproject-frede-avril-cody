@@ -38,9 +38,9 @@ class Feed extends Component {
 
         fetch("http://localhost:4000/like", options)
             .then(res => res.json())
-            .then(res => {
-                console.log(res);
-            });
+            .then(res => {            });
+        
+        this.componentDidMount();
     }
 
     getImgUrl(id) {
@@ -90,7 +90,9 @@ class Feed extends Component {
                             <div className={`col inline feed_centered feed_icon myHover`}>
                                     <button  className={`feed_like`} onClick={this.handleLike} data-tweetid={post.rowid}>
                                         <FontAwesomeIcon className={`feed_like_icon feed_postActionIcon`} icon={faHeart} size="1x" />
+                                        <p className={`likes-display`}>{post.likes}</p>
                                     </button>
+                                    
                             </div>
                             <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faShareSquare} size="1x" />

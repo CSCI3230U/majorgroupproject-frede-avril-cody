@@ -41,6 +41,8 @@ class Profile extends Component {
             .then(res => {
                 console.log(res);
             });
+
+        this.componentDidMount();
     }
 
     getProfileData() {
@@ -142,6 +144,7 @@ class Profile extends Component {
                             <div className={`col inline feed_centered feed_icon myHover`}>
                                     <button className={`profile-like`} onClick={this.handleLike} data-tweetid={post.rowid}>
                                         <FontAwesomeIcon className={`profile-like-icon feed_postActionIcon`} icon={faHeart} size="1x" />
+                                        <p className={`likes-display`}>{post.likes}</p>
                                     </button>
                             </div>
                             <div className={`col inline feed_centered feed_icon`}>
