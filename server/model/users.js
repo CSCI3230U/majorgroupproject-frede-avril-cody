@@ -273,6 +273,27 @@ function getRowId(req, res) {
     });
 }
 
+function getFollowed(req, res) {
+    db.data.get(`SELECT rowid FROM users WHERE username = '${req.sender}'`, function(err, user) {
+        if (err) {
+            console.error("There was an error retrieving the user from the database");
+        } else {
+            sendFollows(user.rowid, res);
+        }
+    });
+}
+
+function sendFollows(id, res) {
+    db.data.all(`SELECT rowid, username, handle FROM users WHERE rowid IN (SELECT followedId FROM followers WHERE followerId = ${id})`, function (err, follows) {
+        if (err) {
+            console.error("There was an error getting the list of follows");
+        } else {
+            console.log(follows)
+            res.json({followed: follows});
+        }
+    })
+}
+
 module.exports.verifyUnique = verifyUniqueIdentifier;
 module.exports.getProfile = getUserProfile;
 module.exports.login = handleLogin;
@@ -280,3 +301,4 @@ module.exports.getId = getRowId;
 module.exports.findUsers = findUsers;
 module.exports.register = registerNewUser;
 module.exports.getFollowRecommendations = findFollowRecommendations;
+module.exports.getFollowed = getFollowed;

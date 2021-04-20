@@ -39,7 +39,7 @@ class Feed extends Component {
         fetch("http://localhost:4000/like", options)
             .then(res => res.json())
             .then(res => {            });
-        
+
         this.componentDidMount();
     }
 
@@ -92,7 +92,7 @@ class Feed extends Component {
                                         <FontAwesomeIcon className={`feed_like_icon feed_postActionIcon`} icon={faHeart} size="1x" />
                                         <p className={`likes-display`}>{post.likes}</p>
                                     </button>
-                                    
+
                             </div>
                             <div className={`col inline feed_centered feed_icon`}>
                                 <FontAwesomeIcon className={`feed_postActionIcon`} icon={faShareSquare} size="1x" />

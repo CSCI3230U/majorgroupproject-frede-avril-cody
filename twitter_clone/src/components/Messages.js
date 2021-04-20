@@ -61,6 +61,7 @@ class Messages extends Component {
     }
 
     componentDidMount() {
+        this.getFollowed();
         this.displayMessages();
         const interval = setInterval(this.displayMessages, 5000);
         this.setState({interval: interval});
@@ -139,8 +140,7 @@ class Messages extends Component {
 
     getFollowed(){
         const params = {
-            profileName: this.props.sender
-
+            sender: this.props.sender
         };
         const options = {
             method: 'POST',
@@ -151,6 +151,7 @@ class Messages extends Component {
             .then(res => res.json())
             .then(res => {
                 let followed = res.followed;
+                console.log(followed);
                 this.setState({followed: followed});
             });
     }
@@ -173,11 +174,9 @@ class Messages extends Component {
 
     render() {
         const followed = this.state.followed.map((user,index) => (
-            <div key={index} className={`user`}>
-                <button className={`dropdown-item`} onClick={this.setReciever} value={user.username}>{user.username} | {user.handle}</button>
-            </div>
+            <button className={`dropdown-item`} onClick={this.setReciever} key={user.rowid} value={user.username}>{user.username} | {user.handle}</button>
         ));
-        
+
         const messages = React.Children.toArray(this.state.messages.map(message => (
             <OneMessage message={message} user={this.state.id} />
         )));
@@ -198,9 +197,9 @@ class Messages extends Component {
                                 <FontAwesomeIcon className={`message-icon`} icon={faCommentAlt} size="2x" />
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <button className={`dropdown-item`} onClick={this.setReciever} value="Joe">Joe</button>
-                                <button className={`dropdown-item`} onClick={this.setReciever} value="Randy">Randy</button>
-                                <button className={`dropdown-item`} onClick={this.setReciever} value="Rupinder">Rupinder</button>
+                                {/*// <button className={`dropdown-item`} onClick={this.setReciever} value="Joe">Joe</button>
+                                // <button className={`dropdown-item`} onClick={this.setReciever} value="Randy">Randy</button>
+                                // <button className={`dropdown-item`} onClick={this.setReciever} value="Rupinder">Rupinder</button>*/}
                                 {followed}
                             </div>
                         </div>

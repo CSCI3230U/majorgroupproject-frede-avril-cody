@@ -107,6 +107,11 @@ app.post('/like', (request, response) => {
     response.json({});
 });
 
+app.post('/getFollowed', (request, response) => {
+        console.log(request.body);
+    users.getFollowed(request.body, response);
+});
+
 app.get('/getMostTweeted', (request, response) => {
     tweets.getMostTweeted(response);
 });
