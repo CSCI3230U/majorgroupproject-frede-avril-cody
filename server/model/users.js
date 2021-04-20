@@ -163,18 +163,19 @@ function registerNewUser(session, req, res) {
 
 function getUserProfile(req, res) {
     const username = req.profileName;
+    const requestor = req.username;
 
     db.data.get(`SELECT rowid, username, handle FROM users WHERE username = \
                                 '${username}'`, function(err, user) {
         if (err) {
             console.error("There was an error getting the user for a profile retrieval");
         } else {
-            getUserFollowCount(user, res);
+            getUserFollowCount(user, requestor, res);
         }
     });
 }
 
-function getUserFollowCount(user, res) {
+function getUserFollowCount(user, requestor, res) {
     db.data.all(`SELECT COUNT(followerId) FROM followers WHERE followerId = \
         ${user.rowid} GROUP BY followerId`, function(err, follows) {
             if (err) {
@@ -185,12 +186,12 @@ function getUserFollowCount(user, res) {
                 } else {
                     user.follows = 0;
                 }
-                getUserFollowerCount(user, res);
+                getUserFollowerCount(user, requestor, res);
             }
         });
 }
 
-function getUserFollowerCount(user, res) {
+function getUserFollowerCount(user, requestor, res) {
     db.data.all(`SELECT COUNT(followedId) FROM followers WHERE followedId = \
                 ${user.rowid} GROUP BY followedId`, function(err, followers) {
                     if (err) {
@@ -201,21 +202,53 @@ function getUserFollowerCount(user, res) {
                         } else {
                             user.followers = 0;
                         }
-                        getUserFeed(user, res);
+                        getUserFeed(user, requestor, res);
                     }
                 });
 }
 
-function getUserFeed(user, res) {
+function getUserFeed(user, requestor, res) {
     db.data.all(`SELECT * FROM tweets WHERE senderId = ${user.rowid} ORDER BY \
                 time DESC LIMIT 30`, function(err, tweets) {
         if (err) {
             console.error("error retreiving an individual's feed");
         } else {
             user.tweets = tweets;
-            res.json(user);
+            getRequestorId(user, requestor, res);
         }
     });
+}
+
+function getRequestorId(user, requestor, res) {
+    db.data.get(`SELECT rowid FROM users WHERE username = '${requestor}'`, function(err, requestorId) {
+        if (err) {
+            console.error("There was an error retrieving the user from the database");
+        } else {
+            sendProfile(user, requestorId.rowid, res)
+        }
+    });
+}
+
+function sendProfile(user, requestorId, res) {
+    console.log("peppa")
+    console.log(user.rowid)
+    console.log(requestorId)
+    db.data.get(`SELECT * FROM followers WHERE (followerId, followedId) IN \
+                (SELECT ${requestorId}, ${user.rowid})`, function (err, row) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(row)
+                        if (row) {
+                            user.isFollowing = true;
+                            res.json(user);
+                        } else {
+                            user.isFollowing = false;
+                            res.json(user);
+                        }
+                    }
+                });
+
 }
 
 function findUsers(username, res) {

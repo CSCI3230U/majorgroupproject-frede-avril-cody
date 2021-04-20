@@ -18,6 +18,7 @@ class Profile extends Component {
             followers: 0,
             followed: 0,
             id: '',
+            isFollowing: false
         };
         this.handleFollow = this.handleFollow.bind(this);
         this.getProfileData = this.getProfileData.bind(this);
@@ -25,8 +26,8 @@ class Profile extends Component {
 
     getProfileData() {
         const params = {
-            profileName: this.props.profileName
-
+            profileName: this.props.profileName,
+            username: this.props.username
         };
         const options = {
             method: 'POST',
@@ -43,7 +44,14 @@ class Profile extends Component {
                 let followers = res.followers;
                 let followed = res.follows;
                 let id = res.rowid;
-                this.setState({tweets: tweets, user: user, handle: handle, followers: followers, followed: followed, id: id});
+                let isFollowing = res.isFollowing;
+                this.setState({ tweets: tweets,
+                                user: user,
+                                handle: handle,
+                                followers: followers,
+                                followed: followed,
+                                id: id,
+                                isFollowing: isFollowing});
             });
     }
 
@@ -141,7 +149,7 @@ class Profile extends Component {
                                 <p className={`profile-inline`}>{this.state.followers} | Followers</p>
                             </div>
                             <div className={`col-2 profile-button-col`}>
-                                <button onClick={this.handleFollow} className={`follow-recs-follow rounded-pill`}>Follow</button>
+                                <button onClick={this.handleFollow} className={`follow-recs-follow rounded-pill`}>{this.state.isFollowing ? "Following!" : "Follow"}</button>
                             </div>
                         </div>
                     </div>

@@ -95,6 +95,10 @@ class App extends React.Component {
     }
 
     render() {
+        const flag = this.state.justLoggedIn;
+        if (flag) {
+            this.setState({justLoggedIn: false});
+        }
         if (this.state.register) {
             return <Register    handleRegister={this.handleRegister}
                                 displayRegister={this.displayRegister}/>;
@@ -102,10 +106,6 @@ class App extends React.Component {
             return <Login   handleLogin={this.handleLogin}
                             displayRegister={this.displayRegister}/>;
         } else {
-            const flag = this.state.justLoggedIn;
-            if (flag) {
-                this.setState({justLoggedIn: false});
-            }
             return (
                 <div className="App">
                     <div className="leftSide">
