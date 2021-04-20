@@ -118,7 +118,6 @@ function drawPieChart(pieData){
      // parse the data to get the angles
      let parsedData = d3.pie().sort(null)
                          .value(function(d) {return d["SUM(likes)"]})(pieData);
-     console.log(parsedData);
 
      // arc details
      let arcs = d3.arc()
