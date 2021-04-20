@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import '../styles/Register.css';
+import image from "../image/twitterBackground.png" // picture from https://twitter.com
 const validator = require('validator');
 
 class Register extends Component {
-    defaultMessage = 'Please complete this form to register a new account';
+    defaultMessage = 'Please complete this form to register';
     constructor(props) {
         super(props);
         this.state = {
@@ -192,19 +193,24 @@ class Register extends Component {
     render() {
         return(
             // TODO refactor to handle enter press
-            <div className={`register`}>
-                <h2>{this.state.message} </h2>
-                <input  placeholder="Username" type="text" data-type="username"
-                        className={this.state.usernameStyle} onChange={this.handleChange} />
-                <input  placeholder="Password" type="password"
-                        className={this.state.passwordStyle} onChange={this.handlePasswordChange} />
-                <input  placeholder="Confirm Password" type="password"
-                        className={this.state.confirmPasswordStyle} onChange={this.handleConfirmPasswordChange} />
-                <input  placeholder="Handle" type="text" data-type="handle"
-                        className={this.state.handleStyle} onChange={this.handleChange} />
-                <input  placeholder="Email" type="email"
-                        className={this.state.emailStyle} onChange={this.handleEmailChange} />
-                <button onClick={this.handleRegisterClick}>Register</button>
+            <div className={`LoginPage`}>
+                <div className="loginImage" >
+                    <img src={image} alt="NotFound"/>
+                </div>
+                <div className={`register`}>
+                    <h2>{this.state.message} </h2>
+                    <input  placeholder="Username" type="text" data-type="username"
+                            className={this.state.usernameStyle} onChange={this.handleChange} />
+                    <input  placeholder="Password" type="password"
+                            className={this.state.passwordStyle} onChange={this.handlePasswordChange} />
+                    <input  placeholder="Confirm Password" type="password"
+                            className={this.state.confirmPasswordStyle} onChange={this.handleConfirmPasswordChange} />
+                    <input  placeholder="Handle" type="text" data-type="handle"
+                            className={this.state.handleStyle} onChange={this.handleChange} />
+                    <input  placeholder="Email" type="email"
+                            className={this.state.emailStyle} onChange={this.handleEmailChange} />
+                    <button onClick={this.handleRegisterClick}>Register</button>
+                </div>
             </div>
         );
     };
