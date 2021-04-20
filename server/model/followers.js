@@ -1,8 +1,7 @@
 const db = require('./database.js');
 
-
+// given usernames, insert a row in the followers table
 function addFollowerByName(req) {
-    console.log(req)
     db.data.get(`SELECT rowid FROM users WHERE username = '${req.followed}'`, function(err, user) {
         if (err) {
             console.error(`There was an error while adding a follower: ${err}`);
@@ -16,7 +15,7 @@ function addFollowerByName(req) {
         }
     });
 }
-
+// pt 2 of above, can be called directly if req.followed is already a users rowid
 function addFollower(req) {
     db.data.get(`SELECT rowid FROM users WHERE username = '${req.follower}'`, function(err, user) {
         if (err) {
@@ -30,7 +29,8 @@ function addFollower(req) {
         }
     });
 }
-
+// pt 3 of above, can be called directly if both rowids are already known
+// will delete the row if it exists, else will insert a new row (unfollow/follow)
 function insert(follower, followed) {
     db.data.get(`SELECT * FROM followers WHERE (followerId, followedId) IN \
                 (SELECT '${follower}', '${followed}')`, function(err, row) {
@@ -46,6 +46,7 @@ function insert(follower, followed) {
     });
 }
 
+// exports
 module.exports.insert = insert;
 module.exports.addFollower = addFollower;
 module.exports.addFollowerByName = addFollowerByName;

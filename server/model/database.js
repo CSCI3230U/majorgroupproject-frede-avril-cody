@@ -19,21 +19,23 @@ function shuffleArray(array) {
 
 shuffleArray(fakeTweets);
 
+// imports
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database(':memory:');
 const tweets = require('./tweets.js');
-// const db = new sqlite3.Database('./data/twitterClone.db');
 const bcrypt = require('bcrypt');
 
+// initialize with fake data
 db.serialize(async function() {
+    // they don't exist but in case a file is used in the future
     db  .run("DROP TABLE IF EXISTS hashtags")
         .run("DROP TABLE IF EXISTS tweets")
         .run("DROP TABLE IF EXISTS tweetHashtags")
         .run("DROP TABLE IF EXISTS users")
         .run("DROP TABLE IF EXISTS followers")
         .run("DROP TABLE IF EXISTS messages")
-        .run("DROP TABLE IF EXISTS totallyDoesnt");
 
+    // create tables
     db  .run(`CREATE TABLE IF NOT EXISTS tweets (
                                         time DATETIME DEFAULT CURRENT_TIMESTAMP,
                                         senderId INTEGER NOT NULL,
@@ -70,6 +72,7 @@ db.serialize(async function() {
                                         FOREIGN KEY (senderId) REFERENCES users(rowid),
                                         FOREIGN KEY (receiverId) REFERENCES users(rowid))`);
 
+    // create fake users
     const users = db.prepare('INSERT INTO users VALUES (?, ?, ?, ?)');
 
     const profs = ["Randy", "Lennart", "Mariana", "Mehran", "Paula", "Ilona",
@@ -82,6 +85,7 @@ db.serialize(async function() {
 
     users.finalize();
 
+    // have each fake user send a fake tweet, time in between tweets is 2 seconds
     fakeTweets.forEach(function(tweet, i) {
         let senderIndex = Math.floor(Math.random() * profs.length);
         let senderUsername = profs[senderIndex];
@@ -90,11 +94,12 @@ db.serialize(async function() {
                 console.error(err.message);
             } else {
                 setTimeout(function() {
-                    tweets.fakeInsert(tweet, user.rowid, user.handle);
-                }, i*1000);
+                    tweets.insert(tweet, user.rowid, user.handle);
+                }, i*2000);
             }
         });
     });
 });
 
+// export db
 module.exports.data = db;

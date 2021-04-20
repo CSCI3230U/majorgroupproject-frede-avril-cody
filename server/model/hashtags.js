@@ -1,6 +1,8 @@
 const db = require('./database.js');
 const tweetHashtags = require('./tweet_hashtags.js');
 
+/*  given an array of hashtags (that may contain dupes in the array), insert the
+    hashtag into the table if it does not exist otherwise increment the count */
 function insert(hashtags, tweetId) {
     [...new Set(hashtags)].forEach(hashtag => {
         db.data.run(`INSERT INTO hashtags (hashtag) VALUES ('${hashtag}') ON \
@@ -11,13 +13,7 @@ function insert(hashtags, tweetId) {
                     tweetHashtags.addTweet(hashtag, tweetId);
                 }
             });
-    })
-}
-
-function printHashtags() {
-    db.data.all(`SELECT * FROM hashtags`, function(err, tags) {
-        console.log(tags);
-    })
+    });
 }
 
 module.exports.addHashtags = insert;

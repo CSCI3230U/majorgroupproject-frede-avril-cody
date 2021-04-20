@@ -3,7 +3,9 @@ const followers = require('./followers.js');
 const emailValidator = require('validator');
 const bcrypt = require('bcrypt');
 
-function handleLogin(session, req, res) {
+/*  handles a user logging in, returns an object containing at least
+    authenticated key (boolean value), more if login success */
+function handleLogin(req, res) {
     db.data.get(`SELECT username, handle, password FROM users WHERE username\
                 = '${req.username}'`, async function (err, user) {
         if (err) {
@@ -12,7 +14,6 @@ function handleLogin(session, req, res) {
             if (user) {
                 const authenticated = await bcrypt.compare(req.password, user.password);
                 if (authenticated) {
-                    session.username = user.username;
                     delete user.password;
                     user.authenticated = true;
                     res.json(user);
@@ -25,10 +26,10 @@ function handleLogin(session, req, res) {
         }
     });
 }
-
-function findFollowRecommendations(session, req, res) {
+// given a username, returns up to the number of requested profiles pt1
+// does not return profiles the user is already following, or their own
+function findFollowRecommendations(req, res) {
     const thisUser = req.username;
-        // const numProfiles = req.profiles;
 
     db.data.get(`SELECT rowid FROM users WHERE username = '${thisUser}'`, function(err, user) {
         if (err) {
@@ -39,7 +40,6 @@ function findFollowRecommendations(session, req, res) {
                     retrieveRandomProfiles(user.rowid, req.profiles, res);
                 } else {
                     console.error("That user wasn't found (follow recs)");
-                    return;
                 }
             } else {
                 res.json([]);
@@ -47,7 +47,7 @@ function findFollowRecommendations(session, req, res) {
         }
     });
 }
-
+// pt2 of above
 function retrieveRandomProfiles(userId, numProfiles, res) {
     db.data.all(`SELECT rowid, username, handle FROM users WHERE (${userId}, \
                 rowid) NOT IN followers ORDER BY RANDOM() LIMIT ${numProfiles}`,
@@ -67,15 +67,19 @@ function retrieveRandomProfiles(userId, numProfiles, res) {
     });
 }
 
+// helper function because there are multiple reasons to deny a registration
 function denyRegistration(message) {
     return {registered: false, message: message};
 }
 
+// returns true if the identifier (username or handle) is valid, false otherwise
 function valid(identifier) {
     const validator = new RegExp(/^[a-zA-Z0-9]+$/);
     return validator.test(identifier);
 }
 
+/*  given an identifier (username or handle), send a true response if it's
+    available, false otherwise */
 function verifyUniqueIdentifier(req, res) {
     let type = '';
     let identifier = '';
@@ -103,11 +107,15 @@ function verifyUniqueIdentifier(req, res) {
     });
 }
 
+// return true if the password is valid (client enforces first, but never trust client)
 function validPassword(password) {
-    return password.length > 3 && password.search(/\d/) !== -1 && password.search(/[a-zA-z]/) !== -1;
+    return  password.length > 3 &&
+            password.search(/\d/) !== -1 &&
+            password.search(/[a-zA-z]/) !== -1;
 }
 
-function registerNewUser(session, req, res) {
+// registers a new user, if all inputs are valid (most are "enforced" client side, but...)
+function registerNewUser(req, res) {
     const username = req.username;
     const password = req.password;
     let handle = req.handle;
@@ -127,15 +135,16 @@ function registerNewUser(session, req, res) {
         return;
     }
 
+    // append the @
     handle = `@${handle}`;
-    // TODO have people follow themselves - simplifies application logic considerably
-    // eg for FollowRecommendations and Feed
 
+    // get all users with a matching username or handle
     db.data.all(`SELECT username FROM users WHERE username = '${username}' OR\
                     handle = '${handle}'`, async function(err, users) {
         if (err) {
             console.error("Error retrieving users for registration validation");
         } else {
+            // if any exist, deny with appropriate error
             if (users.length > 0) {
                 if (users[0].username == username) {
                     res.json(denyRegistration("That username is already taken!"));
@@ -143,24 +152,27 @@ function registerNewUser(session, req, res) {
                     res.json(denyRegistration("That handle is already in use."));
                 }
             } else {
+                // hash the password and insert, also have them follow themself
                 const salt = await bcrypt.genSalt(10);
                 const hashedPassword = await bcrypt.hash(password, salt);
                 db.data.run(`INSERT INTO users VALUES (?, ?, ?, ?)`,
-                            [username, hashedPassword, handle, email], function(err) {
-                                if (err) {
-                                    console.error(err)
-                                } else {
-                                    followers.insert(this.lastID, this.lastID);
-                                }
-                            });
+                    [username, hashedPassword, handle, email], function(err) {
+                        if (err) {
+                            console.error(err)
+                        } else {
+                            followers.insert(this.lastID, this.lastID);
+                        }
+                    });
+                // send response
                 res.json({registered: true, username: username, handle: handle,
                     message: "Registration success!"});
             }
         }
-        // db.data.all()
     });
 }
 
+/*  given a profileName, return the associated profile and whether or not they
+    are already followed by the requestor */
 function getUserProfile(req, res) {
     const username = req.profileName;
     const requestor = req.username;
@@ -174,7 +186,7 @@ function getUserProfile(req, res) {
         }
     });
 }
-
+// pt2 of above
 function getUserFollowCount(user, requestor, res) {
     db.data.all(`SELECT COUNT(followerId) FROM followers WHERE followerId = \
         ${user.rowid} GROUP BY followerId`, function(err, follows) {
@@ -190,7 +202,7 @@ function getUserFollowCount(user, requestor, res) {
             }
         });
 }
-
+// pt3 of above
 function getUserFollowerCount(user, requestor, res) {
     db.data.all(`SELECT COUNT(followedId) FROM followers WHERE followedId = \
                 ${user.rowid} GROUP BY followedId`, function(err, followers) {
@@ -206,7 +218,7 @@ function getUserFollowerCount(user, requestor, res) {
                     }
                 });
 }
-
+// pt4 of above
 function getUserFeed(user, requestor, res) {
     db.data.all(`SELECT rowid, * FROM tweets WHERE senderId = ${user.rowid} ORDER BY \
                 time DESC LIMIT 30`, function(err, tweets) {
@@ -218,7 +230,7 @@ function getUserFeed(user, requestor, res) {
         }
     });
 }
-
+// pt5 ...
 function getRequestorId(user, requestor, res) {
     db.data.get(`SELECT rowid FROM users WHERE username = '${requestor}'`, function(err, requestorId) {
         if (err) {
@@ -228,41 +240,43 @@ function getRequestorId(user, requestor, res) {
         }
     });
 }
-
+// pt6 of callback hell... next time, async + await
 function sendProfile(user, requestorId, res) {
     console.log("peppa")
     console.log(user.rowid)
     console.log(requestorId)
     db.data.get(`SELECT * FROM followers WHERE (followerId, followedId) IN \
                 (SELECT ${requestorId}, ${user.rowid})`, function (err, row) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(row)
-                        if (row) {
-                            user.isFollowing = true;
-                            res.json(user);
-                        } else {
-                            user.isFollowing = false;
-                            res.json(user);
-                        }
-                    }
-                });
-
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(row)
+            if (row) {
+                user.isFollowing = true;
+                res.json(user);
+            } else {
+                user.isFollowing = false;
+                res.json(user);
+            }
+        }
+    });
 }
 
+/* don't think this is used in current client-side implementation, but returns
+usernames that contain requested substring */
 function findUsers(username, res) {
     db.data.all(`SELECT username FROM users WHERE username LIKE '%${username}%'`,
         function(err, users) {
             if (err) {
                 console.error("There was an error finding the users for messages");
-                return [];
+                res.json([]);
             } else {
                 res.json(users);
             }
         });
 }
 
+// returns the rowid associated with the username given
 function getRowId(req, res) {
     db.data.get(`SELECT rowid FROM users WHERE username = '${req.username}'`, function(err, user) {
         if (err) {
@@ -273,6 +287,7 @@ function getRowId(req, res) {
     });
 }
 
+// pt1 of getting the usernames of the people the sender follows
 function getFollowed(req, res) {
     db.data.get(`SELECT rowid FROM users WHERE username = '${req.sender}'`, function(err, user) {
         if (err) {
@@ -282,7 +297,7 @@ function getFollowed(req, res) {
         }
     });
 }
-
+// pt2 of above
 function sendFollows(id, res) {
     db.data.all(`SELECT rowid, username, handle FROM users WHERE rowid IN (SELECT followedId FROM followers WHERE followerId = ${id})`, function (err, follows) {
         if (err) {
@@ -291,7 +306,7 @@ function sendFollows(id, res) {
             console.log(follows)
             res.json({followed: follows});
         }
-    })
+    });
 }
 
 module.exports.verifyUnique = verifyUniqueIdentifier;
