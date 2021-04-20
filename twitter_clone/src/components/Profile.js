@@ -108,7 +108,7 @@ class Profile extends Component {
         const tweets = this.state.tweets.reverse().map((post,index) => (
             <div key={index} className={`post`}>
                 <div className={`container`}>
-                    
+
                 </div>
                 <div className={`feed_post`}>
                     <div className={`row`}>
@@ -146,7 +146,7 @@ class Profile extends Component {
                 </div>
             </div>
         ));
-
+        // bg source: https://www.goodfreephotos.com/albums/other-landscapes/agriculture-landscape-under-clouds-and-sky.jpg
         return(
             <div className={`profile  container`}>
                 <div className={`profile-header container tweet_body`}>
