@@ -1,5 +1,22 @@
 .explore {
     width: 100%;
     border-radius: 0.5rem;
-    background-color: #d0d0d0;
+
+}
+.title{
+    border: 1px solid black;
+    margin-bottom: 15px;
+}
+.title h2{
+    padding: 0.5rem;
+}
+.hashTagContainer{
+    height: 900px;
+    width: 100%;
+    border: 1px solid black;
+}
+.hashtag{
+    /* border: .5px solid black; */
+    padding: 10px;
+    color: #1DA1F2
 }
