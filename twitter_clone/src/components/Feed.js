@@ -7,11 +7,12 @@ import {faHeart} from '@fortawesome/free-regular-svg-icons';
 import {faShareSquare} from '@fortawesome/free-regular-svg-icons';
 import { formatTime } from '../utilities.js';
 
+// displays the tweets
 class Feed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loaded: false,
+            // loaded: false,
             imgUrl: `images/profile/1.png`
         };
         this.handleLike = this.handleLike.bind(this);

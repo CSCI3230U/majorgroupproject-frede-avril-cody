@@ -8,8 +8,8 @@ class Card extends Component {
         super(props);
         // unimplemented props are this.props.username and this.props.handle eg. @joe
         this.state = {
-            showLogout: false,
-            imgUrl: `images/profile/1.png`
+            showLogout: false,              // show logout popout
+            imgUrl: `images/profile/1.png`  // initialized to placeholder
         }
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
         this.handleEllipsisClick = this.handleEllipsisClick.bind(this);
@@ -17,20 +17,24 @@ class Card extends Component {
         this.getImgUrl = this.getImgUrl.bind(this);
     }
 
+    // handle a click of the logout "button"
     handleLogoutClick() {
         this.props.handleLogout();
     }
 
+    // handle a click of the ellipsis that show the logout button
     handleEllipsisClick() {
         this.setState({showLogout: true});
     }
 
+    // user didn't click logout button, hide popout
     onMouseLeave() {
         this.setState({showLogout: false});
     }
 
+    // helper function to parse img url
     getImgUrl(id) {
-        if (id === 1) {
+        if (id === 1) { // special picture for Randy
             return `images/profile/4randy.png`;
         } else {
             const index = id%18;
@@ -38,6 +42,7 @@ class Card extends Component {
         }
     }
 
+    // get the user id to assign a profile pic
     componentDidMount() {
         const params = {
             username: this.props.username
@@ -58,13 +63,17 @@ class Card extends Component {
     render() {
         return(
             <div className={`card container`} onMouseLeave={this.onMouseLeave}>
+
                 {this.state.showLogout && <div className="card-logout">
-                <div className="card-logout-container" onClick={this.handleLogoutClick}>
-                <p className={`card-logout-text`}>
-                Logout from Twitter</p></div></div>}
+                    <div className="card-logout-container" onClick={this.handleLogoutClick}>
+                        <p className={`card-logout-text`}>Logout from Twitter</p>
+                    </div>
+                </div>}
                 <div className={`row card-vcentered inline`}>
                     <div className={`col-3 inline`}>
-                        <img src={this.state.imgUrl} alt="profile" className={`card-profilePic inline`}></img>
+                        <img    src={this.state.imgUrl}
+                                alt="profile"
+                                className={`card-profilePic inline`} />
                     </div>
                     <div className={`col-6 inline`}>
                         <h6>{this.props.username}</h6>

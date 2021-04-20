@@ -28,7 +28,8 @@ class App extends React.Component {
             isConnectDisplayed: false,  // is the connect page currently displayed
             tweets: [],         // the tweets to display in the feed
             profileName: '',    // the name of the user to display in profile
-            justLoggedIn: false // true if the user has just logged in
+            justLoggedIn: false,// true if the user has just logged in
+            hashtagFlag: false
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
@@ -36,13 +37,16 @@ class App extends React.Component {
         this.displayRegister = this.displayRegister.bind(this);
         this.connectDisplayed = this.connectDisplayed.bind(this);
         this.updateFeed = this.updateFeed.bind(this);
+        this.updateFeedByHashtag = this.updateFeedByHashtag.bind(this);
         this.updateProfileName = this.updateProfileName.bind(this);
     }
 
+    // used to update if connect is displayed (in which case don't show follow-recs)
     connectDisplayed(flag) {
         this.setState({isConnectDisplayed: flag});
     }
 
+    // handles a successful login - props to Login component
     handleLogin(username, handle) {
         this.setState({
             loggedIn: true,
@@ -57,21 +61,29 @@ class App extends React.Component {
         this.updateFeed(username);
     }
 
+    // handles a logout
     handleLogout() {
         this.setState({
             loggedIn: false
         });
     }
 
+    // handles a successful registration - props to Register component
     handleRegister(username, handle) {
         this.setState({register: false});
         this.handleLogin(username, handle);
     }
 
+    // update whether register should be displayed
     displayRegister(flag) {
         this.setState({register: flag});
     }
 
+    updateFeedByHashtag(tweets) {
+        this.setState({tweets: tweets, hashtagFlag: true});
+    }
+
+    // used to trigger feed updates - props to various components
     updateFeed(username) {
         const params = {
             username: username
@@ -81,23 +93,27 @@ class App extends React.Component {
             body: JSON.stringify(params)
         };
 
-            fetch("http://localhost:4000/populateFeed", options)
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                this.setState({tweets: res});
-            });
+        fetch("http://localhost:4000/populateFeed", options)
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            this.setState({tweets: res});
+        });
     }
 
+    // updates the name that should be in profile
     updateProfileName(username) {
         this.setState({profileName: username});
     }
 
     render() {
+        // this is used to make sure feed always is shown first
+        // causes React to complain because state isn't supposed to be updated in render
         const flag = this.state.justLoggedIn;
         if (flag) {
             this.setState({justLoggedIn: false});
         }
+        // render based on the flags
         if (this.state.register) {
             return <Register    handleRegister={this.handleRegister}
                                 displayRegister={this.displayRegister}/>;
@@ -118,11 +134,13 @@ class App extends React.Component {
                         <Switch>
                             <Route exact path="/" render={() => {
                                 return <Redirect to="/feed"/>}} />
+
                             <Route exact path="/connect" render={() => {
                                 return <Connect connectDisplayed={this.connectDisplayed}
                                                 username={this.state.username}
                                                 updateFeed={this.updateFeed}
                                                 updateProfileName={this.updateProfileName}/>}}/>
+
                             <Route exact path="/explore" component={Explore}/>
 
                             <Route exact path="/messages" render={() => {
