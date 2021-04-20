@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import '../styles/FollowRecommendations.css';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faSyncAlt} from '@fortawesome/free-solid-svg-icons';
 
 class FollowRecommendations extends Component {
     constructor(props) {
@@ -8,7 +10,6 @@ class FollowRecommendations extends Component {
         this.state = {
             recommendations: []
         }
-        // this.handleChange = this.handleChange.bind(this);
         this.handleRefresh = this.handleRefresh.bind(this);
         this.handleFollow = this.handleFollow.bind(this);
         this.getImgUrl = this.getImgUrl.bind(this);
@@ -99,7 +100,7 @@ class FollowRecommendations extends Component {
                     </div>
                     {recommendations}
                     <div className={`row follow-recs-footer follow-recs-side-padding`}>
-                        <button className={`follow-recs-refresh`} onClick={this.handleRefresh}>Refresh</button>
+                        <button className={`follow-recs-refresh`} onClick={this.handleRefresh}><FontAwesomeIcon className={`follow-recs-icon`} icon={faSyncAlt} size="1x" /></button>
                     </div>
                 </div>
             </div>

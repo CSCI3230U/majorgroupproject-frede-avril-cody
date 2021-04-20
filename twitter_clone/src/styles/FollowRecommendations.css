@@ -23,6 +23,9 @@
 
 .follow-recs-footer {
     padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .follow-recs-refresh {
@@ -44,4 +47,9 @@
 
 .follow-recs-fix{
     width: 100%;
+}
+
+.follow-recs-icon {
+    color: hsl(203,85%,60%);
+    font-size: 2rem;
 }

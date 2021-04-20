@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react';
-// import React, { Component, Fragment } from 'react';
-// import ReactDOM from 'react-dom';
 import Menu from './components/Menu.js'
 import Tweet from './components/Tweet.js'
 import Feed from './components/Feed.js'
@@ -18,19 +16,19 @@ import FollowRecommendations from './components/FollowRecommendations.js'
 import { Route, Switch, Redirect} from 'react-router-dom';
 import './styles/App.css';
 
+// the main App
 class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            loggedIn: false,
-            username: '',
-            handle: '',
-            register: false,
-            isConnectDisplayed: false,
-            tweets: [],
-            profileName: '',
-            justLoggedIn: false,
-            hashtagFlag: false
+            loggedIn: false,    // is user logged in
+            username: '',       // username of logged in user
+            handle: '',         // the handle of the logged in user
+            register: false,    // if the register page should be displayed
+            isConnectDisplayed: false,  // is the connect page currently displayed
+            tweets: [],         // the tweets to display in the feed
+            profileName: '',    // the name of the user to display in profile
+            justLoggedIn: false // true if the user has just logged in
         }
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
@@ -38,9 +36,7 @@ class App extends React.Component {
         this.displayRegister = this.displayRegister.bind(this);
         this.connectDisplayed = this.connectDisplayed.bind(this);
         this.updateFeed = this.updateFeed.bind(this);
-        this.updateFeedByHashtag = this.updateFeedByHashtag.bind(this);
         this.updateProfileName = this.updateProfileName.bind(this);
-        // this.resetHashtagFlag = this.resetHashtagFlag.bind(this);
     }
 
     connectDisplayed(flag) {
@@ -93,15 +89,6 @@ class App extends React.Component {
             });
     }
 
-    updateFeedByHashtag(tweets) {
-        this.setState({tweets: tweets, hashtagFlag: true});
-    }
-
-    // resetHashtagFlag() {
-    //     console.log("called")
-    //     this.setState({hashtagFlag: false});
-    // }
-
     updateProfileName(username) {
         this.setState({profileName: username});
     }
@@ -152,9 +139,7 @@ class App extends React.Component {
                                             updateFeed={this.updateFeed}/>
                                     <Feed   username={this.state.username}
                                             updateFeed={this.updateFeed}
-                                            tweets={this.state.tweets}
-                                            hashtagFlag={this.state.hashtagFlag} />
-                                            {/*// resetHashtagFlag={this.resetHashtagFlag} />*/}
+                                            tweets={this.state.tweets}/>
                                 </Fragment>
                             }/>
 

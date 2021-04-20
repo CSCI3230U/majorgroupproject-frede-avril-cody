@@ -1,3 +1,4 @@
+// takes a time in UTC format and converts it to EST
 export function formatTime(time) {
     time = time.split(" ")[1];
     time = time.split(":");
