@@ -90,3 +90,8 @@
 .menu-hover:hover{
     text-decoration: none;
 }
+
+.menu-external-container {
+    display: flex;
+    align-items: center;
+}

@@ -9,6 +9,7 @@ import {faUsers} from '@fortawesome/free-solid-svg-icons';
 import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
 import {faUser} from '@fortawesome/free-regular-svg-icons';
 import {faChartPie} from '@fortawesome/free-solid-svg-icons';
+import {faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
 //
 class Menu extends Component{
     constructor() {
@@ -85,8 +86,11 @@ class Menu extends Component{
                             <div className={`col-3`}>
                                 <FontAwesomeIcon className={`menu-icon`} icon={faChartPie} size="2x" />
                             </div>
-                            <div className={`col menu-option`}>
+                            <div className={`col-6 menu-option`}>
                                 <p className={`menu-option`}>Analytics</p>
+                            </div>
+                            <div className={`menu-external-container`}>
+                                <FontAwesomeIcon className={`menu-icon`} icon={faExternalLinkAlt} size="1x" />
                             </div>
                         </div>
                     </a>
