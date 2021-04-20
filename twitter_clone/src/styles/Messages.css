@@ -54,8 +54,10 @@
 
 #message{
     /* background:#1da1f2; */
-    border-radius: 10%;
+    border-radius: 20%;
     margin:0;
+    background-color: #1DA1F2;
+    padding: 0 5px 0 5px;
     /* margin: 5px 0 5px 2px; */
 
 }
@@ -71,7 +73,6 @@
     margin: 10px;
     max-width: 75%;
     align-self: flex-start;
-    background-color: hsla(240, 50%, 50%, 0.25);
 }
 
 .receiver{
@@ -80,7 +81,7 @@
     max-width: 75%;
     align-self: flex-end;
     text-align: right;
-    background-color: hsla(120, 50%, 50%, 0.25);
+   
 }
 
 .messages-receiver-input {
