@@ -1,5 +1,47 @@
-.profile {
-    width: 100%;
-    border-radius: 0.5rem;
-    background-color: #d0d0d0;
+.profile-header{
+    position: sticky;
+    padding: 10px;
+    border: 1px solid #ececec;
 }
+
+.profile-body {
+    border-left: 1px solid #ececec;
+    border-right: 1px solid #ececec;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.profile-body::-webkit-scrollbar {
+    display: none;
+}
+
+.profile-background{
+    background-color: #afafaf;
+    height: 200px;
+    width: 100%;
+}
+
+.profile-profilePic{
+    margin-top: -4rem;
+    width: 150px;
+    height: auto;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 50%;
+}
+
+.profile-details{
+    border-bottom: 1px solid #ececec;
+    height: 200px;
+    width: 100%;
+}
+
+.profile-button-col{
+
+}
+
+.profile-inline{
+    margin-right: 1rem;
+    display: inline;
+}
+
