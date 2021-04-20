@@ -44,29 +44,28 @@ class Explore extends Component {
                 </div>
                 <div className={`search`}>
                     <Search/>
-
                 </div>
                 <div className="hashtagContainer">
                     <div className={`hashtag`}>
-                        #instagram
+                        <p>#instagram</p>
                     </div>
                     <div className={`hashtag`}>
-                        #help
+                        <p>#help</p>
                     </div>
                     <div className={`hashtag`}>
-                        #Chavintrial
+                        <p> #Chavintrial</p>
                     </div>
                     <div className={`hashtag`}>
-                        #Bitcon
+                        <p> #Bitcon</p>
                     </div>
                     <div className={`hashtag`}>
-                        #Stocks
+                        <p>#Stocks</p>
                     </div>
                     <div className={`hashtag`}>
-                        #FacebookUnderFire
+                        <p>#FacebookUnderFire</p>
                     </div>
                     <div className={`hashtag`}>
-                        #Cats
+                        <p>#Cats</p>
                     </div>
                 </div>
             </div>
