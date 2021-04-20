@@ -64,11 +64,17 @@ class Login extends Component {
                     <img src={image} alt="login background not found"/>
                 </div>
                 <div className={`login`}>
-                    <h2 className={`login-text`}>{this.state.message} </h2>
-                    <input placeholder="Username" type="text" onChange={this.handleUsernameChange} className={`login-input`}/>
-                    <input placeholder="Password" type="password" onChange={this.handlePasswordChange} className={`login-input`}/>
-                    <button onClick={this.handleLoginClick} className={`rounded-pill login-button`}>Login</button>
-                    <button onClick={this.props.displayRegister} className={`rounded-pill login-button`}>Register</button>
+                    <div className={`login-text-container`}>
+                        <h2 className={`login-text`}>{this.state.message} </h2>
+                    </div>
+                    <div className={`login-inputs`}>
+                        <input placeholder="Username" type="text" onChange={this.handleUsernameChange} className={`login-input login-default`}/>
+                        <input placeholder="Password" type="password" onChange={this.handlePasswordChange} className={`login-input login-default`}/>
+                    </div>
+                    <div className={`login-button-container`}>
+                        <button onClick={this.handleLoginClick} className={`rounded-pill login-button`}>Login</button>
+                        <button onClick={this.props.displayRegister} className={`rounded-pill login-button`}>Register</button>
+                    </div>
                 </div>
             </div>
 

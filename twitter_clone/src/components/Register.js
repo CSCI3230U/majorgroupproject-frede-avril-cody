@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
-import '../styles/Register.css';
+import '../styles/Login.css';
 import image from "../image/twitterBackground.png" // picture from https://twitter.com
 const validator = require('validator');
 
@@ -15,11 +15,11 @@ class Register extends Component {
             handle: '',
             email: '',
             message: this.defaultMessage,
-            usernameStyle: 'register-default',
-            handleStyle: 'register-default',
-            passwordStyle: 'register-default',
-            confirmPasswordStyle: 'register-default',
-            emailStyle: 'register-default'
+            usernameStyle: 'login-default',
+            handleStyle: 'login-default',
+            passwordStyle: 'login-default',
+            confirmPasswordStyle: 'login-default',
+            emailStyle: 'login-default'
         }
         this.handleRegisterClick = this.handleRegisterClick.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -140,7 +140,7 @@ class Register extends Component {
         this.setState({[type]: identifier, message: this.defaultMessage});
 
         if (!identifier) {
-            this.setState({[style]: 'register-default'});
+            this.setState({[style]: 'login-default'});
             return;
         }
 
@@ -166,7 +166,7 @@ class Register extends Component {
         if (password === this.state.confirmedPassword) {
             this.setState({confirmPasswordStyle: 'register-valid'});
         } else {
-            this.setState({confirmPasswordStyle: 'register-default'});
+            this.setState({confirmPasswordStyle: 'login-default'});
         }
     }
 
@@ -201,20 +201,26 @@ class Register extends Component {
                 <div className="loginImage" >
                     <img src={image} alt="NotFound"/>
                 </div>
-                <div className={`register`}>
-                    <h2>{this.state.message} </h2>
-                    <input  placeholder="Username" type="text" data-type="username"
-                            className={this.state.usernameStyle} onChange={this.handleChange} />
-                    <input  placeholder="Password" type="password"
-                            className={this.state.passwordStyle} onChange={this.handlePasswordChange} />
-                    <input  placeholder="Confirm Password" type="password"
-                            className={this.state.confirmPasswordStyle} onChange={this.handleConfirmPasswordChange} />
-                    <input  placeholder="Handle" type="text" data-type="handle"
-                            className={this.state.handleStyle} onChange={this.handleChange} />
-                    <input  placeholder="Email" type="email"
-                            className={this.state.emailStyle} onChange={this.handleEmailChange} />
-                    <button className={"login-button"} onClick={this.handleRegisterClick}>Register</button>
-                    <button className={"login-button"} onClick={this.handleBackToLogin}>Back To Login</button>
+                <div className={`login`}>
+                    <div className={`login-text-container`}>
+                        <h2 className={`login-text`}>{this.state.message} </h2>
+                    </div>
+                    <div className={`login-inputs`}>
+                        <input  placeholder="Username" type="text" data-type="username"
+                                className={`login-input ${this.state.usernameStyle}`} onChange={this.handleChange} />
+                        <input  placeholder="Password" type="password"
+                                className={`login-input ${this.state.passwordStyle}`} onChange={this.handlePasswordChange} />
+                        <input  placeholder="Confirm Password" type="password"
+                                className={`login-input ${this.state.confirmPasswordStyle}`} onChange={this.handleConfirmPasswordChange} />
+                        <input  placeholder="Handle" type="text" data-type="handle"
+                                className={`login-input ${this.state.handleStyle}`} onChange={this.handleChange} />
+                        <input  placeholder="Email" type="email"
+                                className={`login-input ${this.state.emailStyle}`} onChange={this.handleEmailChange} />
+                    </div>
+                    <div className={`register-button-container`}>
+                        <button className={"login-button rounded-pill"} onClick={this.handleRegisterClick}>Register</button>
+                        <button className={"login-button rounded-pill"} onClick={this.handleBackToLogin}>Back To Login</button>
+                    </div>
                 </div>
             </div>
         );

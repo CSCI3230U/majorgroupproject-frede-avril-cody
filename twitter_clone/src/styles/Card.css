@@ -43,6 +43,7 @@
 
 .card-logout:hover {
     background-color: hsl(0, 0%, 95%);
+    cursor: pointer;
 }
 
 .card-logout-container {
