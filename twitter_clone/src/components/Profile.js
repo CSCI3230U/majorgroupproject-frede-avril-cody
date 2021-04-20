@@ -78,6 +78,12 @@ class Profile extends Component {
         this.getProfileData();
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.profileName != this.props.profileName) {
+            this.getProfileData();
+        }
+    }
+
     handleFollow(event) {
         const params = {
             follower: this.props.username,
